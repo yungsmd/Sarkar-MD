@@ -1,6 +1,6 @@
 <p align="center">  
   <a href="https://telegra.ph/file/f03bd3b5a50f2892ec1ee.jpg">
-    <img alt="secktor docs" height="300" src="https://telegra.ph/file/f03bd3b5a50f2892ec1ee.jpg">
+    <img alt="secktor docs" height="300" src="">
     <h1 align="center"> Sarkar-MD MADE BY Sarkar-Bandaheali</h1>
   </a>
 </p>  
