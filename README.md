@@ -4,6 +4,10 @@
     <h1 align="center"> Sarkar-MD MADE BY Sarkar-Bandaheali</h1>
   </a>
 </p>  
+FORK THE REPOSITORY (Repo) 
+    <br>
+<a href="https://github.com/Sarkar-Bandaheali/Sarkar-MD/fork"><img title="WEB" src="https://img.shields.io/badge/FORK Sarkar-MD-QR?color=black&style=for-the-badge&logo=stackshare"></a>
+
   
 </p>
 
