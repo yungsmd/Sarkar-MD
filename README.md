@@ -68,7 +68,7 @@
 
  # 😈 Sarkar-MD INFO
 ***
-## ᴡʜᴀᴛsᴀᴘᴘ ᴄʜᴀɴɴᴇʟ
+## ᴡʜᴀᴛsᴀᴘᴘ ᴄʜᴀɴɴᴇʟ // Whatsapp group
 <a href="https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P" target="_blank">
     <img alt="whatsapp channel" src="https://img.shields.io/badge/ Whatsapp Support Channel -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
 </a>
