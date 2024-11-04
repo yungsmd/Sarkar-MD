@@ -71,8 +71,7 @@
 ## ᴡʜᴀᴛsᴀᴘᴘ ᴄʜᴀɴɴᴇʟ
 <a href="https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P" target="_blank">
     <img alt="whatsapp channel" src="https://img.shields.io/badge/ Whatsapp Support Channel -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-  </a>
-  ## ᴡʜᴀᴛsᴀᴘᴘ Group
+</a>
 <a href="https://chat.whatsapp.com/IZ08OuI8pqV2RbTrDvlQk3" target="_blank">
     <img alt="whatsapp Group" src="https://img.shields.io/badge/ Whatsapp Support Group -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
   </a>
