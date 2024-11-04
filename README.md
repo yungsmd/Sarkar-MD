@@ -54,8 +54,8 @@ FORK THE REPOSITORY (Repo)
 
 
   ♻️DEPLOY NORMAL BOT ✅*[ HEROKU ]*
-
-
+<br>
+<a href='https://dashboard.heroku.com/new?template=https://github.com/Sarkar-Bandaheali/Sarkar-MD' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=heroku&logoColor=white'/>
 ***
 
 ⭕  DEPLOY ON [ RENDER ]
