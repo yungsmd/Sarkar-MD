@@ -106290,16 +106290,16 @@
 
 {
   "name": "Sarkar-MD",
-  "version": "10.8.1",
+  "version": "1.0.0",
   "description": "Sarkar-MD latest multi device whatsapp bot",
-  "main": "body.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "pm2 start body.js --deep-monitoring --attach --name Sarkar-MD",
+    "start": "pm2 start index.js --deep-monitoring --attach --name Sarkar-MD",
     "stop": "pm2 stop Sarkar-MD",
     "restart": "pm2 restart Sarkar-MD"
   },
-  "keywords": ["Sarkar-md", "whatsapp-bot", "whatsapp md bot"],
+  "keywords": ["Sarkar-md", "Sarkar-MD", "Sarkar-MD whatsapp bot" "whatsapp-bot", "whatsapp md bot"],
   "author": "Bandaheali",
   "license": "ISC",
   "dependencies": {
