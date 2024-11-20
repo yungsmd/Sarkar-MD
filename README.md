@@ -13,7 +13,7 @@ FORK THE REPOSITORY (Repo)
 
 ---
 ***
-<a href="https://vercel.com/sarkarji1s-projects/sarkar-md-session-pair"><img src="https://img.shields.io/badge/Sarkar%20MD%20WEB-skyblue" alt="CLICK ME TO GET SESSION" width="270"></a>
+<a href="https://sarkar-md-session-pair.vercel.app/"><img src="https://img.shields.io/badge/CLICK%20ME%20WEB%20TO%20GET%20SESSION-skyblue" alt="CLICK ME TO GET SESSION" width="270"></a>
 
 
   ***
