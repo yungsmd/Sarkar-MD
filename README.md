@@ -13,12 +13,12 @@ FORK THE REPOSITORY (Repo)
 
 ---
 ***
-<a href="https://bmw-md-web-by-ibrahim.vercel.app/"><img src="https://img.shields.io/badge/Sarkar%20MD%20WEB-skyblue" alt="Sarkar-MD_WEB" width="270"></a>
+<a href="https://vercel.com/sarkarji1s-projects/sarkar-md-session-pair"><img src="https://img.shields.io/badge/Sarkar%20MD%20WEB-skyblue" alt="CLICK ME TO GET SESSION" width="270"></a>
 
 
   ***
 
-<a href="https://www.buymeacoffee.com/ibrahimadams" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="null" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 </p>
 <p align="center">
@@ -32,14 +32,6 @@ FORK THE REPOSITORY (Repo)
 </p>></a>                     
 
    <h1 align="center"                  
-
-
-
-
-
-
-
- <a href="https://ibrahim-adams.vercel.app"><img title="GET SESSION" src="https://img.shields.io/badge/GET SESSION-h?color=blue&style=for-the-badge&logo=Sarkar" width="220" height="38.45"/></a></p>
 
 
 
