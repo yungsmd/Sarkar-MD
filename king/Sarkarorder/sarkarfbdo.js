@@ -45,7 +45,7 @@ const facebookCommand = async (m, Matrix) => {
         const content = { 
           video: videoBuffer, 
           mimetype: 'video/mp4', 
-          caption: '> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ',
+          caption: '> © DOWNLOADED BY SARKAR-MD',
         };
         await Matrix.sendMessage(m.from, content, { quoted: m });
         await m.React("✅");
