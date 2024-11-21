@@ -2,7 +2,7 @@ import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
 import getFBInfo from '@xaviabot/fb-downloader';
 import config from '../../config.cjs';
-import fetch from 'node-fetch'; // Ensure node-fetch is installed if using Node.js
+import fetch from 'node-fetch';
 
 const facebookCommand = async (m, Matrix) => {
   const prefix = config.PREFIX;
@@ -21,7 +21,7 @@ const facebookCommand = async (m, Matrix) => {
 
       // Fetch Facebook video data
       const fbData = await getFBInfo(text);
-      console.log("fbData:", fbData);  // Log the data structure to check
+      console.log("fbData:", fbData); // Debugging the fetched data
 
       if (!fbData) {
         await m.reply('No results found.');
@@ -30,14 +30,14 @@ const facebookCommand = async (m, Matrix) => {
       }
 
       // Choose the highest available quality (HD preferred)
-      const videoUrl = fbData.hd || fbData.sd; // Prefer HD, fallback to SD
+      const videoUrl = fbData.hd || fbData.sd; // HD first, fallback to SD
       if (!videoUrl) {
         await m.reply('No video found in supported quality.');
         await m.React("❌");
         return;
       }
 
-      // Download video and check file size
+      // Download video with audio
       const videoBuffer = await getStreamBuffer(videoUrl);
       const fileSizeInMB = videoBuffer.length / (1024 * 1024);
 
@@ -45,7 +45,7 @@ const facebookCommand = async (m, Matrix) => {
         const content = { 
           video: videoBuffer, 
           mimetype: 'video/mp4', 
-          caption: '> © DOWNLOADED BY SARKAR-MD',
+          caption: '> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ',
         };
         await Matrix.sendMessage(m.from, content, { quoted: m });
         await m.React("✅");
@@ -53,7 +53,6 @@ const facebookCommand = async (m, Matrix) => {
         await m.reply('The video file size exceeds 300MB.');
         await m.React("❌");
       }
-
     } catch (error) {
       console.error("Error processing your request:", error);
       await m.reply('Error processing your request.');
@@ -68,6 +67,12 @@ const getStreamBuffer = async (url) => {
     if (!response.ok) {
       throw new Error(`Failed to fetch the video: ${response.statusText}`);
     }
+
+    const contentType = response.headers.get('content-type');
+    if (!contentType.includes('video')) {
+      throw new Error('URL does not contain a video stream.');
+    }
+
     const buffer = await response.arrayBuffer();
     return Buffer.from(buffer);
   } catch (error) {
