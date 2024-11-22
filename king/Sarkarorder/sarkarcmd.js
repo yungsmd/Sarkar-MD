@@ -1,5 +1,6 @@
 import pkg from '@whiskeysockets/baileys';
-const { generateWAMessageFromContent } = pkg;
+const { generateWAMessageFromContent, prepareWAMessageMedia } = pkg;
+import fs from 'fs';
 
 const alive = async (m, Matrix) => {
   const uptimeSeconds = process.uptime();
@@ -12,14 +13,7 @@ const alive = async (m, Matrix) => {
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).toLowerCase() : '';
 
   if (['command', 'menu', 'help'].includes(cmd)) {
-    const uptimeMessage = `╭───━═━═━⊷ 
-🤖 𝗕𝗢𝗧 𝗡𝗔𝗠𝗘: *_Sarkar MD_*
-📟 𝗩𝗘𝗥𝗦𝗜𝗢𝗡: *_1.0.0_*
-👤 𝗗𝗘𝗩: *_Sir Bandaheali_*
-📈 *uptime*: *${days}d ${hours}h ${minutes}m ${seconds}s*
-╰───━═━═━⊷
-
-━━━━━🌟━━━━━
+    const uptimeMessage = `━━━━━🌟━━━━━
 
 ✨ 𝗦𝗔𝗥𝗞𝗔𝗥-𝗠𝗗 𝗖𝗢𝗠𝗠𝗔𝗡𝗗 𝗟𝗜𝗦𝗧 ✨
 ╭━━━━◈ SYSTEM ◈━━━╮
@@ -36,7 +30,6 @@ const alive = async (m, Matrix) => {
 ➤ ${prefix}𝗨𝗻𝗯𝗹𝗼𝗰𝗸
 ➤ ${prefix}𝗦𝗲𝘁𝗽𝗽𝗯𝗼𝘁
 ➤ ${prefix}𝗔𝗻𝘁𝗶𝗰𝗮𝗹𝗹
-➤ ${prefix}𝗦𝗲𝘁𝘀𝘁𝗮𝘁𝘂𝘀
 ➤ ${prefix}𝗦𝗲𝘁𝗻𝗮𝗺𝗲𝗯𝗼𝘁
 ➤ ${prefix}𝗔𝘂𝘁𝗼𝗧𝘆𝗽𝗶𝗻𝗴
 ➤ ${prefix}𝗔𝗹𝘄𝗮𝘆𝘀𝗢𝗻𝗹𝗶𝗻𝗲
@@ -49,15 +42,11 @@ const alive = async (m, Matrix) => {
 ➤ ${prefix}𝗕𝘂𝗴
 ➤ ${prefix}𝗥𝗲𝗽𝗼𝗿𝘁
 ➤ ${prefix}𝗿𝗮𝘀𝗵𝗶𝗱
-➤ ${prefix}𝗗𝗮𝗹𝗹𝗲
 ➤ ${prefix}𝗥𝗲𝗺𝗶𝗻𝗶
 ➤ ${prefix}𝗚𝗲𝗺𝗶𝗻𝗶 
 ╰━━━━━━◈━━━━━━╯
 
 ╭━━━━ 𝗖𝗢𝗡𝗩𝗘𝗥𝗧𝗘𝗥 ━━━╮
-➤ ${prefix}𝗔𝗧𝗧𝗣
-➤ ${prefix}𝗔𝗧𝗧𝗣𝟮
-➤ ${prefix}𝗔𝗧𝗧𝗣𝟯
 ➤ ${prefix}𝗘𝗕𝗜𝗡𝗔𝗥𝗬
 ➤ ${prefix}𝗗𝗕𝗜𝗡𝗔𝗥𝗬
 ➤ ${prefix}𝗘𝗠𝗢𝗝𝗜𝗠𝗜𝗫
@@ -77,20 +66,15 @@ const alive = async (m, Matrix) => {
 ➤ ${prefix}𝗛𝗶𝗱𝗲𝗧𝗮𝗴
 ➤ ${prefix}𝗧𝗮𝗴𝗮𝗹𝗹
 ➤ ${prefix}𝗔𝗻𝘁𝗶𝗟𝗶𝗻𝗸
-➤ ${prefix}𝗔𝗻𝘁𝗶𝗧𝗼𝘅𝗶𝗰
 ➤ ${prefix}𝗣𝗿𝗼𝗺𝗼𝘁𝗲
-➤ ${prefix}𝗗𝗲𝗺𝗼𝘁𝗲
-➤ ${prefix}𝗚𝗲𝘁𝗯𝗶𝗼 
+➤ ${prefix}𝗗𝗲𝗺𝗼𝘁𝗲 
 ╰━━━━━━━◈━━━━━━╯
 
 ╭━━◈ 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗 ◈━━━╮
 ➤ ${prefix}𝗔𝗽𝗸
 ➤ ${prefix}𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸
 ➤ ${prefix}𝗠𝗲𝗱𝗶𝗮𝗳𝗶𝗿𝗲
-➤ ${prefix}𝗣𝗶𝗻𝘁𝗲𝗿𝗲𝘀𝘁𝗱𝗹
-➤ ${prefix}𝗚𝗶𝘁𝗰𝗹𝗼𝗻𝗲
 ➤ ${prefix}𝗚𝗱𝗿𝗶𝘃𝗲
-➤ ${prefix}𝗜𝗻𝘀𝘁𝗮
 ➤ ${prefix}𝘆𝘁𝗺𝗽𝟯
 ➤ ${prefix}𝘆𝘁𝗺𝗽𝟰
 ➤ ${prefix}𝗣𝗹𝗮𝘆
@@ -107,17 +91,32 @@ const alive = async (m, Matrix) => {
 ➤ ${prefix}𝗜𝗺𝗱𝗯
 ➤ ${prefix}𝗚𝗼𝗼𝗴𝗹𝗲
 ➤ ${prefix}𝗚𝗶𝗺𝗮𝗴𝗲
-➤ ${prefix}𝗟𝘆𝗿𝗶𝗰𝘀 
+➤ ${prefix}𝗟𝘆𝗿𝗶𝗰𝘀
+➤ ${prefix}GINFO 
 ╰━━━━━━━◈━━━━━━━╯
 
 🌐 𝗠𝗢𝗥𝗘 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 𝗖𝗢𝗠𝗜𝗡𝗚 𝗦𝗢𝗢𝗡! 🌐`;
 
-    const msg = generateWAMessageFromContent(m.from, {
-      conversation: uptimeMessage,
+    // Load Image
+    const imageBuffer = fs.readFileSync('../files/Sarkar.jpeg'); // Replace with your image path
+    const media = await prepareWAMessageMedia({ image: imageBuffer }, { upload: Matrix.waUploadToServer });
+
+    const message = generateWAMessageFromContent(m.from, {
+      templateMessage: {
+        hydratedTemplate: {
+          imageMessage: media.imageMessage,
+          hydratedContentText: uptimeMessage,
+          hydratedFooterText: '🤖 Sarkar MD | Always at your service!',
+          hydratedButtons: [
+            { urlButton: { displayText: 'GitHub', url: 'https://github.com/bandaheali' } },
+            { quickReplyButton: { displayText: 'Menu', id: `${prefix}menu` } },
+          ],
+        },
+      },
     }, {});
 
-    await Matrix.relayMessage(msg.key.remoteJid, msg.message, {
-      messageId: msg.key.id
+    await Matrix.relayMessage(message.key.remoteJid, message.message, {
+      messageId: message.key.id,
     });
   }
 };
