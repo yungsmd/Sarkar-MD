@@ -13,7 +13,7 @@ const ping = async (m, sock) => {
 
     // Updated text style with Sarkar-MD branding and response rate
     const responseText = `*_Sarkar-MD Speed is_* ${responseTime} ms`; // Use responseText instead of reusing text
-
+await m.React('✅️'); // React with a loading icon
     sock.sendMessage(m.from, { text: responseText }, { quoted: m });
   }
 };
