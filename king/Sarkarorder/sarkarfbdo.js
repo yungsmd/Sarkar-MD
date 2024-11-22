@@ -1,17 +1,8 @@
-import axios from 'axios';
-
-const getStreamBuffer = async (url) => {
-  try {
-    const response = await axios.get(url, { responseType: 'arraybuffer' });
-    if (!response.headers['content-type'].includes('video')) {
-      throw new Error('URL does not contain a video stream.');
-    }
-    return Buffer.from(response.data);
-  } catch (error) {
-    console.error("Error fetching video:", error);
-    throw new Error('Error downloading video.');
-  }
-};
+import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
+const { generateWAMessageFromContent, proto } = pkg;
+import getFBInfo from '@xaviabot/fb-downloader';
+import config from '../../config.cjs';
+import fetch from 'node-fetch';
 
 const facebookCommand = async (m, Matrix) => {
   const prefix = config.PREFIX;
@@ -26,10 +17,11 @@ const facebookCommand = async (m, Matrix) => {
     }
 
     try {
-      await m.React("🔄 Downloading...");
+      await m.React("🕘");
 
+      // Fetch Facebook video data
       const fbData = await getFBInfo(text);
-      console.log("fbData:", fbData);
+      console.log("fbData:", fbData); // Debugging the fetched data
 
       if (!fbData) {
         await m.reply('No results found.');
@@ -37,13 +29,15 @@ const facebookCommand = async (m, Matrix) => {
         return;
       }
 
-      const videoUrl = fbData.sd || fbData.hd; // SD preferred for faster downloads
+      // Choose the highest available quality (HD preferred)
+      const videoUrl = fbData.hd || fbData.sd; // HD first, fallback to SD
       if (!videoUrl) {
         await m.reply('No video found in supported quality.');
         await m.React("❌");
         return;
       }
 
+      // Download video with audio
       const videoBuffer = await getStreamBuffer(videoUrl);
       const fileSizeInMB = videoBuffer.length / (1024 * 1024);
 
@@ -66,4 +60,25 @@ const facebookCommand = async (m, Matrix) => {
     }
   }
 };
+
+const getStreamBuffer = async (url) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch the video: ${response.statusText}`);
+    }
+
+    const contentType = response.headers.get('content-type');
+    if (!contentType.includes('video')) {
+      throw new Error('URL does not contain a video stream.');
+    }
+
+    const buffer = await response.arrayBuffer();
+    return Buffer.from(buffer);
+  } catch (error) {
+    console.error("Error fetching video:", error);
+    throw new Error('Error downloading video.');
+  }
+};
+
 export default facebookCommand;
