@@ -1,30 +1,18 @@
 import pkg from '@whiskeysockets/baileys';
-const { generateWAMessageFromContent, prepareWAMessageMedia } = pkg;
-import fs from 'fs';
+const { generateWAMessageFromContent } = pkg;
 
 const alive = async (m, Matrix) => {
-  try {
-    // Uptime Calculation
-    const uptimeSeconds = process.uptime();
-    const days = Math.floor(uptimeSeconds / (24 * 3600));
-    const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
-    const minutes = Math.floor((uptimeSeconds % 3600) / 60);
-    const seconds = Math.floor(uptimeSeconds % 60);
+  const uptimeSeconds = process.uptime();
+  const days = Math.floor(uptimeSeconds / (24 * 3600));
+  const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
+  const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+  const seconds = Math.floor(uptimeSeconds % 60);
 
-    const prefix = /^[\\/!#.]/gi.test(m.body) ? m.body.match(/^[\\/!#.]/gi)[0] : '/';
-    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).toLowerCase() : '';
+  const prefix = /^[\\/!#.]/gi.test(m.body) ? m.body.match(/^[\\/!#.]/gi)[0] : '/';
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).toLowerCase() : '';
 
-    if (['command', 'menu', 'help'].includes(cmd)) {
-      // Send Image
-      const imagePath = '../files/Sarkar.jpeg'; // Update your path
-      if (!fs.existsSync(imagePath)) throw new Error('Image file not found!');
-      const imageBuffer = fs.readFileSync(imagePath);
-      const imageMedia = await prepareWAMessageMedia({ image: imageBuffer }, { upload: Matrix.waUploadToServer });
-
-      await Matrix.relayMessage(m.from, imageMedia, { messageId: m.key.id });
-
-      // Send Menu Text
-      const menuMessage = `╭───━═━═━⊷ 
+  if (['command', 'menu', 'help'].includes(cmd)) {
+    const uptimeMessage = `╭───━═━═━⊷ 
 🤖 𝗕𝗢𝗧 𝗡𝗔𝗠𝗘: *_Sarkar MD_*
 📟 𝗩𝗘𝗥𝗦𝗜𝗢𝗡: *_1.0.0_*
 👤 𝗗𝗘𝗩: *_Sir Bandaheali_*
@@ -113,20 +101,17 @@ const alive = async (m, Matrix) => {
 ➤ ${prefix}GINFO 
 ╰━━━━━━━◈━━━━━━━╯
 
+https://github.com/Sarkar-Bandaheali/Sarkar-MD
+
 🌐 𝗠𝗢𝗥𝗘 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 𝗖𝗢𝗠𝗜𝗡𝗚 𝗦𝗢𝗢𝗡! 🌐`;
-      await Matrix.sendMessage(m.from, { text: menuMessage });
 
-      // Send Audio
-      const audioPath = '../files/sarkar.mp3'; // Update your path
-      if (!fs.existsSync(audioPath)) throw new Error('Audio file not found!');
-      const audioBuffer = fs.readFileSync(audioPath);
-      const audioMedia = await prepareWAMessageMedia({ audio: audioBuffer }, { upload: Matrix.waUploadToServer });
+    const msg = generateWAMessageFromContent(m.from, {
+      conversation: uptimeMessage,
+    }, {});
 
-      await Matrix.relayMessage(m.from, audioMedia, { messageId: m.key.id });
-    }
-  } catch (error) {
-    console.error('Error in alive command:', error);
-    await Matrix.sendMessage(m.from, { text: '⚠️ کچھ غلط ہو گیا ہے۔ براہ کرم دوبارہ کوشش کریں۔' });
+    await Matrix.relayMessage(msg.key.remoteJid, msg.message, {
+      messageId: msg.key.id
+    });
   }
 };
 
