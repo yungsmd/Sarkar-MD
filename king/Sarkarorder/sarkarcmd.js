@@ -16,7 +16,7 @@ const alive = async (m, Matrix) => {
 
     if (['command', 'menu', 'help'].includes(cmd)) {
       // Send Image
-      const imagePath = '../../files/Sarkar.jpeg'; // Update your path
+      const imagePath = '../files/Sarkar.jpeg'; // Update your path
       if (!fs.existsSync(imagePath)) throw new Error('Image file not found!');
       const imageBuffer = fs.readFileSync(imagePath);
       const imageMedia = await prepareWAMessageMedia({ image: imageBuffer }, { upload: Matrix.waUploadToServer });
@@ -117,7 +117,7 @@ const alive = async (m, Matrix) => {
       await Matrix.sendMessage(m.from, { text: menuMessage });
 
       // Send Audio
-      const audioPath = '../../files/sarkar.mp3'; // Update your path
+      const audioPath = '../files/sarkar.mp3'; // Update your path
       if (!fs.existsSync(audioPath)) throw new Error('Audio file not found!');
       const audioBuffer = fs.readFileSync(audioPath);
       const audioMedia = await prepareWAMessageMedia({ audio: audioBuffer }, { upload: Matrix.waUploadToServer });
