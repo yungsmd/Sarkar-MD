@@ -61,6 +61,8 @@ FORK THE REPOSITORY (Repo)
 
 [![Find On Whatsapp ](https://img.shields.io/badge/🚘Click_Here-blue.svg)](https://toystack.ai)
 
+DEPLOY TO .[KOYEB]
+https://www.koyeb.com/static/images/deploy/button.svg)]https://app.koyeb.com/services/deploy?type=git&repository=Sarkar-Bandaheali/Sarkar-MD&ports=3000;http;/&env[SESSIOlN_ID]=&env[ALWAYS_ONLINE]=Hejeb&env[AUTO_READ]=Hey&env[AUTO_STATUS_VIEW]=true&env[PREFIX]=.&env&env[PORT]=3000&env[KOYEB_NAME]=Hello&builder=dockerfile
 
  # 😈 Sarkar-MD INFO
 ***
