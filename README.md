@@ -69,7 +69,7 @@ FORK THE REPOSITORY (Repo)
 
 ♻️DEPLOY TO [KOYEB] ✅  
 <br>
-<a href='https://app.koyeb.com/services/deploy?type=git&repository=Sarkar-Bandaheali/Sarkar-MD&ports=3000;http;/&env[SESSIOlN_ID]=&env[ALWAYS_ONLINE]=trueb&env[AUTO_READ]=Hey&env[AUTO_STATUS_VIEW]=true&env[PREFIX]=.&env&env[AUTO_REACT]=true&env[ANTI_CALL]=true&builder=dockerfile' target="_blank">
+<a href='https://app.koyeb.com/services/deploy?type=git&repository=Sarkar-Bandaheali/Sarkar-MD&ports=3000;http;/&env[SESSIOlN_ID]=&env[ALWAYS_ONLINE]=true&env[AUTO_READ]=true&env[AUTO_STATUS_VIEW]=true&env[PREFIX]=.&env&env[AUTO_REACT]=true&env[ANTI_CALL]=true&builder=Buildpack' target="_blank">
   <img alt='DEPLOY' src='https://www.koyeb.com/static/images/deploy/button.svg'/>
 </a>
  # 😈 Sarkar-MD INFO
