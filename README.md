@@ -68,10 +68,7 @@ FORK THE REPOSITORY (Repo)
 </a>
 
 ♻️DEPLOY TO [KOYEB] ✅  
-<br>
-<a href='https://app.koyeb.com/services/deploy?type=git&repository=Sarkar-Bandaheali/Sarkar-MD&ports=3000;http;/&env[SESSIOlN_ID]=&env[ALWAYS_ONLINE]=true&env[AUTO_READ]=true&env[AUTO_STATUS_VIEW]=true&env[PREFIX]=.&env&env[AUTO_REACT]=true&env[ANTI_CALL]=true&builder=Buildpack' target="_blank">
-  <img alt='DEPLOY' src='https://www.koyeb.com/static/images/deploy/button.svg'/>
-</a>
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=sarkar-md&type=git&repository=sarKarji1%2FSarkar-MD&branch=main&builder=buildpack&env%5BSESSION_ID%5D=Sarkarmd%24YWXtdy9h&ports=8000%3Bhttp%3B%2F)
  # 😈 Sarkar-MD INFO
 ***
 ## ᴡʜᴀᴛsᴀᴘᴘ ᴄʜᴀɴɴᴇʟ // Whatsapp group
