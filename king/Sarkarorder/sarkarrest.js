@@ -1,25 +1,27 @@
 import { exec } from "child_process";
-import config from "../../config.cjs"; // PREFIX اور OWNER کا ڈیٹا لیں
+import config from "../../config.cjs"; // PREFIX کا ڈیٹا لیں
 
 const restartBot = async (message, client) => {
   const PREFIX = config.PREFIX; // Prefix
-  const OWNER_NUMBER = config.OWNER; // مالک کا نمبر (مثلاً: "+1234567890")
   const userMessage = message.body.toLowerCase();
+
+  // Get the bot's number (creator number)
+  const botNumber = await client.getHostNumber(); // بوٹ کا نمبر حاصل کریں
 
   // Restart command trigger
   if (userMessage === `${PREFIX}restart`) {
-    if (message.sender !== OWNER_NUMBER) {
-      // If user is not the owner
+    if (message.sender !== botNumber) {
+      // If user is not the bot's creator
       await client.sendMessage(
         message.from,
-        { text: "Only the bot owner can use this command!" },
+        { text: "Only the bot creator can use this command!" },
         { quoted: message }
       );
       return;
     }
 
     try {
-      // Inform owner about restart
+      // Inform creator about restart
       await client.sendMessage(
         message.from,
         { text: "Restarting bot..." },
