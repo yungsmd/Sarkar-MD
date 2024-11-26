@@ -1,56 +1,27 @@
-import { exec } from "child_process";
-import config from "../../config.cjs"; // PREFIX کا ڈیٹا لیں
+import config from '../../config.cjs';
 
-const restartBot = async (message, client) => {
-  const PREFIX = config.PREFIX; // Prefix
-  const userMessage = message.body.toLowerCase();
+const restartBot = async (m) => {
+  try {
+    const prefix = config.PREFIX;
+    const cmd = m.body.startsWith(prefix)
+      ? m.body.slice(prefix.length).split(' ')[0].toLowerCase()
+      : '';
+    
+    // If command is 'restart'
+    if (cmd === 'restart') {
+      m.reply('⏳ Processing your request...');
 
-  // Get the bot's number (creator number)
-  const botNumber = await client.getHostNumber(); // بوٹ کا نمبر حاصل کریں
-
-  // Restart command trigger
-  if (userMessage === `${PREFIX}restart`) {
-    if (message.sender !== botNumber) {
-      // If user is not the bot's creator
-      await client.sendMessage(
-        message.from,
-        { text: "Only the bot creator can use this command!" },
-        { quoted: message }
-      );
-      return;
+      // Simulate a short delay before restarting for better user feedback
+      setTimeout(() => {
+        process.exit(0); // Use exit code 0 for a clean restart
+      }, 2000);
     }
+  } catch (error) {
+    console.error(error);
 
-    try {
-      // Inform creator about restart
-      await client.sendMessage(
-        message.from,
-        { text: "Restarting bot..." },
-        { quoted: message }
-      );
-
-      // Execute restart command
-      exec("pm2 restart all", (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Error restarting bot: ${error.message}`);
-          client.sendMessage(
-            message.from,
-            { text: "Failed to restart bot." },
-            { quoted: message }
-          );
-          return;
-        }
-
-        console.log(`Bot restarted successfully: ${stdout}`);
-        // Optionally, send a confirmation message after restart
-      });
-    } catch (error) {
-      console.error("Restart Command Error: ", error);
-      await client.sendMessage(
-        message.from,
-        { text: "Something went wrong during restart." },
-        { quoted: message }
-      );
-    }
+    // React with ❌ if there's an error
+    await m.react("❌");
+    return m.reply(`⚠️ An error occurred while restarting the bot: ${error.message}`);
   }
 };
 
