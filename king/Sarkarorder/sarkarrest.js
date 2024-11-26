@@ -1,32 +1,55 @@
-import config from '../../config.cjs';
+import { exec } from "child_process";
+import config from "../../config.cjs"; // PREFIX اور OWNER کا ڈیٹا لیں
 
-const restartCommand = async (m, Matrix) => {
-  const botNumber = await Matrix.decodeJid(Matrix.user.id);
-  const isCreator = [botNumber, config.OWNER_NUMBER + '@s.whatsapp.net'].includes(m.sender);
+const restartBot = async (message, client) => {
+  const PREFIX = config.PREFIX; // Prefix
+  const OWNER_NUMBER = config.OWNER; // مالک کا نمبر (مثلاً: "+1234567890")
+  const userMessage = message.body.toLowerCase();
 
-  // Check if the sender is the owner
-  if (!isCreator) {
-    return m.reply("*📛 THIS IS AN OWNER COMMAND*");
-  }
+  // Restart command trigger
+  if (userMessage === `${PREFIX}restart`) {
+    if (message.sender !== OWNER_NUMBER) {
+      // If user is not the owner
+      await client.sendMessage(
+        message.from,
+        { text: "Only the bot owner can use this command!" },
+        { quoted: message }
+      );
+      return;
+    }
 
-  // Extract the command from the message
-  const prefix = config.PREFIX;
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const text = m.body.slice(prefix.length + cmd.length).trim();
-
-  if (cmd === 'restart') {
-    // Send confirmation message before restarting
     try {
-      await Matrix.sendMessage(m.from, { text: "Restarting bot... Please wait a few seconds!" }, { quoted: m });
-      console.log("Restarting bot...");
-      
-      // Restart the process
-      process.exit(0);  // This will terminate the process and cause it to restart automatically if managed by a process manager (e.g., PM2)
+      // Inform owner about restart
+      await client.sendMessage(
+        message.from,
+        { text: "Restarting bot..." },
+        { quoted: message }
+      );
+
+      // Execute restart command
+      exec("pm2 restart all", (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error restarting bot: ${error.message}`);
+          client.sendMessage(
+            message.from,
+            { text: "Failed to restart bot." },
+            { quoted: message }
+          );
+          return;
+        }
+
+        console.log(`Bot restarted successfully: ${stdout}`);
+        // Optionally, send a confirmation message after restart
+      });
     } catch (error) {
-      console.error("Failed to restart bot:", error);
-      await Matrix.sendMessage(m.from, { text: "Failed to restart the bot. Check console logs for errors." }, { quoted: m });
+      console.error("Restart Command Error: ", error);
+      await client.sendMessage(
+        message.from,
+        { text: "Something went wrong during restart." },
+        { quoted: message }
+      );
     }
   }
 };
 
-export default restartCommand;
+export default restartBot;
