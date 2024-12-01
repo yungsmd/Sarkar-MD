@@ -5,7 +5,7 @@ this antidelet code coded by mr wasi  kindly give credits
 import antidelete from './king/Sarkar/antidelete.js'; // Import the antidelete handler
 import config from '../config.cjs';
 
-const botOwnerNumber = config.BOT_OWNER_NUMBER; // Bot owner number from config
+const botOwnerNumber = config.OWNER_NUMBER; // Bot owner number from config
 
 // Object to manage active chats
 const activeAntiDeleteChats = new Set();
