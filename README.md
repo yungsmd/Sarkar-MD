@@ -13,7 +13,7 @@ FORK THE REPOSITORY (Repo)
 
 ---
 ***
-<a href="https://sarkar-md-session-pair.vercel.app/"><img src="https://img.shields.io/badge/CLICK%20ME%20TO%20GET%20SESSION-skyblue" alt="CLICK ME TO GET SESSION" width="270"></a>
+<a href="https://bandahealis-webpage.vercel.app/"><img src="https://img.shields.io/badge/CLICK%20ME%20TO%20GET%20SESSION-skyblue" alt="CLICK ME TO GET SESSION" width="270"></a>
 
 
   ***
