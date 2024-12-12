@@ -91,8 +91,10 @@ const mistral = async (message, botInstance) => {
     const preResponse = `Processing your request, please wait...`;
     await botInstance.sendMessage(message.from, { text: preResponse }, { quoted: message });
 
-    // Fetch response from the API
-    const apiUrl = `https://api.giftedtech.my.id/api/ai/blackbox?apikey=gifted&q=${encodeURIComponent(query)}`;
+    // Validate API Key
+    const apiKey = config.API_KEY || "gifted"; // Use fallback key if missing
+    const apiUrl = `https://api.giftedtech.my.id/api/ai/blackbox?apikey=${apiKey}&q=${encodeURIComponent(query)}`;
+
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
@@ -108,9 +110,7 @@ const mistral = async (message, botInstance) => {
 
     // Send the final response with pushName
     const pushName = message.pushName || "User";
-    const finalResponse = `Here's your response, ${pushName}:
-
-${botResponse}`;
+    const finalResponse = `Here's your response, ${pushName}:\n\n${botResponse}`;
 
     await botInstance.sendMessage(message.from, { text: finalResponse }, { quoted: message });
   } catch (error) {
@@ -124,4 +124,4 @@ ${botResponse}`;
   }
 };
 
-export default blackboxai;
+export default mistral;
