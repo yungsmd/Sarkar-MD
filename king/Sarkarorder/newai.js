@@ -10,7 +10,7 @@ const __filename = new URL(import.meta.url).pathname;
 
 const __dirname = path.dirname(__filename);
 
-const chatHistoryFile = path.resolve(__dirname, "../mistral_history.json");
+const chatHistoryFile = path.resolve(__dirname, "../newai.json");
 
 // Read chat history from file
 
@@ -104,7 +104,7 @@ const mistral = async (message, botInstance) => {
 
   const query = text.slice(prefix.length + command.length).trim();
 
-  const validCommands = ['gpt', 'bot', 'ai'];
+  const validCommands = ['aziz', 'sarkar', 'rashid'];
 
   if (!validCommands.includes(command)) return; // Ignore invalid commands
 
@@ -118,13 +118,13 @@ const mistral = async (message, botInstance) => {
 
   try {
 
-    const preResponse = `AI GPT is processing your request...`; // Initial bot response
+    const preResponse = `Please wait processing your request...`; // Initial bot response
 
     await botInstance.sendMessage(message.from, { text: preResponse }, { quoted: message });
 
     // Fetch response from the API
 
-    const apiUrl = `https://api.giftedtech.my.id/api/ai/?apikey=gifted&q=${encodeURIComponent(query)}`;
+    const apiUrl = `https://www.dark-yasiya-api.site/ai/chatgpt?q=${encodeURIComponent(query)}`;
 
     const response = await fetch(apiUrl);
 
