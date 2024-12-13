@@ -23,7 +23,7 @@ const snackVideoDownloader = async (message, client) => {
     }
 
     try {
-      await client.sendMessage(message.from, { text: "*Fetching the video, please wait...*" });
+      await client.sendMessage(message.from, { text: "*Downlaoding the video, please wait...*" });
 
       const apiEndpoint = `https://api.siputzx.my.id/api/d/snackvideo?url=${encodeURIComponent(args)}`;
       console.log("Fetching URL:", apiEndpoint); // Debug log
@@ -37,7 +37,7 @@ const snackVideoDownloader = async (message, client) => {
         if (videoData?.videoUrl) {
           await client.sendMessage(message.from, {
             video: { url: videoData.videoUrl },
-            caption: `*Title:* ${videoData.title}\n*Duration:* ${videoData.duration}\n*Views:* ${videoData.interaction?.views || 'N/A'}\n*Likes:* ${videoData.interaction?.likes || 'N/A'}\n*Shares:* ${videoData.interaction?.shares || 'N/A'}\n*Creator:* ${videoData.creator?.name || 'Unknown'}\n\nEnjoy your video!`
+            caption: `*DOWNLOADED BY Sarkar-MD*`
           });
         } else {
           throw new Error("Video URL not found in API response.");
