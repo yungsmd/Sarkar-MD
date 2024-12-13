@@ -6,7 +6,7 @@ const snackVideoDownloader = async (message, client) => {
   const command = message.body.startsWith(prefix)
     ? message.body.slice(prefix.length).split(" ")[0].toLowerCase()
     : '';
-  let args = message.body.slice(prefix.length + command.length).trim();
+  const args = message.body.slice(prefix.length + command.length).trim();
 
   const validCommands = ["snack", "snackvideo", "svdl"];
   if (validCommands.includes(command)) {
@@ -25,19 +25,20 @@ const snackVideoDownloader = async (message, client) => {
 
     try {
       // Inform the user that the bot is processing
-      await client.sendMessage(message.from, { text: "*SNACKVIDEO is downloading, please wait...*" });
+      await client.sendMessage(message.from, { text: "*Fetching the video, please wait...*" });
 
-      // Fetch the video from the API
+      // Fetch video details from the API
       const apiEndpoint = `https://api.siputzx.my.id/api/d/snackvideo?url=${encodeURIComponent(args)}`;
       const response = await axios.get(apiEndpoint);
 
       if (response.status === 200 && response.data?.status) {
-        const videoData = response.data.data?.[0]; // Extract the first video object
-        if (videoData?.url) {
-          // Send the video back to the user
+        const videoData = response.data.data; // Extract video data object
+
+        if (videoData?.videoUrl) {
+          // Send the video to the user
           await client.sendMessage(message.from, {
-            video: { url: videoData.url },
-            caption: "*DOWNLOADED BY Sarkar-MD*"
+            video: { url: videoData.videoUrl },
+            caption: `*Title:* ${videoData.title}\n*Duration:* ${videoData.duration}\n*Views:* ${videoData.interaction?.views || 'N/A'}\n*Likes:* ${videoData.interaction?.likes || 'N/A'}\n*Shares:* ${videoData.interaction?.shares || 'N/A'}\n*Creator:* ${videoData.creator?.name || 'Unknown'}\n\nEnjoy your video!`
           });
         } else {
           throw new Error("Video URL not found in API response.");
