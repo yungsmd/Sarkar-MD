@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../config.cjs';
 
 const instagramVideoDownloader = async (message, client) => {
-  const prefix = config.PREFIX; // Prefix from your config
+  const prefix = config.PREFIX; // Bot prefix from configuration
   const command = message.body.startsWith(prefix)
     ? message.body.slice(prefix.length).split(" ")[0].toLowerCase()
     : '';
@@ -31,12 +31,12 @@ const instagramVideoDownloader = async (message, client) => {
       const apiEndpoint = `https://api.siputzx.my.id/api/d/igdl?url=${encodeURIComponent(args)}`;
       const response = await axios.get(apiEndpoint);
 
-      if (response.status === 200 && response.data?.status === 'success') {
-        const videoUrl = response.data.result?.url;
-        if (videoUrl) {
+      if (response.status === 200 && response.data?.status) {
+        const videoData = response.data.data?.[0]; // Extract the first video object
+        if (videoData?.url) {
           // Send the video back to the user
           await client.sendMessage(message.from, {
-            video: { url: videoUrl },
+            video: { url: videoData.url },
             caption: "Here is your Instagram video!"
           });
         } else {
