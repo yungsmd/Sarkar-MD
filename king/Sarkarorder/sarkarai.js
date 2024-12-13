@@ -10,7 +10,7 @@ const __filename = new URL(import.meta.url).pathname;
 
 const __dirname = path.dirname(__filename);
 
-const chatHistoryFile = path.resolve(__dirname, "../mistral_history.json");
+const chatHistoryFile = path.resolve(__dirname, "../gpt_history.json");
 
 // Read chat history from file
 
@@ -110,7 +110,7 @@ const mistral = async (message, botInstance) => {
 
   if (!query) {
 
-    await botInstance.sendMessage(message.from, { text: "Please provide a prompt." }, { quoted: message });
+    await botInstance.sendMessage(message.from, { text: "*EXAMPLE:${prefix}gpt who is bandaheali?*" }, { quoted: message });
 
     return;
 
@@ -124,7 +124,7 @@ const mistral = async (message, botInstance) => {
 
     // Fetch response from the API
 
-    const apiUrl = `https://api.giftedtech.my.id/api/ai/?apikey=gifted&q=${encodeURIComponent(query)}`;
+    const apiUrl = `https://api.siputzx.my.id/api/ai/copilot?text=${encodeURIComponent(query)}`;
 
     const response = await fetch(apiUrl);
 
