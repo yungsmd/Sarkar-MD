@@ -8,7 +8,7 @@ const youtubeSearchCommand = async (message, client) => {
     : '';
   const searchQuery = message.body.slice(prefix.length + command.length).trim();
 
-  const validCommands = ["youtube", "yt"];
+  const validCommands = ["play", "yt"];
   if (validCommands.includes(command)) {
     if (!searchQuery) {
       return client.sendMessage(message.from, {
