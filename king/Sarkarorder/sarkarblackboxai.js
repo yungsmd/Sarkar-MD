@@ -93,7 +93,7 @@ const mistral = async (message, botInstance) => {
     await botInstance.sendMessage(
       message.from,
       {
-        text: `EXAMPLE: ${prefix}${command} can you create a login page in HTML.`,
+        text: `*EXAMPLE: ${prefix}${command} can you create a login page in HTML.*`,
       },
       { quoted: message }
     );
@@ -102,7 +102,7 @@ const mistral = async (message, botInstance) => {
 
   try {
     // Initial bot response
-    const preResponse = `Processing your request, please wait...`;
+    const preResponse = `*Processing your code, please wait...*`;
     await botInstance.sendMessage(
       message.from,
       { text: preResponse },
