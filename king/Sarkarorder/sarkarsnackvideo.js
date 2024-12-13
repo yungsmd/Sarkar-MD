@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../config.cjs';
 
 const snackVideoDownloader = async (message, client) => {
-  const prefix = config.PREFIX; // Bot prefix from configuration
+  const prefix = config.PREFIX;
   const command = message.body.startsWith(prefix)
     ? message.body.slice(prefix.length).split(" ")[0].toLowerCase()
     : '';
@@ -16,7 +16,6 @@ const snackVideoDownloader = async (message, client) => {
       });
     }
 
-    // Validate Snack Video URL
     if (!/^https?:\/\/(www\.)?snackvideo\.com\/.*$/.test(args)) {
       return client.sendMessage(message.from, {
         text: "Invalid Snack Video URL. Please provide a valid Snack Video link."
@@ -24,18 +23,18 @@ const snackVideoDownloader = async (message, client) => {
     }
 
     try {
-      // Inform the user that the bot is processing
       await client.sendMessage(message.from, { text: "*Fetching the video, please wait...*" });
 
-      // Fetch video details from the API
       const apiEndpoint = `https://api.siputzx.my.id/api/d/snackvideo?url=${encodeURIComponent(args)}`;
+      console.log("Fetching URL:", apiEndpoint); // Debug log
+
       const response = await axios.get(apiEndpoint);
+      console.log("API Response:", response.data); // Debug log
 
       if (response.status === 200 && response.data?.status) {
-        const videoData = response.data.data; // Extract video data object
+        const videoData = response.data.data;
 
         if (videoData?.videoUrl) {
-          // Send the video to the user
           await client.sendMessage(message.from, {
             video: { url: videoData.videoUrl },
             caption: `*Title:* ${videoData.title}\n*Duration:* ${videoData.duration}\n*Views:* ${videoData.interaction?.views || 'N/A'}\n*Likes:* ${videoData.interaction?.likes || 'N/A'}\n*Shares:* ${videoData.interaction?.shares || 'N/A'}\n*Creator:* ${videoData.creator?.name || 'Unknown'}\n\nEnjoy your video!`
@@ -47,7 +46,7 @@ const snackVideoDownloader = async (message, client) => {
         throw new Error(response.data?.message || "API returned an error.");
       }
     } catch (error) {
-      console.error("Error downloading Snack Video:", error);
+      console.error("Error downloading Snack Video:", error.message || error);
       await client.sendMessage(message.from, {
         text: "*Oops! Something went wrong while downloading the video. Please try again later.*"
       });
