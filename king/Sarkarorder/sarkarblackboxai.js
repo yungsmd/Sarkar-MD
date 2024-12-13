@@ -92,35 +92,39 @@ const mistral = async (message, botInstance) => {
     await botInstance.sendMessage(message.from, { text: preResponse }, { quoted: message });
 
     
-    const apiUrl = `https://api.siputzx.my.id/api/ai/teachanything?content=${encodeURIComponent(query)}`;
+try {
+  const apiUrl = `https://api.siputzx.my.id/api/ai/teachanything?content=${encodeURIComponent(query)}`;
+  const response = await fetch(apiUrl);
 
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-      throw new Error(`API returned status ${response.status}`);
-    }
-
-    const result = await response.json();
-    const botResponse = result.result;
-
-    // Update chat history
-    await updateChatHistory(chatHistory, message.sender, { role: "user", content: query });
-    await updateChatHistory(chatHistory, message.sender, { role: "programmer", content: botResponse });
-
-    // Send the final response with pushName
-    const pushName = message.pushName || "User";
-    const finalResponse = `Here's is your code, ${pushName}:\n\n${botResponse}`;
-
-    await botInstance.sendMessage(message.from, { text: finalResponse }, { quoted: message });
-  } catch (error) {
-    console.error("Error processing request:", error);
-
-    const errorMessage = error.message.includes("API") 
-      ? "The AI service is currently unavailable. Please try again later."
-      : "An unexpected error occurred. Please try again later.";
-
-    await botInstance.sendMessage(message.from, { text: errorMessage }, { quoted: message });
+  if (!response.ok) {
+    const errorDetails = await response.text();
+    throw new Error(`API returned status ${response.status}: ${errorDetails}`);
   }
-};
+
+  const result = await response.json();
+
+  console.log("API Response:", result); // Debug API response
+  const botResponse = result?.result;
+
+  if (!botResponse) {
+    throw new Error("Invalid API response structure");
+  }
+
+  // Update chat history and send response
+  await updateChatHistory(chatHistory, message.sender, { role: "user", content: query });
+  await updateChatHistory(chatHistory, message.sender, { role: "programmer", content: botResponse });
+
+  const pushName = message.pushName || "User";
+  const finalResponse = `Here's your code, ${pushName}:\n\n${botResponse}`;
+  await botInstance.sendMessage(message.from, { text: finalResponse }, { quoted: message });
+} catch (error) {
+  console.error("Error processing request:", error);
+
+  const errorMessage = error.message.includes("API")
+    ? "The AI service is currently unavailable. Please try again later."
+    : "An unexpected error occurred. Please try again later.";
+
+  await botInstance.sendMessage(message.from, { text: errorMessage }, { quoted: message });
+}
 
 export default mistral;
