@@ -8,7 +8,7 @@ const youtubeSearchCommand = async (message, client) => {
     : '';
   const searchQuery = message.body.slice(prefix.length + command.length).trim();
 
-  const validCommands = ["play", "yt"];
+  const validCommands = ["youtube", "yt"];
   if (validCommands.includes(command)) {
     if (!searchQuery) {
       return client.sendMessage(message.from, {
@@ -47,7 +47,7 @@ const youtubeSearchCommand = async (message, client) => {
         // Send the thumbnail image for the user to click (optional)
         await client.sendMessage(message.from, {
           image: { url: videoData.thumbnailUrl },
-          caption: "Click on the thumbnail to choose a download option (1 or 2)."
+          caption: "You can reply with '1' for video or '2' for audio."
         });
 
         // Wait for the user to respond with '1' or '2'
@@ -55,19 +55,21 @@ const youtubeSearchCommand = async (message, client) => {
           if (response.from !== message.from || !response.body) return;  // Only respond to the original user
 
           if (response.body.trim() === '1') {
-            // User chose to download the video
+            // User chose to download the video, send video file directly
             await client.sendMessage(response.from, {
-              text: `*Downloading Video...*\n[Click to Download Video](${videoData.video})`
+              video: { url: videoData.video },
+              caption: `Here is the video: ${videoData.title}`
             });
           } else if (response.body.trim() === '2') {
-            // User chose to download the audio
+            // User chose to download the audio, send audio file directly
             await client.sendMessage(response.from, {
-              text: `*Downloading Audio...*\n[Click to Download Audio](${videoData.sounds})`
+              audio: { url: videoData.sounds },
+              caption: `Here is the audio: ${videoData.title}`
             });
           } else {
             // Invalid response
             await client.sendMessage(response.from, {
-              text: "Invalid option. Please choose either '1' for video or '2' for audio."
+              text: "Invalid option. Please reply with '1' for video or '2' for audio."
             });
           }
         });
