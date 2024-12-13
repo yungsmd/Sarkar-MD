@@ -1,32 +1,27 @@
 import axios from 'axios';
 import config from '../../config.cjs';
 
-const youtubeCommand = async (message, client) => {
+const youtubeSearchCommand = async (message, client) => {
   const prefix = config.PREFIX;
   const command = message.body.startsWith(prefix)
     ? message.body.slice(prefix.length).split(" ")[0].toLowerCase()
     : '';
-  const args = message.body.slice(prefix.length + command.length).trim();
+  const searchQuery = message.body.slice(prefix.length + command.length).trim();
 
-  const validCommands = ["play", "yt"];
+  const validCommands = ["youtube", "yt"];
   if (validCommands.includes(command)) {
-    if (!args) {
+    if (!searchQuery) {
       return client.sendMessage(message.from, {
-        text: `Please provide a YouTube URL. Example usage: ${prefix}${command} <YouTube URL>`
-      });
-    }
-
-    if (!/^https?:\/\/(www\.)?youtube\.com\/.*$/.test(args)) {
-      return client.sendMessage(message.from, {
-        text: "Invalid YouTube URL. Please provide a valid YouTube link."
+        text: `Please provide a search term. Example usage: ${prefix}${command} <search term>`
       });
     }
 
     try {
-      await client.sendMessage(message.from, { text: "*Fetching video details, please wait...*" });
+      await client.sendMessage(message.from, { text: "*Searching for videos, please wait...*" });
 
-      const apiEndpoint = `https://api.siputzx.my.id/api/d/youtube?q=${encodeURIComponent(args)}`;
-      console.log("Fetching URL:", apiEndpoint); // Debug log
+      // Construct the API search query endpoint
+      const apiEndpoint = `https://api.siputzx.my.id/api/d/youtube?q=${encodeURIComponent(searchQuery)}`;
+      console.log("Searching with URL:", apiEndpoint); // Debug log
 
       const response = await axios.get(apiEndpoint);
       console.log("API Response:", response.data); // Debug log
@@ -34,14 +29,17 @@ const youtubeCommand = async (message, client) => {
       if (response.status === 200 && response.data?.status) {
         const videoData = response.data.data;
 
-        // Prepare the message to send to the user
+        // Check if video and audio are available, use the first one
+        const downloadOption = videoData.video ? "video" : "audio";
+        let downloadLink = downloadOption === "video" ? videoData.video : videoData.sounds;
+
         const messageText = `
-        *Video Title:* ${videoData.title}
+        *Title:* ${videoData.title}
         *Duration:* ${videoData.duration}
-        *Download Options:*
-        1. *Download Video:* [Video Download Link](${videoData.video})
-        2. *Download Audio:* [Audio Download Link](${videoData.sounds})
         
+        *Download ${downloadOption.charAt(0).toUpperCase() + downloadOption.slice(1)}:*
+        [Click to Download](${downloadLink})
+
         *Thumbnail:* ${videoData.thumbnailUrl}
         `;
 
@@ -57,12 +55,12 @@ const youtubeCommand = async (message, client) => {
         throw new Error("API returned an error.");
       }
     } catch (error) {
-      console.error("Error fetching YouTube video:", error.message || error);
+      console.error("Error fetching YouTube search result:", error.message || error);
       await client.sendMessage(message.from, {
-        text: "*Oops! Something went wrong while fetching the video details. Please try again later.*"
+        text: "*Oops! Something went wrong while searching the video. Please try again later.*"
       });
     }
   }
 };
 
-export default youtubeCommand;
+export default youtubeSearchCommand;
