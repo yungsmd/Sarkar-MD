@@ -21,7 +21,7 @@ const imageCommand = async (_0x1613da, _0x34fae5) => {
       });
       const _0x29a800 = [];
       for (let _0x14af34 = 0; _0x14af34 < 5; _0x14af34++) {
-        const _0x5b75f7 = "https://api.guruapi.tech/api/googleimage?text=" + encodeURIComponent(_0x17c3b5);
+        const _0x5b75f7 = "https://api.siputzx.my.id/api/images?query=" + encodeURIComponent(_0x17c3b5);
         const _0x28c1c5 = await _0x51eb9c.get(_0x5b75f7, {
           'responseType': "arraybuffer"
         });
