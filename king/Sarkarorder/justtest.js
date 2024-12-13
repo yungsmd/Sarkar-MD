@@ -29,26 +29,47 @@ const youtubeSearchCommand = async (message, client) => {
       if (response.status === 200 && response.data?.status) {
         const videoData = response.data.data;
 
-        // Check if video and audio are available, use the first one
-        const downloadOption = videoData.video ? "video" : "audio";
-        let downloadLink = downloadOption === "video" ? videoData.video : videoData.sounds;
-
+        // Prepare the message text with options for the user to choose (1 for video, 2 for audio)
         const messageText = `
         *Title:* ${videoData.title}
         *Duration:* ${videoData.duration}
+        *Views:* ${videoData.interaction?.views || "N/A"}
         
-        *Download ${downloadOption.charAt(0).toUpperCase() + downloadOption.slice(1)}:*
-        [Click to Download](${downloadLink})
+        *Choose Download Option:*
+        - *1:* Download Video
+        - *2:* Download Audio
 
         *Thumbnail:* ${videoData.thumbnailUrl}
         `;
 
         await client.sendMessage(message.from, { text: messageText });
 
-        // Optionally, you can send the thumbnail image
+        // Send the thumbnail image for the user to click (optional)
         await client.sendMessage(message.from, {
           image: { url: videoData.thumbnailUrl },
-          caption: "Video Thumbnail",
+          caption: "Click on the thumbnail to choose a download option (1 or 2)."
+        });
+
+        // Wait for the user to respond with '1' or '2'
+        client.on('message', async (response) => {
+          if (response.from !== message.from || !response.body) return;  // Only respond to the original user
+
+          if (response.body.trim() === '1') {
+            // User chose to download the video
+            await client.sendMessage(response.from, {
+              text: `*Downloading Video...*\n[Click to Download Video](${videoData.video})`
+            });
+          } else if (response.body.trim() === '2') {
+            // User chose to download the audio
+            await client.sendMessage(response.from, {
+              text: `*Downloading Audio...*\n[Click to Download Audio](${videoData.sounds})`
+            });
+          } else {
+            // Invalid response
+            await client.sendMessage(response.from, {
+              text: "Invalid option. Please choose either '1' for video or '2' for audio."
+            });
+          }
         });
 
       } else {
