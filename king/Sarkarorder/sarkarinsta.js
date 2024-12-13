@@ -8,7 +8,7 @@ const instagramVideoDownloader = async (message, client) => {
     : '';
   let args = message.body.slice(prefix.length + command.length).trim();
 
-  const validCommands = ["insta", "instagram", "igdl", "video"];
+  const validCommands = ["insta", "instagram", "igdl"];
   if (validCommands.includes(command)) {
     if (!args) {
       return client.sendMessage(message.from, {
