@@ -37,7 +37,7 @@ const instagramVideoDownloader = async (message, client) => {
           // Send the video back to the user
           await client.sendMessage(message.from, {
             video: { url: videoData.url },
-            caption: "Here is your Instagram video!"
+            caption: "*DOWNLOADED BY Sarkar-MD*"
           });
         } else {
           throw new Error("Video URL not found in API response.");
