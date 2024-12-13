@@ -125,3 +125,16 @@ ${botResponse}`;
 };
 
 export default mistral;
+
+
+/*
+'https://aemt.uk.to/bingai?text=',
+    'https://meitang.xyz/bingai?text=',
+    'https://btch.us.kg/bingai?text=',
+    'https://api.tioo.eu.org/bingai?text=',
+    'https://api.tioprm.eu.org/bingai?text='
+
+
+    https://api.siputzx.my.id/api/d/gdrive?url=
+    
+    */
