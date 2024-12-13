@@ -82,13 +82,13 @@ const mistral = async (message, botInstance) => {
   if (!validCommands.includes(command)) return; // Ignore invalid commands
 
   if (!query) {
-    await botInstance.sendMessage(message.from, { text: "✈️ *Example:* ${prefix + validcommands} how can I visit the Taj Mahal 🏰" }, { quoted: message });
+    await botInstance.sendMessage(message.from, { text: "✈️ *Example:* ${prefix}+{validcommands} how can I visit the Taj Mahal 🏰" }, { quoted: message });
     return;
   }
 
   try {
     // Initial bot response
-    const preResponse = `Processing your request, please wait...`;
+    const preResponse = `please wait... `;
     await botInstance.sendMessage(message.from, { text: preResponse }, { quoted: message });
 
     // Fetch response from the API
