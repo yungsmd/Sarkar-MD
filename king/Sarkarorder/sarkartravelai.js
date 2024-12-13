@@ -5,7 +5,7 @@ import config from '../../config.cjs';
 
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
-const chatHistoryFile = path.resolve(__dirname, "../newai.json");
+const chatHistoryFile = path.resolve(__dirname, "../travelai.json");
 
 // Read chat history from file
 async function readChatHistoryFromFile() {
@@ -78,11 +78,11 @@ const mistral = async (message, botInstance) => {
   const command = text.slice(prefix.length).split(" ")[0].toLowerCase();
   const query = text.slice(prefix.length + command.length).trim();
 
-  const validCommands = ['aziz', 'sarkar', 'rashid'];
+  const validCommands = ['travel', 'visit', 'travel-assistant'];
   if (!validCommands.includes(command)) return; // Ignore invalid commands
 
   if (!query) {
-    await botInstance.sendMessage(message.from, { text: "Please provide a prompt." }, { quoted: message });
+    await botInstance.sendMessage(message.from, { text: "✈️ *Example:* ${prefix + validcommands} how can I visit the Taj Mahal 🏰" }, { quoted: message });
     return;
   }
 
@@ -92,7 +92,7 @@ const mistral = async (message, botInstance) => {
     await botInstance.sendMessage(message.from, { text: preResponse }, { quoted: message });
 
     // Fetch response from the API
-    const apiUrl = `https://www.dark-yasiya-api.site/ai/chatgpt?q=${encodeURIComponent(query)}`;
+    const apiUrl = `https://itzpire.com/ai/copilot2trip?q=${encodeURIComponent(query)}`;
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
