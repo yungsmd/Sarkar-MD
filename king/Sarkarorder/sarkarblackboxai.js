@@ -82,7 +82,7 @@ const mistral = async (message, botInstance) => {
   if (!validCommands.includes(command)) return; // Ignore invalid commands
 
   if (!query) {
-    await botInstance.sendMessage(message.from, { text: "Please provide a prompt." }, { quoted: message });
+    await botInstance.sendMessage(message.from, { text: "EXAMPLE:${prefix}$command}can you create a login page in html." }, { quoted: message });
     return;
   }
 
@@ -91,9 +91,8 @@ const mistral = async (message, botInstance) => {
     const preResponse = `Processing your request, please wait...`;
     await botInstance.sendMessage(message.from, { text: preResponse }, { quoted: message });
 
-    // Validate API Key
-    const apiKey = config.API_KEY || "gifted"; // Use fallback key if missing
-    const apiUrl = `https://api.giftedtech.my.id/api/ai/blackbox?apikey=${apiKey}&q=${encodeURIComponent(query)}`;
+    
+    const apiUrl = `https://api.siputzx.my.id/api/ai/teachanything?content=${encodeURIComponent(query)}`;
 
     const response = await fetch(apiUrl);
 
@@ -106,11 +105,11 @@ const mistral = async (message, botInstance) => {
 
     // Update chat history
     await updateChatHistory(chatHistory, message.sender, { role: "user", content: query });
-    await updateChatHistory(chatHistory, message.sender, { role: "assistant", content: botResponse });
+    await updateChatHistory(chatHistory, message.sender, { role: "programmer", content: botResponse });
 
     // Send the final response with pushName
     const pushName = message.pushName || "User";
-    const finalResponse = `Here's your response, ${pushName}:\n\n${botResponse}`;
+    const finalResponse = `Here's is your code, ${pushName}:\n\n${botResponse}`;
 
     await botInstance.sendMessage(message.from, { text: finalResponse }, { quoted: message });
   } catch (error) {
