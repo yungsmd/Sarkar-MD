@@ -1,4 +1,3 @@
-import generateProfilePicture from '../generateProfilePicture.js'; 
 import { writeFile, unlink } from 'fs/promises';
 import config from '../../config.cjs';
 
@@ -36,10 +35,7 @@ const setProfilePictureGroup = async (m, gss) => {
       // Save the image temporarily
       await writeFile(filePath, media);
 
-      // Generate profile picture
-      const { img } = await generateProfilePicture(media);
-      
-      // Update group profile picture
+      // Update group profile picture using the original image
       await gss.query({
         tag: 'iq',
         attrs: {
@@ -50,7 +46,7 @@ const setProfilePictureGroup = async (m, gss) => {
         content: [{
           tag: 'picture',
           attrs: { type: 'image' },
-          content: img
+          content: media
         }]
       });
 
