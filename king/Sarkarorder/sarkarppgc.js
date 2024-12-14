@@ -1,54 +1,72 @@
+import generateProfilePicture from '../generateProfilePicture.js'; 
+import { writeFile, unlink } from 'fs/promises';
 import config from '../../config.cjs';
 
-const setGroupProfilePicture = async (m, gss) => {
-  try {
+const setProfilePictureGroup = async (m, gss) => {
+  const prefix = config.PREFIX;
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  
+  const validCommands = ['setppfullgroup', 'setfullprofilepicgc', 'fullppgc'];
+
+  if (validCommands.includes(cmd)) {
+    if (!m.isGroup) return m.reply("*📛 THIS COMMAND CAN ONLY BE USED IN GROUPS*");
+
+    const groupMetadata = await gss.groupMetadata(m.from);
+    const participants = groupMetadata.participants;
     const botNumber = await gss.decodeJid(gss.user.id);
-    const isOwner = [botNumber, config.OWNER_NUMBER + '@s.whatsapp.net'].includes(m.sender);
-    const prefix = config.PREFIX;
-    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+    const botAdmin = participants.find(p => p.id === botNumber)?.admin;
+    const senderAdmin = participants.find(p => p.id === m.sender)?.admin;
 
-    // Command check
-    if (!['setppgc', 'fullppgc'].includes(cmd)) return;
+    // Check if both bot and user are admins
+    if (!botAdmin) return m.reply("*📛 BOT MUST BE AN ADMIN TO USE THIS COMMAND*");
+    if (!senderAdmin) return m.reply("*📛 YOU MUST BE AN ADMIN TO USE THIS COMMAND*");
 
-    // Validate group
-    if (!m.isGroup) return m.reply("This command can only be used in groups!");
-
-    // Fetch group metadata
-    const groupMetadata = await gss.groupMetadata(m.chat);
-
-    // Check if sender is admin
-    const senderData = groupMetadata.participants.find((p) => p.id === m.sender);
-    const isAdmin = senderData && (senderData.admin === 'admin' || senderData.admin === 'superadmin');
-
-    // Allow only owner or admins to use this command
-    if (!isOwner && !isAdmin) {
-      return m.reply("You must be an *admin* or the *bot owner* to use this command.");
+    // Check if the message has a quoted image
+    if (!m.quoted || m.quoted.mtype !== 'imageMessage') {
+      return m.reply(`Please reply to an image to set the group profile picture using: ${prefix + cmd}`);
     }
 
-    // Check for quoted image
-    const quotedMessage = m.quoted || null;
+    try {
+      // Download the quoted image
+      const media = await m.quoted.download();
+      if (!media) return m.reply('Failed to download the media. Please try again.');
 
-    if (!quotedMessage || !(quotedMessage.mimetype && quotedMessage.mimetype.startsWith('image/'))) {
-      return m.reply("Please reply to an image to set it as the group's profile picture.");
-    }
+      const filePath = `./${Date.now()}.png`;
+      
+      // Save the image temporarily
+      await writeFile(filePath, media);
 
-    // Download image
-    const image = await quotedMessage.download();
-    if (!image) {
-      return m.reply("Failed to download the image. Make sure you're replying to a valid image.");
-    }
-
-    // Update group profile picture
-    await gss.updateProfilePicture(m.chat, image)
-      .then(() => m.reply("✅ Group profile picture updated successfully!"))
-      .catch((err) => {
-        console.error('Update Error:', err);
-        m.reply(`❌ Failed to update group profile picture. Error: ${err.message}`);
+      // Generate profile picture
+      const { img } = await generateProfilePicture(media);
+      
+      // Update group profile picture
+      await gss.query({
+        tag: 'iq',
+        attrs: {
+          to: m.from,
+          type: 'set',
+          xmlns: 'w:profile:picture'
+        },
+        content: [{
+          tag: 'picture',
+          attrs: { type: 'image' },
+          content: img
+        }]
       });
-  } catch (error) {
-    console.error('Error:', error);
-    m.reply("❌ An error occurred while processing the command. Please try again.");
+
+      m.reply('✅ Group profile picture updated successfully.');
+    } catch (error) {
+      console.error('Error setting profile picture:', error);
+      m.reply('❌ Error setting profile picture. Please try again later.');
+    } finally {
+      // Clean up the temporary image file
+      try {
+        await unlink(filePath);
+      } catch (cleanupError) {
+        console.error('Error cleaning up file:', cleanupError);
+      }
+    }
   }
 };
 
-export default setGroupProfilePicture;
+export default setProfilePictureGroup;
