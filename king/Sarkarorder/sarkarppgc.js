@@ -7,8 +7,10 @@ const setGroupProfilePicture = async (m, gss) => {
     const prefix = config.PREFIX;
     const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
 
+    // Command check
     if (!['setppgc', 'fullppgc'].includes(cmd)) return;
 
+    // Validate group
     if (!m.isGroup) return m.reply("This command can only be used in groups!");
 
     // Fetch group metadata
@@ -23,27 +25,29 @@ const setGroupProfilePicture = async (m, gss) => {
       return m.reply("You must be an *admin* or the *bot owner* to use this command.");
     }
 
-    // Check if the message has a quoted image
+    // Check for quoted image
     const quotedMessage = m.quoted || null;
 
     if (!quotedMessage || !(quotedMessage.mimetype && quotedMessage.mimetype.startsWith('image/'))) {
-      return m.reply("Please reply to an image to set as the group's profile picture.");
+      return m.reply("Please reply to an image to set it as the group's profile picture.");
     }
 
-    // Download the image from the quoted message
+    // Download image
     const image = await quotedMessage.download();
     if (!image) {
-      return m.reply("No image found. Please make sure you are replying to an image.");
+      return m.reply("Failed to download the image. Make sure you're replying to a valid image.");
     }
 
-    // Set the group's profile picture
+    // Update group profile picture
     await gss.updateProfilePicture(m.chat, image)
-      .then(() => m.reply("Group profile picture updated successfully!"))
-      .catch((err) => m.reply(`Failed to update group profile picture: ${err.message}`));
-
+      .then(() => m.reply("✅ Group profile picture updated successfully!"))
+      .catch((err) => {
+        console.error('Update Error:', err);
+        m.reply(`❌ Failed to update group profile picture. Error: ${err.message}`);
+      });
   } catch (error) {
     console.error('Error:', error);
-    m.reply("An error occurred while processing the command.");
+    m.reply("❌ An error occurred while processing the command. Please try again.");
   }
 };
 
