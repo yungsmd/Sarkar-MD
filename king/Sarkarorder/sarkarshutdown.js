@@ -18,8 +18,8 @@ const shutdownBot = async (m, Matrix) => {
     // Send shutdown confirmation to the user
     await m.reply("Bot is shutting down...");
 
-    // Exit the process, effectively shutting down the bot
-    process.exit(0);
+    // If running in a Node.js environment, exit the process
+    process.exit(1);  // Exit with non-zero status to indicate an abnormal termination
   }
 };
 
