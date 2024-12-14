@@ -14,15 +14,17 @@ const blockUnblock = async (m, gss) => {
 
     if (!isCreator) return m.reply("*📛 THIS IS AN OWNER COMMAND*");
 
-    // If a number is provided with the command
     let userToBlockUnblock;
+
+    // Check if a number or mention is provided after the command
     if (text) {
       userToBlockUnblock = text.replace(/[^0-9]/g, '') + '@s.whatsapp.net'; // Clean up the number and append domain
     } else {
       // If no number is provided, check for mentioned users or quoted message sender
-      userToBlockUnblock = m.mentionedJid[0] || m.quoted ? m.quoted.sender : null;
+      userToBlockUnblock = m.mentionedJid[0] || (m.quoted ? m.quoted.sender : null);
     }
 
+    // If no user is provided, return a helpful message
     if (!userToBlockUnblock) {
       return m.reply("Please provide a valid number or mention the user to block/unblock.");
     }
@@ -38,8 +40,13 @@ const blockUnblock = async (m, gss) => {
         .catch((err) => m.reply(`Failed to unblock user: ${err}`));
     }
   } catch (error) {
-    console.error('Error:', error);
-    m.reply('An error occurred while processing the command.');
+    console.error('Error:', error); // Log the error for debugging
+    // Prevent generic error message if there are no issues in processing
+    if (m.body.startsWith(config.PREFIX) && m.body.split(' ').length === 1) {
+      return m.reply("You must provide a valid number or mention the user after the command.");
+    } else {
+      m.reply('An error occurred while processing the command.');
+    }
   }
 };
 
