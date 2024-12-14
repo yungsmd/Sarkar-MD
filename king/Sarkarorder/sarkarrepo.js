@@ -4,14 +4,41 @@ import axios from 'axios';
 
 const handleRepoCommand = async (m, Matrix) => {
   try {
-    // WhatsApp Channel and Group Links
-    const channelLink = 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P';
-    const groupLink = 'https://chat.whatsapp.com/C5js5lDia5Y8dcAoXj4mpq';
+    // Fetch Repository Info
+    const repoLink = 'https://github.com/Sarkar-Bandaheali/Sarkar-MD';
+    const repoOwner = 'Bandaheali';
+    const repoName = 'Sarkar-MD';
 
-    // VIP-Styled Message Text
-    const messageText = `╭─❒ 「 *Sarkar-MD* 」 ❒──\n│\n│ *Hello, ${m.pushName}!*\n│\n│ Welcome to *Sarkar-MD,* a premium WhatsApp bot\n│ created by *Bandaheali.* This bot is packed with\n│ amazing features to enhance your experience!\n│\n╰───────────────────❒\n\n◈ *❲❒❳ Features & Info*\n\n*➤ WhatsApp Channel:*\n[Join Now](${channelLink})\n\n*➤ WhatsApp Group:*\n[Join Now](${groupLink})\n\n_Stay connected for updates, features,\nand premium services!_\n\n*© Powered by Sarkar-MD.*`;
+    const repoData = {
+      stars: 690,
+      forks: 6676,
+      watchers: 690,
+      openIssues: 28,
+    };
 
-    // Send the message
+    const fetchedDate = new Date().toLocaleString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    // Styled Repository Message
+    const messageText = `🌍 *${repoName} REPO INFO* 🌟\n\n` +
+      `💡 *Name:* ${repoName}\n` +
+      `⭐ *Stars:* ${repoData.stars}\n` +
+      `🍴 *Forks:* ${repoData.forks}\n` +
+      `👀 *Watchers:* ${repoData.watchers}\n` +
+      `❗ *Open Issues:* ${repoData.openIssues}\n` +
+      `👤 *Owner:* ${repoOwner}\n\n` +
+      `🕒 *Fetched on:* ${fetchedDate}\n\n` +
+      `🔗 *Repo Link:* ${repoLink}\n\n` +
+      `🛠️ Scripted by *${repoOwner}*\n\n` +
+      `Stay connected and follow my updates!`;
+
+    // Send the styled message
     await Matrix.sendMessage(m.from, { text: messageText }, { quoted: m });
     await m.react('✅');
   } catch (error) {
