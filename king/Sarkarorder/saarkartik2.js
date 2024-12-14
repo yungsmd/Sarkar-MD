@@ -21,28 +21,46 @@ const tiktokDownloader = async (m, Matrix) => {
       throw new Error('Invalid API response structure');
     }
 
-    const { title, hdVideo, wmVideo } = response.data.result;
+    const { title, hdVideo, wmVideo, sound } = response.data.result;
 
-    // Ask the user for their preference
-    const choiceMessage = `*Video Found!*\n\n*Title:* ${title}\n\nReply with:\n1️⃣ for HD Video (No Watermark)\n2️⃣ for Watermarked Video`;
+    // Construct buttons for user selection
+    const buttons = [
+      { buttonId: `${prefix}tt2-hd-${query}`, buttonText: { displayText: 'HD Video (No Watermark)' }, type: 1 },
+      { buttonId: `${prefix}tt2-wm-${query}`, buttonText: { displayText: 'Watermarked Video' }, type: 1 },
+      { buttonId: `${prefix}tt2-audio-${query}`, buttonText: { displayText: 'Audio (MP3)' }, type: 1 },
+    ];
 
-    await Matrix.sendMessage(m.from, { text: choiceMessage }, { quoted: m });
+    const buttonMessage = {
+      text: `*Video Found!*\n\n*Title:* ${title}\n\nSelect an option:`,
+      footer: '© Powered by Sarkar-MD',
+      buttons: buttons,
+      headerType: 1,
+    };
 
-    // Wait for user reply
+    await Matrix.sendMessage(m.from, buttonMessage, { quoted: m });
+
+    // Listen for button responses
     Matrix.on('chat-update', async (chat) => {
-      if (!chat.hasNewMessage || !chat.messages.all()[0].key.fromMe) {
-        const reply = chat.messages.all()[0];
-        const choice = reply.message.conversation;
+      if (!chat.hasNewMessage) return;
+      const reply = chat.messages.all()[0];
+      if (!reply.message.buttonsResponseMessage) return;
 
-        if (choice === '1') {
+      const buttonId = reply.message.buttonsResponseMessage.selectedButtonId;
+
+      try {
+        if (buttonId.startsWith(`${prefix}tt2-hd`)) {
           // Send HD Video
           await Matrix.sendMedia(m.from, hdVideo, 'mp4', `*${title}*`, m);
-        } else if (choice === '2') {
+        } else if (buttonId.startsWith(`${prefix}tt2-wm`)) {
           // Send Watermarked Video
           await Matrix.sendMedia(m.from, wmVideo, 'mp4', `*${title}*`, m);
-        } else {
-          await Matrix.sendMessage(m.from, { text: 'Invalid choice. Please reply with 1 or 2.' }, { quoted: m });
+        } else if (buttonId.startsWith(`${prefix}tt2-audio`)) {
+          // Send Audio
+          await Matrix.sendMedia(m.from, sound, 'mp3', `*Audio from: ${title}*`, m);
         }
+      } catch (err) {
+        console.error('Error sending selected media:', err.message);
+        await Matrix.sendMessage(m.from, { text: 'Failed to send the selected file. Please try again.' }, { quoted: m });
       }
     });
   } catch (error) {
