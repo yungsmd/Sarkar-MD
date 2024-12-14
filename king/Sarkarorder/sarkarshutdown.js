@@ -8,7 +8,7 @@ const shutdownBot = async (m, Matrix) => {
   // Check if the command is 'shutdown'
   if (cmd === 'shutdown') {
     // Get the owner's phone number from the config file
-    const ownerNumber = config.OWNER_NUMBER; // Assuming you have OWNER_NUMBER in your config file
+    const ownerNumber = config.OWNER_NUMBER + '@s.whatsapp.net'; // Assuming you have OWNER_NUMBER in your config file
 
     // Check if the sender is the owner
     if (m.sender !== ownerNumber) {
