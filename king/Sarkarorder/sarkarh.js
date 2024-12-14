@@ -7,8 +7,6 @@ const validCommands = ['alive', 'runtime', 'uptime']; // Valid commands list
 const alive = async (m, Matrix) => {
 
   const prefix = config.PREFIX;
-  const mode = config.MODE
-  const pushName = m.pushName || 'User';
 
 const text = m.body || m.message?.conversation || '';
 
@@ -34,8 +32,17 @@ const text = m.body || m.message?.conversation || '';
 
   const seconds = Math.floor(uptimeSeconds % 60);
 
-  const uptimeMessage = `╭┈───────────────•*
-  𝗠𝗢𝗥𝗘 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 𝗖𝗢𝗠𝗜𝗡𝗚 𝗦𝗢𝗢𝗡! 🌐`;
+  const uptimeMessage = `╭──────────◆
+│  *SARKAR-MD STATUS*
+│───────────◆
+│ *Uptime Details:*
+│  *Days:* ${days}
+│  *Hours:* ${hours}
+│  *Minutes:* ${minutes}
+│  *Seconds:* ${seconds}
+│───────────◆
+│   ©Sarkar-MD
+╰──────────◆`;
   
   const msg = generateWAMessageFromContent(
     m.from,
