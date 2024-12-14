@@ -13,14 +13,17 @@ const setProfilePicture = async (m, gss) => {
 
     // Check if the message has a quoted image
     const quotedMessage = m.quoted || null;
+    console.log('Quoted Message:', quotedMessage);
 
-    if (!quotedMessage || !quotedMessage.mimetype || !quotedMessage.mimetype.startsWith('image/')) {
+    if (!quotedMessage || !(quotedMessage.mimetype && quotedMessage.mimetype.startsWith('image/')) && quotedMessage.mtype !== 'imageMessage') {
       return m.reply("Please reply with an image to set as your profile picture.");
     }
 
     // Download the image from the quoted message
+    console.log('Attempting to download image...');
     const image = await quotedMessage.download();
-    
+    console.log('Image downloaded:', image);
+
     if (!image) {
       return m.reply("No image found. Please make sure you are replying to an image.");
     }
