@@ -7,11 +7,9 @@ const fontStyles = async (m, Matrix) => {
   const query = m.body.slice(prefix.length + cmd.length).trim();
 
   const validCommands = ['fonts', 'fancy', 'style'];
-  
-  // Check if the command is valid
+
   if (!validCommands.includes(cmd)) return;
 
-  // If no text is provided
   if (!query) {
     return m.reply(`Usage: *${prefix}${cmd} <text>*\n\nExample: *${prefix}${cmd} Hello*`);
   }
@@ -35,20 +33,26 @@ const fontStyles = async (m, Matrix) => {
       // Send the list to the user
       await m.reply(replyMessage);
 
-      // Listen for user's reply
+      // Add a listener to capture user reply
       Matrix.on('message', async (msg) => {
-        if (msg.key.fromMe || msg.from !== m.from) return;
+        // Ensure the reply is from the same user and chat
+        if (msg.key.fromMe || msg.from !== m.from || !msg.body.trim().match(/^\d+$/)) return;
 
-        const selectedIndex = parseInt(msg.body.trim());
-        if (!isNaN(selectedIndex) && selectedIndex > 0 && selectedIndex <= fonts.length) {
-          const selectedFont = fonts[selectedIndex - 1];
+        const selectedIndex = parseInt(msg.body.trim()) - 1;
+
+        if (selectedIndex >= 0 && selectedIndex < fonts.length) {
+          const selectedFont = fonts[selectedIndex];
           await Matrix.sendMessage(
             m.from,
             { text: `Here is your styled text:\n\n${selectedFont.result}` },
             { quoted: msg }
           );
         } else {
-          await msg.reply('Invalid selection. Please reply with a valid number.');
+          await Matrix.sendMessage(
+            m.from,
+            { text: 'Invalid selection. Please reply with a valid number from the list.' },
+            { quoted: msg }
+          );
         }
       });
     } else {
