@@ -23,44 +23,36 @@ const tiktokDownloader = async (m, Matrix) => {
 
     const { title, hdVideo, wmVideo, sound } = response.data.result;
 
-    // Construct buttons for user selection
-    const buttons = [
-      { buttonId: `${prefix}tt2-hd-${query}`, buttonText: { displayText: 'HD Video (No Watermark)' }, type: 1 },
-      { buttonId: `${prefix}tt2-wm-${query}`, buttonText: { displayText: 'Watermarked Video' }, type: 1 },
-      { buttonId: `${prefix}tt2-audio-${query}`, buttonText: { displayText: 'Audio (MP3)' }, type: 1 },
-    ];
+    // Send options to the user
+    const optionsMessage = `*Video Found!*\n\n*Title:* ${title}\n\nReply with:\n*1* - HD Video (No Watermark)\n*2* - Watermarked Video\n*3* - Audio (MP3)`;
 
-    const buttonMessage = {
-      text: `*Video Found!*\n\n*Title:* ${title}\n\nSelect an option:`,
-      footer: '© Powered by Sarkar-MD',
-      buttons: buttons,
-      headerType: 1,
-    };
+    await Matrix.sendMessage(m.from, { text: optionsMessage }, { quoted: m });
 
-    await Matrix.sendMessage(m.from, buttonMessage, { quoted: m });
-
-    // Listen for button responses
+    // Listen for user reply
     Matrix.on('chat-update', async (chat) => {
       if (!chat.hasNewMessage) return;
       const reply = chat.messages.all()[0];
-      if (!reply.message.buttonsResponseMessage) return;
 
-      const buttonId = reply.message.buttonsResponseMessage.selectedButtonId;
+      if (!reply.key.fromMe && reply.message.extendedTextMessage?.contextInfo?.stanzaId === m.key.id) {
+        const userChoice = reply.message.conversation.trim();
 
-      try {
-        if (buttonId.startsWith(`${prefix}tt2-hd`)) {
-          // Send HD Video
-          await Matrix.sendMedia(m.from, hdVideo, 'mp4', `*${title}*`, m);
-        } else if (buttonId.startsWith(`${prefix}tt2-wm`)) {
-          // Send Watermarked Video
-          await Matrix.sendMedia(m.from, wmVideo, 'mp4', `*${title}*`, m);
-        } else if (buttonId.startsWith(`${prefix}tt2-audio`)) {
-          // Send Audio
-          await Matrix.sendMedia(m.from, sound, 'mp3', `*Audio from: ${title}*`, m);
+        try {
+          if (userChoice === '1') {
+            // Send HD Video
+            await Matrix.sendMedia(m.from, hdVideo, 'mp4', `*${title}*`, reply);
+          } else if (userChoice === '2') {
+            // Send Watermarked Video
+            await Matrix.sendMedia(m.from, wmVideo, 'mp4', `*${title}*`, reply);
+          } else if (userChoice === '3') {
+            // Send Audio
+            await Matrix.sendMedia(m.from, sound, 'mp3', `*Audio from: ${title}*`, reply);
+          } else {
+            await Matrix.sendMessage(m.from, { text: 'Invalid option. Please reply with 1, 2, or 3.' }, { quoted: reply });
+          }
+        } catch (err) {
+          console.error('Error sending selected media:', err.message);
+          await Matrix.sendMessage(m.from, { text: 'Failed to send the selected file. Please try again.' }, { quoted: reply });
         }
-      } catch (err) {
-        console.error('Error sending selected media:', err.message);
-        await Matrix.sendMessage(m.from, { text: 'Failed to send the selected file. Please try again.' }, { quoted: m });
       }
     });
   } catch (error) {
