@@ -28,25 +28,40 @@ const tiktokDownloader = async (m, Matrix) => {
 
     await Matrix.sendMessage(m.from, { text: optionsMessage }, { quoted: m });
 
-    // Listen for user reply with a number (1, 2, or 3)
-    const reply = await Matrix.waitForMessage(m.from); // Wait for user's reply
+    // Define a function to handle the user response
+    const handleUserResponse = async (response) => {
+      const userChoice = response.body.trim();
+      let mediaUrl = '';
+      let mediaType = '';
+      let caption = `*${title}*`;
 
-    if (!reply || !reply.message) return;
+      if (userChoice === '1') {
+        mediaUrl = hdVideo;
+        mediaType = 'mp4';
+        caption += ' (HD Video)';
+      } else if (userChoice === '2') {
+        mediaUrl = wmVideo;
+        mediaType = 'mp4';
+        caption += ' (Watermarked Video)';
+      } else if (userChoice === '3') {
+        mediaUrl = sound;
+        mediaType = 'mp3';
+        caption += ' (Audio)';
+      } else {
+        return Matrix.sendMessage(m.from, { text: 'Invalid option. Please reply with 1, 2, or 3.' }, { quoted: response });
+      }
 
-    const userChoice = reply.message.text.trim();
+      // Send the selected media to the user
+      await Matrix.sendMedia(m.from, mediaUrl, mediaType, caption, response);
+    };
 
-    if (userChoice === '1') {
-      // Send HD Video
-      await Matrix.sendMedia(m.from, hdVideo, 'mp4', `*${title}* (HD Video)`, reply);
-    } else if (userChoice === '2') {
-      // Send Watermarked Video
-      await Matrix.sendMedia(m.from, wmVideo, 'mp4', `*${title}* (Watermarked Video)`, reply);
-    } else if (userChoice === '3') {
-      // Send Audio
-      await Matrix.sendMedia(m.from, sound, 'mp3', `*Audio from: ${title}*`, reply);
-    } else {
-      await Matrix.sendMessage(m.from, { text: 'Invalid option. Please reply with 1, 2, or 3.' }, { quoted: reply });
-    }
+    // Set up a listener for the user response to the message
+    Matrix.on('message', async (newMessage) => {
+      if (newMessage.from === m.from && newMessage.body) {
+        await handleUserResponse(newMessage);
+      }
+    });
+
   } catch (error) {
     console.error('Error fetching TikTok video:', error.message);
     await m.reply('An error occurred while processing your request. Please try again later.');
