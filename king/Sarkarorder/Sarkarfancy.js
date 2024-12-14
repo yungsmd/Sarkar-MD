@@ -13,6 +13,7 @@ const fontStyles = async (m, Matrix) => {
   }
 
   try {
+    // Fetch fonts from the API
     const apiUrl = `https://www.dark-yasiya-api.site/other/font?text=${encodeURIComponent(query)}`;
     const response = await axios.get(apiUrl);
 
@@ -22,35 +23,14 @@ const fontStyles = async (m, Matrix) => {
 
     const fonts = response.data.result;
 
+    // Prepare message with all fonts
     let replyMessage = `*Here are the styles for:* _${query}_\n\n`;
-    fonts.forEach((font, index) => {
-      replyMessage += `${index + 1}. *${font.name}*:\n${font.result}\n\n`;
+    fonts.forEach((font) => {
+      replyMessage += `*${font.name}*:\n${font.result}\n\n`;
     });
-    replyMessage += `\n_Reply with a number to select a style._`;
 
-    await m.reply(replyMessage);
-
-    // Add listener for user reply
-    Matrix.on('message', async (msg) => {
-      if (msg.key.fromMe || msg.from !== m.from || !msg.body.trim().match(/^\d+$/)) return;
-
-      const selectedIndex = parseInt(msg.body.trim()) - 1;
-
-      if (selectedIndex >= 0 && selectedIndex < fonts.length) {
-        const selectedFont = fonts[selectedIndex];
-        await Matrix.sendMessage(
-          m.from,
-          { text: `Here is your styled text:\n\n${selectedFont.result}` },
-          { quoted: msg }
-        );
-      } else {
-        await Matrix.sendMessage(
-          m.from,
-          { text: 'Invalid selection. Please reply with a valid number from the list.' },
-          { quoted: msg }
-        );
-      }
-    });
+    // Send all styles to the user
+    await Matrix.sendMessage(m.from, { text: replyMessage }, { quoted: m });
   } catch (error) {
     console.error('Error:', error.message);
     await m.reply('An error occurred while processing your request. Please try again later.');
