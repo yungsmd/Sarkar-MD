@@ -12,14 +12,14 @@ const setProfilePicture = async (m, gss) => {
     if (!isCreator) return m.reply("*📛 THIS IS AN OWNER COMMAND*");
 
     // Check if the message has a quoted image
-    const quotedMessage = m.quoted ? m.quoted : null;
+    const quotedMessage = m.quoted || null;
 
-    if (!quotedMessage || quotedMessage.mtype !== 'image') {
+    if (!quotedMessage || !quotedMessage.mimetype || !quotedMessage.mimetype.startsWith('image/')) {
       return m.reply("Please reply with an image to set as your profile picture.");
     }
 
     // Download the image from the quoted message
-    const image = await m.quoted.download();
+    const image = await quotedMessage.download();
     
     if (!image) {
       return m.reply("No image found. Please make sure you are replying to an image.");
@@ -28,7 +28,7 @@ const setProfilePicture = async (m, gss) => {
     // Set the profile picture
     await gss.updateProfilePicture(gss.user.id, image)
       .then(() => m.reply("Profile picture updated successfully!"))
-      .catch((err) => m.reply(`Failed to update profile picture: ${err}`));
+      .catch((err) => m.reply(`Failed to update profile picture: ${err.message}`));
 
   } catch (error) {
     console.error('Error:', error);
