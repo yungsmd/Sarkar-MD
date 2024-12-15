@@ -28,26 +28,35 @@ const imageCommand = async (message, client) => {
     query = numberMatch ? query.replace(/(\d+)$/, '').trim() : query;
 
     try {
-      await client.sendMessage(message.from, { text: "*Please wait*" });
+      await client.sendMessage(message.from, { text: "*Please wait while I fetch the images...*" });
 
       const apiUrl = `https://api.siputzx.my.id/api/images?query=${encodeURIComponent(query)}`;
       const response = await axios.get(apiUrl);
 
       if (response.status === 200 && response.data.status) {
-        const images = response.data.data.slice(0, imageCount); // Use the dynamic image count
+        const images = response.data.data.slice(0, imageCount); // Limit images based on count
+
+        if (images.length === 0) {
+          return client.sendMessage(message.from, {
+            text: `No images found for "${query}". Please try a different query.`
+          });
+        }
 
         for (const img of images) {
-          await sleep(500);
+          await sleep(500); // Ensure a small delay to avoid API/bot overload
           await client.sendMessage(message.from, {
             image: { url: img.url },
             caption: `Here is an image for "${query}"`,
           }, { quoted: message });
         }
       } else {
-        throw new Error("API returned an error or no data found.");
+        // API returned error or no images
+        await client.sendMessage(message.from, {
+          text: `*Sorry, I couldn't fetch images for "${query}". Please try again later.*`
+        });
       }
     } catch (error) {
-      console.error("Error fetching images:", error);
+      console.error("Error fetching images:", error.message);
       await client.sendMessage(message.from, {
         text: "*Oops! Something went wrong while generating images. Please try again later.*"
       });
