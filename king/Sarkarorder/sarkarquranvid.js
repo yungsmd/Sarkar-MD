@@ -13,7 +13,7 @@ const quranVideo = async (m, gss) => {
       m.from,
       {
         video: { url: videoUrl },
-        caption: `📖 *Sarkar-MD Quran Video*\n\n🔖 POWERED BY SARKAR-MD\n🎯 CREATED BY BANDAHEALI`,
+        caption: `📖 *𝙳𝙰𝚁𝙾𝙾𝙳 𝚂𝙷𝚁𝙴𝙴𝙵 𝙿𝙰𝙳𝙷𝙴𝙽*\n\n🎯 CREATED BY BANDAHEALI`,
       },
       { quoted: m }
     );
