@@ -4,8 +4,11 @@ import fetch from 'node-fetch';
 const chatbotCommand = async (m, Matrix) => {
 
     const text = m.message?.conversation || m.message?.extendedTextMessage?.text || null; // Extract text
-
     const senderId = m.key.remoteJid;
+    const senderName = m.pushName || 'User'; // Get sender pushname or default to 'User'
+
+    // Get the owner's phone number from config
+    const ownerNumber = config.OWNER_NUMBER + '@s.whatsapp.net';
 
     // Chatbot configuration
     const isChatbotEnabled = config.CHAT_BOT || false; // Enable/disable chatbot
@@ -18,9 +21,9 @@ const chatbotCommand = async (m, Matrix) => {
         return;
     }
 
-    // Ignore group, broadcast, and newsletter messages
-    if (senderId.endsWith('@g.us') || senderId === 'status@broadcast' || senderId.includes('@newsletter')) {
-        console.log('Group, broadcast, or newsletter message ignored.');
+    // Ignore group, broadcast, newsletter messages, and owner's messages
+    if (senderId.endsWith('@g.us') || senderId === 'status@broadcast' || senderId.includes('@newsletter') || senderId === ownerNumber) {
+        console.log('Group, broadcast, newsletter, or owner message ignored.');
         return;
     }
 
@@ -49,7 +52,7 @@ const chatbotCommand = async (m, Matrix) => {
 
         const responseData = await response.json();
         const botReply = responseData.result || 'No response received';
-        const formattedReply = `👾 SARKAR-MD AI ASSISTANT 🤖\n\nHello ${botReply}`;
+        const formattedReply = `👾 SARKAR-MD AI ASSISTANT 🤖\n\nHello ${senderName},\n\n${botReply}`;
 
         // Send the AI response to the user
         await Matrix.sendMessage(senderId, { text: formattedReply }, { quoted: m });
