@@ -79,7 +79,16 @@ FORK THE REPOSITORY (Repo)
     <img alt="whatsapp Group" src="https://img.shields.io/badge/ Whatsapp Support Group -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
   </a>
 </p>
+## DEPLOY SARKAR-MD ON GITHUB WORKFLOW
+<h2>STEP 1 : FORK THE REPO</h2><br>
+<h2>STEP 1 : CREATE A NEW FILE .env AND PASTE YOUR SESSION_ID</h2><br>
+```
+SESSION_ID=YOUR SESSION ID
+MODE=public
+OWNER_NUMBER=923253617422
+OWNER_NAME=BANDAHEALI
 
+```
 <h2>STEP 1 : COPY UNDER WORKFLOW DEPLOYEMNT CODE</h2><br>
 <h2>STEP 2 : GO TO YOUR REPO ACTION TAG </h2><br>
 <h2>STEP 3 : CLICK "SETUP NEW WORKFLOW"</h2><br>
