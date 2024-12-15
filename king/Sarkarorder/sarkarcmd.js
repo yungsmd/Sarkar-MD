@@ -53,8 +53,8 @@ const alive = async (m, Matrix) => {
 *│  ◦* 𝚄𝙿𝚃𝙸𝙼𝙴: *${days}d ${hours}h ${minutes}m ${seconds}s*
 *╰┈───────────────•*
 *♡︎•━━━━━━☻︎━━━━━━•♡︎*
-*[ • 🥰 𝚀𝚄𝚁𝙰𝙽 𝙲𝙼𝙳 🥰 • ]*
-*┋*🥰 *{prefix}QURANVIDEO*
+*[ • 🥰 𝙸𝚂𝙻𝙰𝙼𝙸𝙲 𝙲𝙼𝙳 🥰 • ]*
+*┋*🥰 *${prefix}QURANVIDEO*
 *[ • 🤴 𝙾𝚆𝙽𝙴𝚁 𝙲𝙼𝙳 🤴 ‎• ]*
 *╭┈───────────────•*
 *┋*👑 *${prefix}𝙱𝙻𝙾𝙲𝙺*
