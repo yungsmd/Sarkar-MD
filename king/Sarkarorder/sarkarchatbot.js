@@ -1,21 +1,16 @@
 import config from '../../config.cjs';
 import fetch from 'node-fetch';
 
-// Function to check and ignore owner messages
-const ignoreOwnerMessages = (senderId) => {
-    const ownerNumber = config.OWNER_NUMBER + '@s.whatsapp.net'; // Construct full ID for owner number
-    if (senderId === ownerNumber) {
-        console.log('Owner message ignored.');
-        return true; // Return true if it's the owner's message
-    }
-    return false; // Return false if it's not the owner's message
+// Function to check and ignore owner messages based on phone number
+const ignoreOwnerMessages = (senderNumber) => {
+    const ownerNumber = config.OWNER_NUMBER; // Get the owner's phone number from config
+    return senderNumber === ownerNumber; // Return true if the message is from the owner's number
 };
 
 const chatbotCommand = async (m, Matrix) => {
 
     const text = m.message?.conversation || m.message?.extendedTextMessage?.text || null; // Extract text
-    const senderId = m.key.remoteJid; // This gives the full sender ID (including @s.whatsapp.net)
-    const senderName = m.pushName || `User ${senderId}`; // Default to 'User <senderId>' if pushName is not available
+    const senderNumber = m.key.fromMe ? m.key.remoteJid : m.key.remoteJid.split('@')[0]; // Get sender's number (without @s.whatsapp.net)
 
     // Chatbot configuration
     const isChatbotEnabled = config.CHAT_BOT || false; // Enable/disable chatbot
@@ -28,20 +23,21 @@ const chatbotCommand = async (m, Matrix) => {
         return;
     }
 
-    // Check if the sender is the owner and ignore their messages
-    if (ignoreOwnerMessages(senderId)) {
+    // Ignore owner's messages entirely (whether in a group or private message)
+    if (ignoreOwnerMessages(senderNumber)) {
+        console.log('Owner message ignored.');
         return; // Ignore the owner's message and stop further processing
     }
 
     // Ignore group, broadcast, and newsletter messages
-    if (senderId.endsWith('@g.us') || senderId === 'status@broadcast' || senderId.includes('@newsletter')) {
+    if (senderNumber.endsWith('@g.us') || senderNumber === 'status@broadcast' || senderNumber.includes('@newsletter')) {
         console.log('Group, broadcast, or newsletter message ignored.');
         return;
     }
 
     // Private mode: Process only specific users
-    if (chatbotMode === 'private' && !privateUsers.includes(senderId)) {
-        console.log(`Message from unauthorized user ignored in private mode: ${senderId}`);
+    if (chatbotMode === 'private' && !privateUsers.includes(senderNumber)) {
+        console.log(`Message from unauthorized user ignored in private mode: ${senderNumber}`);
         return;
     }
 
@@ -64,14 +60,14 @@ const chatbotCommand = async (m, Matrix) => {
 
         const responseData = await response.json();
         const botReply = responseData.result || 'No response received';
-        const formattedReply = `👾 SARKAR-MD AI ASSISTANT 🤖\n\nHello ${senderName},\n\n${botReply}`;
+        const formattedReply = `👾 SARKAR-MD AI ASSISTANT 🤖\n\nHello,\n\n${botReply}`;
 
         // Send the AI response to the user
-        await Matrix.sendMessage(senderId, { text: formattedReply }, { quoted: m });
+        await Matrix.sendMessage(senderNumber + '@s.whatsapp.net', { text: formattedReply }, { quoted: m });
 
     } catch (err) {
         console.error('Error fetching AI response:', err.message);
-        await Matrix.sendMessage(senderId, { text: '❌ Failed to fetch response from the server.' }, { quoted: m });
+        await Matrix.sendMessage(senderNumber + '@s.whatsapp.net', { text: '❌ Failed to fetch response from the server.' }, { quoted: m });
     }
 };
 
