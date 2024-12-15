@@ -22,6 +22,11 @@ const imageCommand = async (message, client) => {
       query = message.quoted.text;
     }
 
+    // Extract number from the query, default to 3 if not present
+    const numberMatch = query.match(/(\d+)$/);
+    const imageCount = numberMatch ? Math.min(parseInt(numberMatch[1], 10), 5) : 3; // Max 5 images
+    query = numberMatch ? query.replace(/(\d+)$/, '').trim() : query;
+
     try {
       await client.sendMessage(message.from, { text: "*Please wait*" });
 
@@ -29,7 +34,7 @@ const imageCommand = async (message, client) => {
       const response = await axios.get(apiUrl);
 
       if (response.status === 200 && response.data.status) {
-        const images = response.data.data.slice(0, 5); // Max 5 images
+        const images = response.data.data.slice(0, imageCount); // Use the dynamic image count
 
         for (const img of images) {
           await sleep(500);
