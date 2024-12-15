@@ -43,8 +43,6 @@ const imageCommand = async (message, client) => {
             caption: `Here is an image for "${query}"`,
           }, { quoted: message });
         }
-
-        await message.react('✅');
       } else {
         throw new Error("API returned an error or no data found.");
       }
