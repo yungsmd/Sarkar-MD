@@ -20,7 +20,7 @@ const ipStalk = async (m, gss) => {
     if (data.status) {
       const ipData = data.BK9;
 
-      let responseMessage = `🌍 *𝙸𝙿 𝙰𝙳𝚁𝙴𝚂𝚂 𝙸𝙽𝙵𝙾𝚁𝙼𝙰𝚃𝙸𝙾𝙽 𝙱𝚈 𝚂𝙰𝚁𝙺𝙰𝚁-𝙼𝙳*\n\n`;
+      let responseMessage = `🌍 *Sarkar-MD IP Stalker*\n\n`;
       responseMessage += `  ◦  *IP*: ${ipData.ip}\n`;
       responseMessage += `  ◦  *Continent*: ${ipData.continent}\n`;
       responseMessage += `  ◦  *Country*: ${ipData.country} (${ipData.countryCode})\n`;
@@ -37,9 +37,8 @@ const ipStalk = async (m, gss) => {
       responseMessage += `  ◦  *Reverse DNS*: ${ipData.reverse}\n`;
       responseMessage += `  ◦  *Mobile*: ${ipData.mobile ? 'Yes' : 'No'}\n`;
       responseMessage += `  ◦  *Proxy*: ${ipData.proxy ? 'Yes' : 'No'}\n`;
-      responseMessage += `  ◦  *Hosting*: ${ipData.hosting ? 'Yes' : 'No'}\n
-𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚂𝙰𝚁𝙺𝙰𝚁-𝙼𝙳 𝙲𝚁𝙴𝙰𝚃𝙴𝙳 𝙱𝚈 𝙱𝙰𝙽𝙳𝙰𝙷𝙴𝙰𝙻𝙸
-`;
+      responseMessage += `  ◦  *Hosting*: ${ipData.hosting ? 'Yes' : 'No'}\n\n`;
+      responseMessage += `🔖 *POWERED BY SARKAR-MD*\n🎯 *CREATED BY BANDAHEALI*\n`;
 
       await gss.sendMessage(m.from, { text: responseMessage }, { quoted: m });
     } else {
