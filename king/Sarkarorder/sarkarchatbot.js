@@ -1,1 +1,66 @@
-(function(_0x3404ac,_0x562f88){const _0x3574aa=_0x339d,_0x45f45e=_0x3404ac();while(!![]){try{const _0x291238=-parseInt(_0x3574aa(0x189))/0x1*(parseInt(_0x3574aa(0x171))/0x2)+parseInt(_0x3574aa(0x186))/0x3+parseInt(_0x3574aa(0x170))/0x4*(parseInt(_0x3574aa(0x194))/0x5)+parseInt(_0x3574aa(0x18c))/0x6+parseInt(_0x3574aa(0x178))/0x7+parseInt(_0x3574aa(0x17b))/0x8*(-parseInt(_0x3574aa(0x18e))/0x9)+-parseInt(_0x3574aa(0x190))/0xa*(parseInt(_0x3574aa(0x179))/0xb);if(_0x291238===_0x562f88)break;else _0x45f45e['push'](_0x45f45e['shift']());}catch(_0x2f3e62){_0x45f45e['push'](_0x45f45e['shift']());}}}(_0xe051,0x42242));import _0x2a9206 from'../../config.cjs';import _0x15a294 from'node-fetch';const chatbotCommand=async(_0xaadb2,_0x1af36c)=>{const _0x407805=_0x339d,_0xc87138=_0xaadb2[_0x407805(0x18f)]?.[_0x407805(0x16d)]||_0xaadb2['message']?.[_0x407805(0x173)]?.[_0x407805(0x192)]||null,_0x50efaf=_0xaadb2[_0x407805(0x16c)][_0x407805(0x18d)],_0x396dcd=_0xaadb2[_0x407805(0x18b)]||_0x407805(0x17a),_0x5b8feb=_0x2a9206[_0x407805(0x193)]+_0x407805(0x188),_0x13a12b=_0x2a9206[_0x407805(0x18a)]||![],_0x535de0=_0x2a9206['CHAT_BOT_MODE']||_0x407805(0x184),_0x4a6eff=_0x2a9206['PRIVATE_USERS']||[];if(!_0x13a12b){console['log']('Chatbot\x20is\x20disabled\x20via\x20config.\x20Ignoring\x20message.');return;}if(_0x50efaf[_0x407805(0x17e)]('@g.us')||_0x50efaf===_0x407805(0x175)||_0x50efaf[_0x407805(0x196)]('@newsletter')||_0x50efaf===_0x5b8feb){console[_0x407805(0x176)](_0x407805(0x183));return;}if(_0x535de0===_0x407805(0x181)&&!_0x4a6eff[_0x407805(0x196)](_0x50efaf)){console[_0x407805(0x176)](_0x407805(0x191)+_0x50efaf);return;}if(!_0xc87138){console[_0x407805(0x176)](_0x407805(0x185));return;}try{const _0x428f54=_0xc87138,_0x157b94=await _0x15a294(_0x407805(0x172)+encodeURIComponent(_0x428f54));if(!_0x157b94['ok'])throw new Error(_0x407805(0x17f)+_0x157b94[_0x407805(0x17d)]);const _0x3cb7a0=await _0x157b94[_0x407805(0x177)](),_0x2fa6cb=_0x3cb7a0[_0x407805(0x180)]||_0x407805(0x182),_0x9cee6b=_0x407805(0x174)+_0x396dcd+_0x407805(0x17c)+_0x2fa6cb;await _0x1af36c[_0x407805(0x195)](_0x50efaf,{'text':_0x9cee6b},{'quoted':_0xaadb2});}catch(_0x16106e){console[_0x407805(0x16f)](_0x407805(0x187),_0x16106e[_0x407805(0x18f)]),await _0x1af36c[_0x407805(0x195)](_0x50efaf,{'text':_0x407805(0x16e)},{'quoted':_0xaadb2});}};function _0xe051(){const _0x4de045=['3391668NZHpEO','33yXdqph','User','112ooRAhu',',\x0a\x0a','status','endsWith','HTTP\x20error!\x20status:\x20','result','private','No\x20response\x20received','Group,\x20broadcast,\x20newsletter,\x20or\x20owner\x20message\x20ignored.','public','No\x20valid\x20message\x20found\x20to\x20process.','380688QSRPPv','Error\x20fetching\x20AI\x20response:','@s.whatsapp.net','43511aZTvUQ','CHAT_BOT','pushName','1216728EcZgel','remoteJid','59382fzvQTB','message','429090rvFaDP','Message\x20from\x20unauthorized\x20user\x20ignored\x20in\x20private\x20mode:\x20','text','OWNER_NUMBER','5DszDqC','sendMessage','includes','key','conversation','❌\x20Failed\x20to\x20fetch\x20response\x20from\x20the\x20server.','error','625704vAGVRc','22Mhigvp','https://www.dark-yasiya-api.site/ai/chatgpt?q=','extendedTextMessage','👾\x20SARKAR-MD\x20AI\x20ASSISTANT\x20🤖\x0a\x0aHello\x20','status@broadcast','log','json'];_0xe051=function(){return _0x4de045;};return _0xe051();}function _0x339d(_0x309d1f,_0xe470e6){const _0xe051a1=_0xe051();return _0x339d=function(_0x339d78,_0x2610af){_0x339d78=_0x339d78-0x16c;let _0x128241=_0xe051a1[_0x339d78];return _0x128241;},_0x339d(_0x309d1f,_0xe470e6);}export default chatbotCommand;
+import config from '../../config.cjs';
+import fetch from 'node-fetch';
+
+const chatbotCommand = async (m, Matrix) => {
+
+    const text = m.message?.conversation || m.message?.extendedTextMessage?.text || null; // Extract text
+    const senderId = m.key.remoteJid; // This gives the full sender ID (including @s.whatsapp.net)
+    const senderName = m.pushName || `User ${senderId}`; // Default to 'User <senderId>' if pushName is not available
+
+    // Get the owner's phone number from config
+    const ownerNumber = config.OWNER_NUMBER + '@s.whatsapp.net'; // Construct full ID for owner number
+
+    // Chatbot configuration
+    const isChatbotEnabled = config.CHAT_BOT || false; // Enable/disable chatbot
+    const chatbotMode = config.CHAT_BOT_MODE || 'public'; // 'private' or 'public'
+    const privateUsers = config.PRIVATE_USERS || []; // Allowed users for private mode
+
+    // Ignore all messages if chatbot is disabled
+    if (!isChatbotEnabled) {
+        console.log('Chatbot is disabled via config. Ignoring message.');
+        return;
+    }
+
+    // Ignore group, broadcast, newsletter messages, and owner's messages globally
+    if (senderId.endsWith('@g.us') || senderId === 'status@broadcast' || senderId.includes('@newsletter') || senderId === ownerNumber) {
+        console.log('Group, broadcast, newsletter, or owner message ignored.');
+        return;
+    }
+
+    // Private mode: Process only specific users
+    if (chatbotMode === 'private' && !privateUsers.includes(senderId)) {
+        console.log(`Message from unauthorized user ignored in private mode: ${senderId}`);
+        return;
+    }
+
+    // If there is no message text, return
+    if (!text) {
+        console.log('No valid message found to process.');
+        return;
+    }
+
+    // Process user messages and fetch response from the API
+    try {
+        const userMessage = text;
+
+        // Make the API call to the chatbot service
+        const response = await fetch(`https://www.dark-yasiya-api.site/ai/chatgpt?q=${encodeURIComponent(userMessage)}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        const botReply = responseData.result || 'No response received';
+        const formattedReply = `👾 SARKAR-MD AI ASSISTANT 🤖\n\nHello ${senderName},\n\n${botReply}`;
+
+        // Send the AI response to the user
+        await Matrix.sendMessage(senderId, { text: formattedReply }, { quoted: m });
+
+    } catch (err) {
+        console.error('Error fetching AI response:', err.message);
+        await Matrix.sendMessage(senderId, { text: '❌ Failed to fetch response from the server.' }, { quoted: m });
+    }
+};
+
+export default chatbotCommand;
