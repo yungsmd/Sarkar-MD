@@ -21,9 +21,15 @@ const chatbotCommand = async (m, Matrix) => {
         return;
     }
 
-    // Ignore group, broadcast, newsletter messages, and owner's messages globally
-    if (senderId.endsWith('@g.us') || senderId === 'status@broadcast' || senderId.includes('@newsletter') || senderId === ownerNumber) {
-        console.log('Group, broadcast, newsletter, or owner message ignored.');
+    // Ignore all owner messages globally, regardless of chat type (group, private, etc.)
+    if (senderId === ownerNumber) {
+        console.log('Owner message ignored.');
+        return;
+    }
+
+    // Ignore group, broadcast, and newsletter messages
+    if (senderId.endsWith('@g.us') || senderId === 'status@broadcast' || senderId.includes('@newsletter')) {
+        console.log('Group, broadcast, or newsletter message ignored.');
         return;
     }
 
