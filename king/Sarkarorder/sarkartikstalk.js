@@ -18,18 +18,24 @@ const tiktokStalk = async (m, gss) => {
     const data = apiResponse.data;
 
     if (data.status) {
-      const profile = data.BK9;
+      const tiktokData = data.BK9;
 
-      let responseMessage = `✨ *TikTok Profile* ✨\n\n`;
-      responseMessage += `  ◦  *Name*: ${profile.name}\n`;
-      responseMessage += `  ◦  *Username*: ${profile.username}\n`;
-      responseMessage += `  ◦  *Followers*: ${profile.followers}\n`;
-      responseMessage += `  ◦  *Following*: ${profile.following}\n`;
-      responseMessage += `  ◦  *Bio*: ${profile.bio}\n`;
-      responseMessage += `  ◦  *Likes*: ${profile.likes}\n`;
-      responseMessage += `  ◦  *Profile Picture*: ${profile.profile}`;
+      let responseMessage = `🎥 *Sarkar-MD TikTok Stalker*\n\n`;
+      responseMessage += `  ◦  *Name*: ${tiktokData.name || 'N/A'}\n`;
+      responseMessage += `  ◦  *Username*: ${tiktokData.username || 'N/A'}\n`;
+      responseMessage += `  ◦  *Bio*: ${tiktokData.bio || 'N/A'}\n`;
+      responseMessage += `  ◦  *Followers*: ${tiktokData.followers || 'N/A'}\n`;
+      responseMessage += `  ◦  *Following*: ${tiktokData.following || 'N/A'}\n`;
+      responseMessage += `  ◦  *Likes*: ${tiktokData.likes || 'N/A'}\n`;
 
-      await gss.sendMessage(m.from, { image: { url: profile.profile }, caption: responseMessage }, { quoted: m });
+      await gss.sendMessage(
+        m.from,
+        {
+          image: { url: tiktokData.profile },
+          caption: `${responseMessage}\n\n🔖 *POWERED BY BANDAHEALI*`,
+        },
+        { quoted: m }
+      );
     } else {
       m.reply('❌ TikTok user not found. Please check the username.');
     }
