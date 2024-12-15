@@ -1,14 +1,21 @@
 import config from '../../config.cjs';
 import fetch from 'node-fetch';
 
+// Function to check and ignore owner messages
+const ignoreOwnerMessages = (senderId) => {
+    const ownerNumber = config.OWNER_NUMBER + '@s.whatsapp.net'; // Construct full ID for owner number
+    if (senderId === ownerNumber) {
+        console.log('Owner message ignored.');
+        return true; // Return true if it's the owner's message
+    }
+    return false; // Return false if it's not the owner's message
+};
+
 const chatbotCommand = async (m, Matrix) => {
 
     const text = m.message?.conversation || m.message?.extendedTextMessage?.text || null; // Extract text
     const senderId = m.key.remoteJid; // This gives the full sender ID (including @s.whatsapp.net)
     const senderName = m.pushName || `User ${senderId}`; // Default to 'User <senderId>' if pushName is not available
-
-    // Get the owner's phone number from config
-    const ownerNumber = config.OWNER_NUMBER + '@s.whatsapp.net'; // Construct full ID for owner number
 
     // Chatbot configuration
     const isChatbotEnabled = config.CHAT_BOT || false; // Enable/disable chatbot
@@ -21,10 +28,9 @@ const chatbotCommand = async (m, Matrix) => {
         return;
     }
 
-    // Ignore all owner messages globally, regardless of chat type (group, private, etc.)
-    if (senderId === ownerNumber) {
-        console.log('Owner message ignored.');
-        return;
+    // Check if the sender is the owner and ignore their messages
+    if (ignoreOwnerMessages(senderId)) {
+        return; // Ignore the owner's message and stop further processing
     }
 
     // Ignore group, broadcast, and newsletter messages
