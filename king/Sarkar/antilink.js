@@ -1,12 +1,13 @@
 import { serialize } from '../../lib/Serializer.js';
 
+import { config } from '../../config.cjs';
 const antilinkSettings = {}; // In-memory database to store antilink settings for each chat
 
 export const handleAntilink = async (m, sock, logger, isBotAdmins, isAdmins, isCreator) => {
     const PREFIX = /^[\\/!#.]/;
     const isCOMMAND = (body) => PREFIX.test(body);
     const prefixMatch = isCOMMAND(m.body) ? m.body.match(PREFIX) : null;
-    const prefix = prefixMatch ? prefixMatch[0] : '/';
+    const prefix = config.PREFIX
     const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
 
     if (cmd === 'antilink') {
