@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../../config.js"; // Ensure your config file exports as ES module
+import config from "../../config.js"; // Make sure config is ES module
 
 const ytaAndSongCommand = async (m, gss) => {
   const prefix = config.PREFIX;
@@ -7,7 +7,7 @@ const ytaAndSongCommand = async (m, gss) => {
   const validCommands = ["yta", "song"];
 
   if (validCommands.includes(cmd)) {
-    // Extract the search query from the message (e.g., "!yta <query>")
+    // Extract search query
     const query = m.body.split(" ").slice(1).join(" ");
 
     if (!query) {
@@ -19,13 +19,15 @@ const ytaAndSongCommand = async (m, gss) => {
       return;
     }
 
+    // API URLs
     const searchApiUrl = `https://www.dark-yasiya-api.site/youtube/search?query=${encodeURIComponent(query)}`;
-    try {
-      // Step 1: Fetch search results from the YouTube Search API
-      const searchResponse = await axios.get(searchApiUrl);
-      const searchData = searchResponse.data;
+    const errorMessage = "❌ Failed to process your request. Please try again later.";
 
-      if (!searchData.status || searchData.result.length === 0) {
+    try {
+      // Step 1: Fetch search results
+      const searchResponse = await axios.get(searchApiUrl);
+
+      if (!searchResponse.data || !searchResponse.data.result || searchResponse.data.result.length === 0) {
         await gss.sendMessage(
           m.from,
           { text: "❌ No results found for your query. Please try with a different keyword." },
@@ -34,37 +36,36 @@ const ytaAndSongCommand = async (m, gss) => {
         return;
       }
 
-      // Select the first result
-      const video = searchData.result[0];
+      const video = searchResponse.data.result[0]; // First result
 
-      // Step 2: Fetch audio download link using YouTube Audio Download API
+      // Step 2: Fetch audio download link
       const downloadApiUrl = `https://www.dark-yasiya-api.site/youtube/audio?id=${encodeURIComponent(video.videoId)}`;
       const downloadResponse = await axios.get(downloadApiUrl);
-      const downloadData = downloadResponse.data;
 
-      if (downloadData.status && downloadData.result) {
-        const audio = downloadData.result;
-
-        // Send the song/audio file to the user
+      if (!downloadResponse.data || !downloadResponse.data.result) {
         await gss.sendMessage(
           m.from,
-          {
-            text: `*🎵 Title*: ${video.title}\n*🎤 Channel*: ${video.channel}\n*⏳ Duration*: ${video.duration}\n\n🔗 [Audio Download Link](${audio.audio_url})\n\n🕹️ Enjoy!`,
-          },
+          { text: "❌ Unable to fetch audio download link. Please try again later." },
           { quoted: m }
         );
-      } else {
-        await gss.sendMessage(
-          m.from,
-          { text: "❌ Failed to fetch the audio. Please try again later." },
-          { quoted: m }
-        );
+        return;
       }
-    } catch (error) {
-      console.error("YTA & Song Command Error:", error);
+
+      const audio = downloadResponse.data.result;
+
+      // Step 3: Send details to user
       await gss.sendMessage(
         m.from,
-        { text: "❌ An error occurred while processing your request. Please try again later." },
+        {
+          text: `*🎵 Title*: ${video.title}\n*🎤 Channel*: ${video.channel}\n*⏳ Duration*: ${video.duration}\n\n🔗 [Audio Download Link](${audio.audio_url})\n\n🕹️ Enjoy!`,
+        },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("YTA & Song Command Error:", error.message || error);
+      await gss.sendMessage(
+        m.from,
+        { text: errorMessage },
         { quoted: m }
       );
     }
