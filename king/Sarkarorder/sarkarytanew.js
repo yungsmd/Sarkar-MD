@@ -9,9 +9,11 @@ const ytSearchAndAudioDownload = async (m, gss) => {
 
   if (cmd === 'yta' && query) {
     try {
-      // Step 1: Search YouTube using the query
+      // Step 1: Search YouTube using the query (using the 'yta' endpoint)
       const youtubeSearchUrl = `https://api.giftedtech.my.id/api/search/yts?apikey=gifted&query=${encodeURIComponent(query)}`;
       const youtubeSearchResponse = await axios.get(youtubeSearchUrl);
+
+      console.log('YouTube Search Response:', youtubeSearchResponse.data);  // Debugging line
 
       if (youtubeSearchResponse.data.success && youtubeSearchResponse.data.results.length > 0) {
         // Extract video details
@@ -19,9 +21,11 @@ const ytSearchAndAudioDownload = async (m, gss) => {
         const videoUrl = video.url; // YouTube video URL
         const videoTitle = video.title; // Title of the video
 
-        // Step 2: Download the audio of the video
+        // Step 2: Download the audio of the video using the 'yta' download API
         const audioDownloadUrl = `https://api.giftedtech.my.id/api/download/ytaud?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
         const audioDownloadResponse = await axios.get(audioDownloadUrl);
+
+      console.log('Audio Download Response:', audioDownloadResponse.data);  // Debugging line
 
         if (audioDownloadResponse.data.success && audioDownloadResponse.data.result) {
           // Extract audio download link
@@ -50,7 +54,8 @@ const ytSearchAndAudioDownload = async (m, gss) => {
         throw new Error('No results found for your query.');
       }
     } catch (error) {
-      // Handle errors (like no results or failed audio download)
+      // Log the error message and send it back to user
+      console.error('Error:', error);  // Debugging line
       await gss.sendMessage(
         m.from,
         {
