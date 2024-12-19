@@ -1,100 +1,70 @@
-import axios from "axios";
-import config from "../../config.js"; // Ensure config is an ES module
+import axios from 'axios';
+import config from '../../config.cjs';
 
-const ytAudioDownloadCommand = async (m, gss) => {
+const ytSearchAndAudioDownload = async (m, gss) => {
   const prefix = config.PREFIX;
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(" ")[0].toLowerCase() : "";
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const args = m.body.trim().split(' ').slice(1); // Extract search query
+  const query = args.join(' ');
 
-  if (cmd === "yta") {
-    // Extract query from user input
-    const query = m.body.split(" ").slice(1).join(" ");
-
-    if (!query) {
-      await gss.sendMessage(
-        m.from,
-        { text: "❌ Please provide a search term after the command. Example: *!ytaudio Spectre*" },
-        { quoted: m }
-      );
-      return;
-    }
-
-    const searchApiUrl = `https://api.giftedtech.my.id/api/search/yts?apikey=gifted&query=${encodeURIComponent(query)}`;
-    const downloadApiUrl = "https://api.giftedtech.my.id/api/download/ytaudio?apikey=gifted&url=";
-
-    const errorMessage = "❌ Failed to fetch video or audio. Please try again later.";
-
+  if (cmd === 'yta' && query) {
     try {
-      // Fetch search results from the API
-      const searchResponse = await axios.get(searchApiUrl);
+      // Step 1: Search YouTube using the query
+      const youtubeSearchUrl = `https://api.giftedtech.my.id/api/search/yts?apikey=gifted&query=${encodeURIComponent(query)}`;
+      const youtubeSearchResponse = await axios.get(youtubeSearchUrl);
 
-      if (!searchResponse || searchResponse.status !== 200 || !searchResponse.data.success) {
-        await gss.sendMessage(
-          m.from,
-          { text: errorMessage },
-          { quoted: m }
-        );
-        return;
+      if (youtubeSearchResponse.data.success && youtubeSearchResponse.data.results.length > 0) {
+        // Extract video details
+        const video = youtubeSearchResponse.data.results[0];
+        const videoUrl = video.url; // YouTube video URL
+        const videoTitle = video.title; // Title of the video
+
+        // Step 2: Download the audio of the video
+        const audioDownloadUrl = `https://api.giftedtech.my.id/api/download/ytaud?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
+        const audioDownloadResponse = await axios.get(audioDownloadUrl);
+
+        if (audioDownloadResponse.data.success && audioDownloadResponse.data.result) {
+          // Extract audio download link
+          const audioUrl = audioDownloadResponse.data.result.download_url;
+          const audioTitle = audioDownloadResponse.data.result.title;
+
+          // Send the audio to the user
+          await gss.sendMessage(
+            m.from,
+            {
+              audio: { url: audioUrl },
+              caption: `🎶 *Audio of* ${videoTitle} 🎶\n\n*Powered By Bandaheali*`,
+            },
+            { quoted: m }
+          );
+        } else {
+          throw new Error('Audio download failed!');
+        }
+      } else {
+        throw new Error('No results found for your query.');
       }
-
-      const video = searchResponse.data.results[0]; // Assuming the first result is the desired one
-
-      if (!video) {
-        await gss.sendMessage(
-          m.from,
-          { text: `❌ No audio found for "${query}".` },
-          { quoted: m }
-        );
-        return;
-      }
-
-      // Display video details to the user
-      const message = {
-        image: { url: video.image },
-        caption: `🎬 *Audio Found* 🎬\n\n` +
-          `*Title:* ${video.title}\n` +
-          `*Description:* ${video.description}\n` +
-          `*Duration:* ${video.duration.timestamp}\n` +
-          `*Views:* ${video.views}\n` +
-          `*Author:* [${video.author.name}](${video.author.url})\n\n` +
-          `🔗 *Watch Video:* ${video.url}\n\n` +
-          `_Sarkar-MD by Bandaheali_`,
-      };
-
-      await gss.sendMessage(m.from, message, { quoted: m });
-
-      // Fetch the audio download link using the video URL
-      const downloadResponse = await axios.get(`${downloadApiUrl}${encodeURIComponent(video.url)}`);
-
-      if (!downloadResponse || downloadResponse.status !== 200 || !downloadResponse.data.success) {
-        await gss.sendMessage(
-          m.from,
-          { text: errorMessage },
-          { quoted: m }
-        );
-        return;
-      }
-
-      const downloadUrl = downloadResponse.data.result.download_url;
-      const audioTitle = downloadResponse.data.result.title;
-
-      // Send the audio file to the user
-      await gss.sendMessage(
-        m.from,
-        { audio: { url: downloadUrl }, mimetype: "audio/mp4", caption: `🎵 *${audioTitle}*` },
-        { quoted: m }
-      );
     } catch (error) {
-      console.error("YouTube Audio Download Command Error:", error.message || error);
-
+      // Handle errors (like no results or failed audio download)
       await gss.sendMessage(
         m.from,
-        { text: errorMessage },
+        {
+          text: `❌ *Error:* ${error.message}\n\n*Powered By Bandaheali*`,
+        },
         { quoted: m }
       );
     }
+  } else if (cmd === 'ytsearch') {
+    await gss.sendMessage(
+      m.from,
+      {
+        text: `⚠️ *Usage:* ${prefix}ytsearch <query>\n\nExample: ${prefix}ytsearch tu hai kahan\n\n*Powered By Bandaheali*`,
+      },
+      { quoted: m }
+    );
   }
 };
 
-export default ytAudioDownloadCommand;
+export default ytSearchAndAudioDownload;
 
-// Sarkar-MD YouTube Audio Download Command POWERED BY BANDAHEALI
+// Sarkar-MD
+// Powered By Bandaheali
