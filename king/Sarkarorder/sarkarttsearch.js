@@ -15,13 +15,15 @@ const tiktokSearch = async (m, gss) => {
       if (response.data && response.data.status) {
         const results = response.data.data;
         let searchResults = `🎥 *Sarkar-MD TikTok Search Results* 🎥\n\n`;
-        
+
         // Iterate through all results and append to message
         results.forEach((result, index) => {
+          const videoLink = `https://www.tiktok.com/@username/video/${result.video_id}`;
           searchResults += `
 *${index + 1}. Video ID:* ${result.video_id}
 📍 *Region:* ${result.region}
 📝 *Title:* ${result.title}
+🎥 *Video Link:* [Watch Video](${videoLink})
 📸 [Cover Image](${result.cover})
 
 `;
