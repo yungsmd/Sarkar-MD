@@ -27,7 +27,7 @@ const weatherInfo = async (m, gss) => {
         await gss.sendMessage(
           m.from,
           {
-            text: `🌤️ *Weather Information* 🌤️\n\n${weatherInfo}\n\nPOWERED BY BANDAHEALI`,
+            text: `🌤️ *Sarkar-MD Weather Information* 🌤️\n\n${weatherInfo}\n\n*Powered By Bandaheali*`,
           },
           { quoted: m }
         );
@@ -38,7 +38,7 @@ const weatherInfo = async (m, gss) => {
       await gss.sendMessage(
         m.from,
         {
-          text: `❌ *Error fetching weather data!* \n\nMake sure the location is correct.\n\nPOWERED BY BANDAHEALI`,
+          text: `❌ *Error fetching weather data!* \n\nMake sure the location is correct.\n\n*Powered By Bandaheali*`,
         },
         { quoted: m }
       );
@@ -47,7 +47,7 @@ const weatherInfo = async (m, gss) => {
     await gss.sendMessage(
       m.from,
       {
-        text: `⚠️ *Usage:* ${prefix}weather <location>\n\nExample: ${prefix}weather Bandhi\n\nPOWERED BY BANDAHEALI`,
+        text: `⚠️ *Usage:* ${prefix}weather <location>\n\nExample: ${prefix}weather Bandhi\n\n*Powered By Bandaheali*`,
       },
       { quoted: m }
     );
@@ -57,4 +57,4 @@ const weatherInfo = async (m, gss) => {
 export default weatherInfo;
 
 // Sarkar-MD
-// POWERED BY BANDAHEALI
+// Powered By Bandaheali
