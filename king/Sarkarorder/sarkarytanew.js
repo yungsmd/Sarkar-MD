@@ -28,15 +28,21 @@ const ytSearchAndAudioDownload = async (m, gss) => {
           const audioUrl = audioDownloadResponse.data.result.download_url;
           const audioTitle = audioDownloadResponse.data.result.title;
 
-          // Send the audio to the user
-          await gss.sendMessage(
-            m.from,
-            {
-              audio: { url: audioUrl },
-              caption: `🎶 *Audio of* ${videoTitle} 🎶\n\n*Powered By Bandaheali*`,
-            },
-            { quoted: m }
-          );
+          // Ensure the file is in mp3 format before sending
+          if (audioUrl.endsWith('.mp3')) {
+            // Send the audio to the user
+            await gss.sendMessage(
+              m.from,
+              {
+                audio: { url: audioUrl },
+                mimetype: 'audio/mp3',  // Explicitly specify audio format
+                caption: `🎶 *Audio of* ${videoTitle} 🎶\n\n*Powered By Bandaheali*`,
+              },
+              { quoted: m }
+            );
+          } else {
+            throw new Error('The file is not in the correct audio format.');
+          }
         } else {
           throw new Error('Audio download failed!');
         }
@@ -57,7 +63,7 @@ const ytSearchAndAudioDownload = async (m, gss) => {
     await gss.sendMessage(
       m.from,
       {
-        text: `⚠️ *Usage:* ${prefix}yta <query>\n\nExample: ${prefix}ytsearch tu hai kahan\n\n*Powered By Bandaheali*`,
+        text: `⚠️ *Usage:* ${prefix}yta <query>\n\nExample: ${prefix}yta tu hai kahan\n\n*Powered By Bandaheali*`,
       },
       { quoted: m }
     );
