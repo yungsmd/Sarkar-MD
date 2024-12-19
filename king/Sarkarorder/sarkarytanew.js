@@ -10,22 +10,22 @@ const ytSearchAndAudioDownload = async (m, gss) => {
   if (cmd === 'yta' && query) {
     try {
       // Step 1: Search YouTube using the query
-      const youtubeSearchUrl = `https://api.giftedtech.my.id/api/search/yts?apikey=gifted&query=${encodeURIComponent(query)}`;
+      const youtubeSearchUrl = `https://www.dark-yasiya-api.site/search/yt?text=${encodeURIComponent(query)}`;
       const youtubeSearchResponse = await axios.get(youtubeSearchUrl);
 
-      if (youtubeSearchResponse.data.success && youtubeSearchResponse.data.results.length > 0) {
+      if (youtubeSearchResponse.data.status && youtubeSearchResponse.data.result.data.length > 0) {
         // Extract video details
-        const video = youtubeSearchResponse.data.results[0];
+        const video = youtubeSearchResponse.data.result.data[0];
         const videoUrl = video.url; // YouTube video URL
-        const videoTitle = video.title; // Title of the video
+        const videoTitle = video.url.split('=')[1]; // Extract video ID from URL
 
-        // Step 2: Download the audio of the video
-        const audioDownloadUrl = `https://api.giftedtech.my.id/api/download/ytaud?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
+        // Step 2: Use the ytmp3 API to get the audio download link
+        const audioDownloadUrl = `https://www.dark-yasiya-api.site/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
         const audioDownloadResponse = await axios.get(audioDownloadUrl);
 
-        if (audioDownloadResponse.data.success && audioDownloadResponse.data.result) {
+        if (audioDownloadResponse.data.status && audioDownloadResponse.data.result) {
           // Extract audio download link
-          const audioUrl = audioDownloadResponse.data.result.download_url;
+          const audioUrl = audioDownloadResponse.data.result.dl_link;
           const audioTitle = audioDownloadResponse.data.result.title;
 
           // Send the audio to the user as an MP3 file
@@ -34,7 +34,7 @@ const ytSearchAndAudioDownload = async (m, gss) => {
             {
               audio: { url: audioUrl },
               mimetype: 'audio/mp3', // Ensure it's sent as an MP3 file
-              caption: `🎶 *Audio of* ${videoTitle} 🎶\n\n*Powered By Bandaheali*`,
+              caption: `🎶 *Audio of* ${audioTitle} 🎶\n\n*Powered By Bandaheali*`,
             },
             { quoted: m }
           );
