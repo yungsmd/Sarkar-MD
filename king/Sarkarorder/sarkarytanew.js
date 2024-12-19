@@ -7,9 +7,21 @@ const ytSearchAndAudioDownload = async (m, gss) => {
   const args = m.body.trim().split(' ').slice(1); // Extract search query
   const query = args.join(' ');
 
-  if (cmd === 'yta' && query) {
+  // If no query provided
+  if (!query) {
+    await gss.sendMessage(
+      m.from,
+      {
+        text: `⚠️ *Usage:* ${prefix}yta <query>\n\nExample: ${prefix}yta tu hai kahan\n\n*Powered By Bandaheali*`,
+      },
+      { quoted: m }
+    );
+    return;
+  }
+
+  if (cmd === 'yta') {
     try {
-      // Step 1: Search YouTube using the query (using the 'yta' endpoint)
+      // Step 1: Search YouTube using the query
       const youtubeSearchUrl = `https://api.giftedtech.my.id/api/search/yts?apikey=gifted&query=${encodeURIComponent(query)}`;
       const youtubeSearchResponse = await axios.get(youtubeSearchUrl);
 
@@ -25,7 +37,7 @@ const ytSearchAndAudioDownload = async (m, gss) => {
         const audioDownloadUrl = `https://api.giftedtech.my.id/api/download/ytaud?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
         const audioDownloadResponse = await axios.get(audioDownloadUrl);
 
-      console.log('Audio Download Response:', audioDownloadResponse.data);  // Debugging line
+        console.log('Audio Download Response:', audioDownloadResponse.data);  // Debugging line
 
         if (audioDownloadResponse.data.success && audioDownloadResponse.data.result) {
           // Extract audio download link
@@ -48,7 +60,7 @@ const ytSearchAndAudioDownload = async (m, gss) => {
             throw new Error('The file is not in the correct audio format.');
           }
         } else {
-          throw new Error('Audio download failed!');
+          throw new Error('Audio download failed! The file may not be available.');
         }
       } else {
         throw new Error('No results found for your query.');
@@ -64,14 +76,6 @@ const ytSearchAndAudioDownload = async (m, gss) => {
         { quoted: m }
       );
     }
-  } else if (cmd === 'yta') {
-    await gss.sendMessage(
-      m.from,
-      {
-        text: `⚠️ *Usage:* ${prefix}yta <query>\n\nExample: ${prefix}yta tu hai kahan\n\n*Powered By Bandaheali*`,
-      },
-      { quoted: m }
-    );
   }
 };
 
