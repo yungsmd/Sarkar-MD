@@ -7,34 +7,33 @@ const ytSearchAndAudioDownload = async (m, gss) => {
   const args = m.body.trim().split(' ').slice(1); // Extract search query
   const query = args.join(' ');
 
-  if (cmd === 'yta' && query) {
+  if (cmd === 'ytsearch' && query) {
     try {
       // Step 1: Search YouTube using the query
-      const youtubeSearchUrl = `https://www.dark-yasiya-api.site/search/yt?text=${encodeURIComponent(query)}`;
+      const youtubeSearchUrl = `https://api.giftedtech.my.id/api/search/yts?apikey=gifted&query=${encodeURIComponent(query)}`;
       const youtubeSearchResponse = await axios.get(youtubeSearchUrl);
 
-      if (youtubeSearchResponse.data.status && youtubeSearchResponse.data.result.data.length > 0) {
+      if (youtubeSearchResponse.data.success && youtubeSearchResponse.data.results.length > 0) {
         // Extract video details
-        const video = youtubeSearchResponse.data.result.data[0];
+        const video = youtubeSearchResponse.data.results[0];
         const videoUrl = video.url; // YouTube video URL
-        const videoTitle = video.url.split('=')[1]; // Extract video ID from URL
+        const videoTitle = video.title; // Title of the video
 
-        // Step 2: Use the ytmp3 API to get the audio download link
+        // Step 2: Download the audio of the video
         const audioDownloadUrl = `https://www.dark-yasiya-api.site/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
         const audioDownloadResponse = await axios.get(audioDownloadUrl);
 
-        if (audioDownloadResponse.data.status && audioDownloadResponse.data.result) {
+        if (audioDownloadResponse.data.success && audioDownloadResponse.data.result) {
           // Extract audio download link
-          const audioUrl = audioDownloadResponse.data.result.dl_link;
+          const audioUrl = audioDownloadResponse.data.result.download_url;
           const audioTitle = audioDownloadResponse.data.result.title;
 
-          // Send the audio to the user as an MP3 file
+          // Send the audio to the user
           await gss.sendMessage(
             m.from,
             {
               audio: { url: audioUrl },
-              mimetype: 'audio/mp3', // Ensure it's sent as an MP3 file
-              caption: `🎶 *Audio of* ${audioTitle} 🎶\n\n*Powered By Bandaheali*`,
+              caption: `🎶 *Audio of* ${videoTitle} 🎶\n\n*Powered By Bandaheali*`,
             },
             { quoted: m }
           );
@@ -54,11 +53,11 @@ const ytSearchAndAudioDownload = async (m, gss) => {
         { quoted: m }
       );
     }
-  } else if (cmd === 'yta') {
+  } else if (cmd === 'ytsearch') {
     await gss.sendMessage(
       m.from,
       {
-        text: `⚠️ *Usage:* ${prefix}yta <query>\n\nExample: ${prefix}yta tu hai kahan\n\n*Powered By Bandaheali*`,
+        text: `⚠️ *Usage:* ${prefix}ytsearch <query>\n\nExample: ${prefix}ytsearch tu hai kahan\n\n*Powered By Bandaheali*`,
       },
       { quoted: m }
     );
