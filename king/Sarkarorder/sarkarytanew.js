@@ -53,11 +53,11 @@ const ytSearchAndAudioDownload = async (m, gss) => {
         { quoted: m }
       );
     }
-  } else if (cmd === 'ytsearch') {
+  } else if (cmd === 'yta') {
     await gss.sendMessage(
       m.from,
       {
-        text: `⚠️ *Usage:* ${prefix}ytsearch <query>\n\nExample: ${prefix}ytsearch tu hai kahan\n\n*Powered By Bandaheali*`,
+        text: `⚠️ *Usage:* ${prefix}yta <query>\n\nExample: ${prefix}ytsearch tu hai kahan\n\n*Powered By Bandaheali*`,
       },
       { quoted: m }
     );
