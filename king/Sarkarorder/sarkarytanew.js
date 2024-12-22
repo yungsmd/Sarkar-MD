@@ -48,7 +48,7 @@ const ytaCommand = async (m, gss) => {
         }
       }
 
-      // Use new BK9 API for downloading audio
+      // Use the new BK9 API for downloading audio and send the audio directly
       const downloadApiURL = `https://bk9.fun/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
       const downloadResponse = await axios.get(downloadApiURL);
       const downloadData = downloadResponse.data;
@@ -57,20 +57,25 @@ const ytaCommand = async (m, gss) => {
 
       if (downloadData.status) {
         const result = downloadData.BK9; // Get the BK9 data from the response
+        const downloadUrl = result.downloadUrl; // Extract the direct download link
 
-        const message = `🎵 *Downloadable Audio*\n\n📥 *Download MP3:* [Click Here](${result.downloadUrl})`;
+        // Fetch the audio file from the download URL
+        const audioResponse = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
+
+        const audioBuffer = audioResponse.data;
 
         await gss.sendMessage(
           m.from,
           {
-            text: message,
+            audio: { url: `data:audio/mp3;base64,${Buffer.from(audioBuffer).toString('base64')}` },
+            caption: `🎵 *Here's your audio download!*`,
           },
           { quoted: m }
         );
       } else {
         await gss.sendMessage(
           m.from,
-          { text: `❌ *Failed to fetch MP3 download link. Please check the video URL.*` },
+          { text: `❌ *Failed to fetch MP3. Please check the video URL.*` },
           { quoted: m }
         );
       }
