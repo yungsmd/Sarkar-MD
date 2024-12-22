@@ -1,7 +1,5 @@
 // Sarkar-MD
 import axios from 'axios';
-import fs from 'fs';
-import path from 'path';
 import config from '../../config.cjs';
 
 const ytaCommand = async (m, gss) => {
@@ -33,7 +31,7 @@ const ytaCommand = async (m, gss) => {
         const searchData = searchResponse.data;
 
         if (searchData.status && searchData.result.data.length > 0) {
-          const video = searchData.result.data[0];
+          const video = searchData.result.data[0]; // Select the first video result
           videoUrl = video.url;
 
           // Inform user about the selected video
@@ -48,22 +46,19 @@ const ytaCommand = async (m, gss) => {
         }
       }
 
-      // Use YTMP3 API for downloading audio from the video URL
+      // Use YTMP3 API for downloading audio
       const downloadApiURL = `https://www.dark-yasiya-api.site/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
       const downloadResponse = await axios.get(downloadApiURL);
       const downloadData = downloadResponse.data;
 
       if (downloadData.status) {
         const result = downloadData.result;
-        const audioUrl = result.dl_link;
 
-        // Directly send the MP3 file to the user
         await gss.sendMessage(
           m.from,
           {
-            audio: { url: audioUrl },
+            audio: { url: result.dl_link },
             mimetype: 'audio/mp3',
-            ptt: false, // Avoid sending as a voice message (PTT - Push To Talk)
           },
           { quoted: m }
         );
@@ -75,7 +70,7 @@ const ytaCommand = async (m, gss) => {
         );
       }
     } catch (error) {
-      console.error('Detailed Error:', error.response?.data || error.message);
+      console.error('Detailed Error:', error);
       await gss.sendMessage(
         m.from,
         { text: `❌ *An error occurred while processing your request. Please try again later.*` },
