@@ -57,39 +57,16 @@ const ytaCommand = async (m, gss) => {
         const result = downloadData.result;
         const audioUrl = result.dl_link;
 
-        // Download MP3 file
-        const tempFilePath = path.join(__dirname, `temp_${Date.now()}.mp3`);
-        console.log('Saving file to:', tempFilePath);
-
-        const writer = fs.createWriteStream(tempFilePath);
-
-        const audioResponse = await axios({
-          url: audioUrl,
-          method: 'GET',
-          responseType: 'stream',
-        });
-
-        audioResponse.data.pipe(writer);
-
-        // Wait for the download to complete
-        await new Promise((resolve, reject) => {
-          writer.on('finish', resolve);
-          writer.on('error', reject);
-        });
-
-        // Send the downloaded audio file to the user
+        // Directly send the MP3 file to the user
         await gss.sendMessage(
           m.from,
           {
-            audio: { url: tempFilePath },
+            audio: { url: audioUrl },
             mimetype: 'audio/mp3',
-            ptt: false,
+            ptt: false, // Avoid sending as a voice message (PTT - Push To Talk)
           },
           { quoted: m }
         );
-
-        // Delete the temporary file
-        fs.unlinkSync(tempFilePath);
       } else {
         await gss.sendMessage(
           m.from,
