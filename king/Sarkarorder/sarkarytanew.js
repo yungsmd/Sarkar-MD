@@ -1,4 +1,4 @@
-
+// Sarkar-MD
 import axios from 'axios';
 import config from '../../config.cjs';
 
@@ -30,6 +30,8 @@ const ytaCommand = async (m, gss) => {
         const searchResponse = await axios.get(searchApiURL);
         const searchData = searchResponse.data;
 
+        console.log('Search API Response:', searchData); // Add this for debugging
+
         if (searchData.status && searchData.result.data.length > 0) {
           const video = searchData.result.data[0]; // Select the first video result
           videoUrl = video.url;
@@ -51,20 +53,19 @@ const ytaCommand = async (m, gss) => {
       const downloadResponse = await axios.get(downloadApiURL);
       const downloadData = downloadResponse.data;
 
+      console.log('Download API Response:', downloadData); // Add this for debugging
+
       if (downloadData.status) {
         const result = downloadData.result;
 
-        // Direct download and send audio
-        const audioBuffer = await axios.get(result.dl_link, { responseType: 'arraybuffer' });
-        const audioFile = {
-          filename: `${result.title}.mp3`,
-          contentType: 'audio/mpeg',
-          body: audioBuffer.data,
-        };
+        const message = `🎵 *${result.title}*\n\n💾 *Size:* ${result.size}\n🔊 *Quality:* ${result.quality_t}\n\n📥 *Download MP3:* [Click Here](${result.dl_link})`;
 
         await gss.sendMessage(
           m.from,
-          { audio: audioFile },
+          {
+            image: { url: result.thumbnail },
+            caption: message,
+          },
           { quoted: m }
         );
       } else {
@@ -75,7 +76,7 @@ const ytaCommand = async (m, gss) => {
         );
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error); // Log the error for debugging
       await gss.sendMessage(
         m.from,
         { text: `❌ *An error occurred while processing your request. Please try again later.*` },
@@ -86,3 +87,4 @@ const ytaCommand = async (m, gss) => {
 };
 
 export default ytaCommand;
+// POWERED BY BANDAHEALI
