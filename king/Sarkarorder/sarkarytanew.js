@@ -30,7 +30,7 @@ const ytaCommand = async (m, gss) => {
         const searchResponse = await axios.get(searchApiURL);
         const searchData = searchResponse.data;
 
-        console.log('Search API Response:', searchData); // Add this for debugging
+        console.log('Search API Response:', searchData); // For debugging
 
         if (searchData.status && searchData.result.data.length > 0) {
           const video = searchData.result.data[0]; // Select the first video result
@@ -48,27 +48,30 @@ const ytaCommand = async (m, gss) => {
         }
       }
 
-      // Use the new BK9 API for downloading audio and send the audio directly
+      // Use the new BK9 API for downloading audio
       const downloadApiURL = `https://bk9.fun/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
       const downloadResponse = await axios.get(downloadApiURL);
       const downloadData = downloadResponse.data;
 
-      console.log('Download API Response:', downloadData); // Add this for debugging
+      console.log('Download API Response:', downloadData); // For debugging
 
       if (downloadData.status) {
-        const result = downloadData.BK9; // Get the BK9 data from the response
-        const downloadUrl = result.downloadUrl; // Extract the direct download link
+        const result = downloadData.BK9; // Extract the BK9 object
+        const downloadUrl = result.downloadUrl; // Extract the direct download URL for audio
 
-        // Fetch the audio file from the download URL
+        // Now download the actual audio file
         const audioResponse = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
 
-        const audioBuffer = audioResponse.data;
+        // Convert the audio data into a format that can be sent as a message
+        const audioBuffer = Buffer.from(audioResponse.data, 'binary');
 
+        // Send the audio directly to the user
         await gss.sendMessage(
           m.from,
           {
-            audio: { url: `data:audio/mp3;base64,${Buffer.from(audioBuffer).toString('base64')}` },
-            caption: `🎵 *Here's your audio download!*`,
+            audio: audioBuffer,
+            mimetype: 'audio/mp3', // You can specify the type of audio file
+            caption: `🎵 *Here's your requested audio!*`,
           },
           { quoted: m }
         );
