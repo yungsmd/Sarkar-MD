@@ -1,4 +1,4 @@
-// Sarkar-MD
+
 import axios from 'axios';
 import config from '../../config.cjs';
 
@@ -54,14 +54,17 @@ const ytaCommand = async (m, gss) => {
       if (downloadData.status) {
         const result = downloadData.result;
 
-        const message = `🎵 *${result.title}*\n\n💾 *Size:* ${result.size}\n🔊 *Quality:* ${result.quality_t}\n\n📥 *Download MP3:* [Click Here](${result.dl_link})`;
+        // Direct download and send audio
+        const audioBuffer = await axios.get(result.dl_link, { responseType: 'arraybuffer' });
+        const audioFile = {
+          filename: `${result.title}.mp3`,
+          contentType: 'audio/mpeg',
+          body: audioBuffer.data,
+        };
 
         await gss.sendMessage(
           m.from,
-          {
-            image: { url: result.thumbnail },
-            caption: message,
-          },
+          { audio: audioFile },
           { quoted: m }
         );
       } else {
@@ -83,4 +86,3 @@ const ytaCommand = async (m, gss) => {
 };
 
 export default ytaCommand;
-// POWERED BY BANDAHEALI
