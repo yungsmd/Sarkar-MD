@@ -62,7 +62,6 @@ const ytaCommand = async (m, gss) => {
           {
             audio: { url: audioResponse.data },  // Send audio as an attachment
             mimetype: 'audio/mpeg',
-            caption: `🎵 *${result.title}*\n\n💾 *Size:* ${result.size}\n🔊 *Quality:* ${result.quality_t}`,
           },
           { quoted: m }
         );
