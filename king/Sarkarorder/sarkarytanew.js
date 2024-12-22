@@ -30,8 +30,6 @@ const ytaCommand = async (m, gss) => {
         const searchResponse = await axios.get(searchApiURL);
         const searchData = searchResponse.data;
 
-        console.log('Search API Response:', searchData); // For debugging
-
         if (searchData.status && searchData.result.data.length > 0) {
           const video = searchData.result.data[0]; // Select the first video result
           videoUrl = video.url;
@@ -48,29 +46,21 @@ const ytaCommand = async (m, gss) => {
         }
       }
 
-      // Use the new BK9 API for downloading audio
+      // Use the BK9 API to fetch audio download URL
       const downloadApiURL = `https://bk9.fun/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
       const downloadResponse = await axios.get(downloadApiURL);
       const downloadData = downloadResponse.data;
 
-      console.log('Download API Response:', downloadData); // For debugging
-
       if (downloadData.status) {
         const result = downloadData.BK9; // Extract the BK9 object
-        const downloadUrl = result.downloadUrl; // Extract the direct download URL for audio
+        const downloadUrl = result.downloadUrl; // Get the actual download URL
 
-        // Now download the actual audio file
-        const audioResponse = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
-
-        // Convert the audio data into a format that can be sent as a message
-        const audioBuffer = Buffer.from(audioResponse.data, 'binary');
-
-        // Send the audio directly to the user
+        // Send the direct audio file to the user
         await gss.sendMessage(
           m.from,
           {
-            audio: audioBuffer,
-            mimetype: 'audio/mp3', // You can specify the type of audio file
+            audio: { url: downloadUrl },  // Direct audio download URL
+            mimetype: 'audio/mp3',
             caption: `🎵 *Here's your requested audio!*`,
           },
           { quoted: m }
@@ -78,7 +68,7 @@ const ytaCommand = async (m, gss) => {
       } else {
         await gss.sendMessage(
           m.from,
-          { text: `❌ *Failed to fetch MP3. Please check the video URL.*` },
+          { text: `❌ *Failed to fetch MP3 download link. Please check the video URL.*` },
           { quoted: m }
         );
       }
