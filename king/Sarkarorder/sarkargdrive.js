@@ -12,7 +12,7 @@ const downloadFile = async (m, gss) => {
 
   const url = args[0]; // The URL provided by the user
 
-  const caption = args.slice(1).join(' ') || 'Downloaded by SARKAR-MD'; // Default caption if none provided
+  const caption = args.slice(1).join(' ') || '*Downloaded by SARKAR-MD*'; // Default caption if none provided
 
   // Allowed download commands
   const validCommands = ['gdrive', 'gdrivedl'];
@@ -41,13 +41,31 @@ const downloadFile = async (m, gss) => {
       const data = await response.json();
       console.log('API response data:', data);
 
-      // Extract the download link from the response
+      // Extract the download link and file name from the response
       const downloadUrl = data?.result?.download || null;
+      const fileName = data?.result?.name || 'Sarkar_gdrive';
+      const fileMimeType = 'application/octet-stream';  // Default mimetype, adjust if necessary
 
       if (!downloadUrl) throw new Error('Download URL not found in API response.');
 
+      // Fetch the file content from the download URL
+      const fileResponse = await fetch(downloadUrl);
+      
+      // Check if the file fetch is successful
+      if (!fileResponse.ok) {
+        throw new Error(`Failed to fetch the file. Status: ${fileResponse.status}`);
+      }
+
+      const fileBuffer = await fileResponse.buffer(); // Get the file content as a buffer
+
       // Send the file to the user with caption
-      await gss.sendMessage(m.from, { document: { url: downloadUrl }, caption, mimetype: 'application/octet-stream', fileName: data?.result?.name || 'downloaded_file' });
+      await gss.sendMessage(m.from, {
+        document: { url: downloadUrl },
+        caption,
+        mimetype: fileMimeType,
+        fileName,
+        file: fileBuffer
+      });
 
       // Optionally, delete the original command message after sending the file (for Baileys)
       await gss.sendMessage(m.key.remoteJid, { delete: m.key });
