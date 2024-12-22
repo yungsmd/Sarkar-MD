@@ -28,6 +28,7 @@ const screenshotCommand = async (m, gss) => {
       const response = await axios.get(ssApiUrl, { responseType: "arraybuffer" });
 
       if (!response || response.status !== 200) {
+        console.error('API Response Error:', response);
         await gss.sendMessage(
           m.from,
           { text: "❌ Unable to capture screenshot for the given URL. Please check the link and try again." },
@@ -46,7 +47,7 @@ const screenshotCommand = async (m, gss) => {
         { quoted: m }
       );
     } catch (error) {
-      console.error("Screenshot Command Error:", error.message || error);
+      console.error('Screenshot Command Error:', error.message || error);
 
       await gss.sendMessage(
         m.from,
