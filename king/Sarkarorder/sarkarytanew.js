@@ -48,23 +48,22 @@ const ytaCommand = async (m, gss) => {
         }
       }
 
-      // Use YTMP3 API for downloading audio
-      const downloadApiURL = `https://www.dark-yasiya-api.site/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
+      // Use new BK9 API for downloading audio
+      const downloadApiURL = `https://bk9.fun/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
       const downloadResponse = await axios.get(downloadApiURL);
       const downloadData = downloadResponse.data;
 
       console.log('Download API Response:', downloadData); // Add this for debugging
 
       if (downloadData.status) {
-        const result = downloadData.result;
+        const result = downloadData.BK9; // Get the BK9 data from the response
 
-        const message = `🎵 *${result.title}*\n\n💾 *Size:* ${result.size}\n🔊 *Quality:* ${result.quality_t}\n\n📥 *Download MP3:* [Click Here](${result.dl_link})`;
+        const message = `🎵 *Downloadable Audio*\n\n📥 *Download MP3:* [Click Here](${result.downloadUrl})`;
 
         await gss.sendMessage(
           m.from,
           {
-            image: { url: result.thumbnail },
-            caption: message,
+            text: message,
           },
           { quoted: m }
         );
