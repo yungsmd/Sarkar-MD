@@ -26,12 +26,11 @@ const ytaCommand = async (m, gss) => {
       if (data.status && data.result.data.length > 0) {
         const video = data.result.data[0]; // Select the first video result
 
+        const message = `🎥 *${video.title}*\n\n⏱ *Duration:* ${video.duration.timestamp}\n👀 *Views:* ${video.views}\n📝 *Author:* ${video.author.name}\n\n📥 *Download Link:* [Click here](${video.url})`;
+
         await gss.sendMessage(
           m.from,
-          {
-            video: { url: video.url },
-            caption: `🎥 *${video.title}*\n\n⏱ Duration: ${video.duration.timestamp}\n👀 Views: ${video.views}\n📝 Author: ${video.author.name}\n\n📥 *Download it now!*`,
-          },
+          { text: message },
           { quoted: m }
         );
       } else {
