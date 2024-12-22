@@ -1,17 +1,17 @@
 // Sarkar-MD
-import axios from "axios";
-import config from "../../config.js"; // Ensure config is an ES module
+import axios from 'axios';
+import config from '../../config.cjs';
 
 const screenshotCommand = async (m, gss) => {
   const prefix = config.PREFIX;
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(" ")[0].toLowerCase() : "";
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const validCommands = ['ss'];
 
-  // Check if the command is 'ss' for screenshot
-  if (cmd === "ss") {
-    // Extract the URL from user input
+  // Check if the command is valid
+  if (validCommands.includes(cmd)) {
     const url = m.body.split(" ").slice(1).join(" ");
 
-    // Ensure the user provided a URL
+    // Check if URL is provided
     if (!url) {
       await gss.sendMessage(
         m.from,
@@ -22,14 +22,12 @@ const screenshotCommand = async (m, gss) => {
     }
 
     const ssApiUrl = `https://api.siputzx.my.id/api/tools/ssweb?url=${encodeURIComponent(url)}`;
-    const errorMessage = "❌ Failed to capture a screenshot. Please try again later.";
 
     try {
-      // Fetch the screenshot from the API
+      // Fetch the screenshot
       const response = await axios.get(ssApiUrl, { responseType: "arraybuffer" });
 
-      // If the response is not successful, send an error message
-      if (response.status !== 200 || !response.data) {
+      if (!response || response.status !== 200) {
         await gss.sendMessage(
           m.from,
           { text: "❌ Unable to capture screenshot for the given URL. Please check the link and try again." },
@@ -42,21 +40,27 @@ const screenshotCommand = async (m, gss) => {
       await gss.sendMessage(
         m.from,
         {
-          image: Buffer.from(response.data, "binary"), // Convert the screenshot buffer into an image
-          caption: `🖼️ Screenshot of: *${url}*\n\n_Sarkar-MD by Bandaheali_`,
+          image: Buffer.from(response.data, "binary"),
+          caption: `🖼️ Screenshot of ${url}\n\n_Sarkar-MD by Bandaheali_`,
         },
         { quoted: m }
       );
     } catch (error) {
       console.error("Screenshot Command Error:", error.message || error);
 
-      // Handle API call failure
       await gss.sendMessage(
         m.from,
-        { text: errorMessage },
+        { text: "❌ Failed to capture a screenshot. Please try again later." },
         { quoted: m }
       );
     }
+  } else {
+    // Inform user if invalid command
+    await gss.sendMessage(
+      m.from,
+      { text: `❌ Invalid command. Use *!ss <URL>* to capture a screenshot.` },
+      { quoted: m }
+    );
   }
 };
 
