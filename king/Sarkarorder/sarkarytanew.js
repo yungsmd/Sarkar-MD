@@ -33,7 +33,7 @@ const ytaCommand = async (m, gss) => {
         const searchData = searchResponse.data;
 
         if (searchData.status && searchData.result.data.length > 0) {
-          const video = searchData.result.data[0]; // Select the first video result
+          const video = searchData.result.data[0];
           videoUrl = video.url;
 
           // Inform user about the selected video
@@ -59,6 +59,8 @@ const ytaCommand = async (m, gss) => {
 
         // Download MP3 file
         const tempFilePath = path.join(__dirname, `temp_${Date.now()}.mp3`);
+        console.log('Saving file to:', tempFilePath);
+
         const writer = fs.createWriteStream(tempFilePath);
 
         const audioResponse = await axios({
@@ -81,7 +83,7 @@ const ytaCommand = async (m, gss) => {
           {
             audio: { url: tempFilePath },
             mimetype: 'audio/mp3',
-            ptt: false, // Set true if you want to send as a voice note
+            ptt: false,
           },
           { quoted: m }
         );
@@ -96,7 +98,7 @@ const ytaCommand = async (m, gss) => {
         );
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Detailed Error:', error.response?.data || error.message);
       await gss.sendMessage(
         m.from,
         { text: `❌ *An error occurred while processing your request. Please try again later.*` },
