@@ -48,7 +48,7 @@ const ytaCommand = async (m, gss) => {
         }
       }
 
-      // Use YTMP3 API for downloading audio
+      // Use YTMP3 API for downloading audio from the video URL
       const downloadApiURL = `https://www.dark-yasiya-api.site/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
       const downloadResponse = await axios.get(downloadApiURL);
       const downloadData = downloadResponse.data;
@@ -77,7 +77,7 @@ const ytaCommand = async (m, gss) => {
           writer.on('error', reject);
         });
 
-        // Send the downloaded audio file
+        // Send the downloaded audio file to the user
         await gss.sendMessage(
           m.from,
           {
