@@ -46,22 +46,28 @@ const ytaCommand = async (m, gss) => {
         }
       }
 
-      // Use YTMP3 API to fetch the audio directly
+      // Use YTMP3 API for downloading audio
       const downloadApiURL = `https://www.dark-yasiya-api.site/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
-      const downloadResponse = await axios.get(downloadApiURL, { responseType: 'stream' });
+      const downloadResponse = await axios.get(downloadApiURL);
+      const downloadData = downloadResponse.data;
 
-      if (downloadResponse.status === 200) {
-        const { data } = downloadResponse;
+      if (downloadData.status) {
+        const result = downloadData.result;
+
+        const message = `🎵 *${result.title}*\n\n💾 *Size:* ${result.size}\n🔊 *Quality:* ${result.quality_t}\n\n📥 *Download MP3:* [Click Here](${result.dl_link})`;
 
         await gss.sendMessage(
           m.from,
-          { audio: { url: data }, mimetype: 'audio/mpeg' },
+          {
+            image: { url: result.thumbnail },
+            caption: message,
+          },
           { quoted: m }
         );
       } else {
         await gss.sendMessage(
           m.from,
-          { text: `❌ *Failed to fetch audio. Please check the video URL.*` },
+          { text: `❌ *Failed to fetch MP3 download link. Please check the video URL.*` },
           { quoted: m }
         );
       }
