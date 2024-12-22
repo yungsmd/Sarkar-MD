@@ -5,10 +5,9 @@ import config from '../../config.cjs';
 const screenshotCommand = async (m, gss) => {
   const prefix = config.PREFIX;
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const validCommands = ['ss'];
 
-  // Check if the command is valid
-  if (validCommands.includes(cmd)) {
+  // Only respond to the 'ss' command with the correct prefix
+  if (cmd === 'ss') {
     const url = m.body.split(" ").slice(1).join(" ");
 
     // Check if URL is provided
@@ -55,13 +54,6 @@ const screenshotCommand = async (m, gss) => {
         { quoted: m }
       );
     }
-  } else {
-    // Inform user if invalid command
-    await gss.sendMessage(
-      m.from,
-      { text: `❌ Invalid command. Use *!ss <URL>* to capture a screenshot.` },
-      { quoted: m }
-    );
   }
 };
 
