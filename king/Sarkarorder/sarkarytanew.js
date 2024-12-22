@@ -1,5 +1,7 @@
 // Sarkar-MD
 import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
 import config from '../../config.cjs';
 
 const ytaCommand = async (m, gss) => {
@@ -53,17 +55,39 @@ const ytaCommand = async (m, gss) => {
 
       if (downloadData.status) {
         const result = downloadData.result;
+        const audioUrl = result.dl_link;
 
-        const message = `🎵 *${result.title}*\n\n💾 *Size:* ${result.size}\n🔊 *Quality:* ${result.quality_t}\n\n📥 *Download MP3:* [Click Here](${result.dl_link})`;
+        // Download MP3 file
+        const tempFilePath = path.join(__dirname, `temp_${Date.now()}.mp3`);
+        const writer = fs.createWriteStream(tempFilePath);
 
+        const audioResponse = await axios({
+          url: audioUrl,
+          method: 'GET',
+          responseType: 'stream',
+        });
+
+        audioResponse.data.pipe(writer);
+
+        // Wait for the download to complete
+        await new Promise((resolve, reject) => {
+          writer.on('finish', resolve);
+          writer.on('error', reject);
+        });
+
+        // Send the downloaded audio file
         await gss.sendMessage(
           m.from,
           {
-            image: { url: result.thumbnail },
-            caption: message,
+            audio: { url: tempFilePath },
+            mimetype: 'audio/mp3',
+            ptt: false, // Set true if you want to send as a voice note
           },
           { quoted: m }
         );
+
+        // Delete the temporary file
+        fs.unlinkSync(tempFilePath);
       } else {
         await gss.sendMessage(
           m.from,
