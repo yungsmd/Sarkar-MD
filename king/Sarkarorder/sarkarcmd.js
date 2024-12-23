@@ -206,7 +206,7 @@ const alive = async (m, sock) => {
             title: "✨ Sarkar-MD ✨",
             body: "Join wa Channel",
             thumbnailUrl: '', // Add thumbnail URL if required
-            sourceUrl: '', // Add source URL if necessary
+            sourceUrl: 'https://github.com/Sarkar-Bandaheali/Sarkar-MD', // Add source URL if necessary
             mediaType: 1,
             renderLargerThumbnail: false,
           },
