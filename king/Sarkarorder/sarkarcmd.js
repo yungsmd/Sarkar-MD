@@ -2,16 +2,30 @@ import config from '../../config.cjs'; // Ensure this matches your project setup
 
 const alive = async (m, sock) => {
   const prefix = config.PREFIX;
+  const mode = config.MODE
+  const pushName = m.pushName || 'User';
+  
   const cmd = m.body.startsWith(prefix)
     ? m.body.slice(prefix.length).split(' ')[0].toLowerCase()
     : '';
 
   if (cmd === "menu") {
     await m.React('⏳'); // React with a loading icon
+// Calculate uptime
+
+  const uptimeSeconds = process.uptime();
+
+  const days = Math.floor(uptimeSeconds / (24 * 3600));
+
+  const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
+
+  const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+
+  const seconds = Math.floor(uptimeSeconds % 60);
 
     const aliveMessage = `╭┈───────────────•*
 *⇆𝙷𝙴𝙻𝙻𝙾 𝙼𝚁⇆*
- /* ${pushName} */
+          *${pushName}*
 *⇆ ✨ 𝚂𝙰𝚁𝙺𝙰𝚁-𝙼𝙳 𝙲𝙾𝙼𝙼𝙰𝙽𝙳 𝙻𝙸𝚂𝚃 ✨ ⇆*
 *╰┈───────────────•*
 *╭┈───────────────•* 
@@ -190,7 +204,7 @@ const alive = async (m, sock) => {
           forwardingScore: 999, // Score to indicate it has been forwarded
           externalAdReply: {
             title: "✨ Sarkar-MD ✨",
-            body: "Alive Status Check",
+            body: "Join wa Channel",
             thumbnailUrl: '', // Add thumbnail URL if required
             sourceUrl: '', // Add source URL if necessary
             mediaType: 1,
