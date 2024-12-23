@@ -205,7 +205,7 @@ const alive = async (m, sock) => {
           externalAdReply: {
             title: "✨ Sarkar-MD ✨",
             body: "Join wa Channel",
-            thumbnailUrl: '', // Add thumbnail URL if required
+            thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
             sourceUrl: 'https://github.com/Sarkar-Bandaheali/Sarkar-MD', // Add source URL if necessary
             mediaType: 1,
             renderLargerThumbnail: false,
