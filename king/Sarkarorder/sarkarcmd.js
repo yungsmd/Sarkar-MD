@@ -3,14 +3,14 @@ import config from '../../config.cjs';
 const { generateWAMessageFromContent } = pkg;
 
 const validCommands = ['command', 'menu', 'cmd']; // Valid commands list
-await m.React('⏳'); // React with a loading icon
+
 const alive = async (m, Matrix) => {
 
   const prefix = config.PREFIX;
   const mode = config.MODE
   const pushName = m.pushName || 'User';
 
-
+await m.React('⏳'); // React with a loading icon
   // Check if the command is valid
 
   const text = m.body || m.message?.conversation || '';
