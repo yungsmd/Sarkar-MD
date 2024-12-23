@@ -3,7 +3,7 @@ import config from '../../config.cjs';
 const { generateWAMessageFromContent } = pkg;
 
 const validCommands = ['command', 'menu', 'cmd']; // Valid commands list
-
+await m.React('⏳'); // React with a loading icon
 const alive = async (m, Matrix) => {
 
   const prefix = config.PREFIX;
