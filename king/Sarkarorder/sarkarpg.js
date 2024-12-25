@@ -23,9 +23,9 @@ const ping = async (m, sock) => {
       {
         text: responseText,
         contextInfo: {
-          isForwarded: true,
+          isForwarded: false,
           forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363199257221654@newsletter',
+            newsletterJid: '@newsletter',
             newsletterName: "Sarkar-MD",
             serverMessageId: -1,
           },
@@ -34,7 +34,7 @@ const ping = async (m, sock) => {
             title: "✨ Sarkar-MD ✨",
             body: "Ping Speed Calculation",
             thumbnailUrl: '', // Add thumbnail URL if required
-            sourceUrl: '', // Add source URL if necessary
+            sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
             mediaType: 1,
             renderLargerThumbnail: false,
           },
