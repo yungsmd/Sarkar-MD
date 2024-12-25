@@ -33,7 +33,8 @@ const allVarCommand = async (m, Matrix) => {
         if (m.sender !== config.OWNER_NUMBER + '@s.whatsapp.net') {
 
             await Matrix.sendMessage(m.from, { text: '📛 THIS IS AN OWNER COMMAND' }, { quoted: m });
-
+            
+    await m.React('⏳');
             return;
 
         }
@@ -87,8 +88,9 @@ const allVarCommand = async (m, Matrix) => {
             // Send the variables to the owner
 
             const message = `🔐 **Environment Variables**\n\n${envVariables}`;
-
+            
             await Matrix.sendMessage(m.from, { text: message }, { quoted: m });
+            await m.React('✅'); 
 
         } catch (err) {
 
@@ -99,7 +101,7 @@ const allVarCommand = async (m, Matrix) => {
                 m.from,
 
                 { text: '❌ Failed to read environment variables. Check server logs for more details.' },
-
+    await m.React('❌');
                 { quoted: m }
 
             );
