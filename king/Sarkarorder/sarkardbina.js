@@ -10,9 +10,10 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
 
    if (validCommands.includes(cmd)) {
          if (!text) return m.reply('Please provide a text.');
+         await m.React('⏳');
          let db = await dBinary(text)
          m.reply(db)
    }
 };
-
+await m.React('✅'); 
 export default dbinary;
