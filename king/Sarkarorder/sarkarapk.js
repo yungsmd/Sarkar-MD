@@ -24,7 +24,7 @@ const apkDownloadCommand = async (m, gss) => {
     }
 
     const apiUrl = `https://www.dark-yasiya-api.site/download/apk?id=${encodeURIComponent(packageId)}`;
-
+    await m.React('⏳');
     try {
       // Fetch data from API
       const response = await axios.get(apiUrl);
@@ -42,6 +42,7 @@ const apkDownloadCommand = async (m, gss) => {
           },
           { quoted: m }
         );
+        await m.React('✅'); 
       } else {
         await gss.sendMessage(
           m.from,
