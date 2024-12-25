@@ -105,7 +105,6 @@ const allVarCommand = async (m, Matrix) => {
                 { quoted: m }
 
             );
-            ❌
 
         }
 
