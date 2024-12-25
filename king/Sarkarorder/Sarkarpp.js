@@ -8,6 +8,7 @@ const setProfilePicture = async (m, gss) => {
     const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
 
     if (!['setpp', 'fullpp', 'setfullpp'].includes(cmd)) return;
+        await m.React('⏳');
 
     if (!isCreator) return m.reply("*📛 THIS IS AN OWNER COMMAND*");
 
@@ -32,7 +33,7 @@ const setProfilePicture = async (m, gss) => {
     await gss.updateProfilePicture(gss.user.id, image)
       .then(() => m.reply("Profile picture updated successfully!"))
       .catch((err) => m.reply(`Failed to update profile picture: ${err.message}`));
-
+    await m.React('✅️');
   } catch (error) {
     console.error('Error:', error);
     m.reply('An error occurred while processing the command.');
