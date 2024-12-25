@@ -24,6 +24,7 @@ const addVarCommand = async (m, Matrix) => {
         if (m.sender !== config.OWNER_NUMBER + '@s.whatsapp.net') {
             await Matrix.sendMessage(m.from, { text: '📛 THIS IS AN OWNER COMMAND' }, { quoted: m });
             return;
+                await m.React('⏳');
         }
 
         // Parse the command
@@ -67,7 +68,7 @@ const addVarCommand = async (m, Matrix) => {
             dotenv.config();
 
             await Matrix.sendMessage(m.from, { text: `✅ Variable ${variable} has been added with value ${newValue}.` }, { quoted: m });
-
+await m.React('✅'); 
         } catch (err) {
             console.error('Error adding variable:', err.message);
             await Matrix.sendMessage(m.from, { text: `❌ Failed to add variable: ${err.message}` }, { quoted: m });
