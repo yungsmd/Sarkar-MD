@@ -1,33 +1,51 @@
-import config from '../../config.cjs';
+// Sarkar-MD Set Status Message Command - POWERED BY BANDAHEALI
+
+import config from "../../config.cjs";
 
 // Main command function
 const anticallCommand = async (m, Matrix) => {
-  const botNumber = await Matrix.decodeJid(Matrix.user.id);
-  const isCreator = [botNumber, config.OWNER_NUMBER + '@s.whatsapp.net'].includes(m.sender);
-  const prefix = config.PREFIX;
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const text = m.body.slice(prefix.length + cmd.length).trim();
-  
-  // Only valid command is 'setstatusmsg'
-  if (cmd === 'setstatusmsg') {
-    if (!isCreator) return m.reply("*📛 THIS IS AN OWNER COMMAND*");
-    
-    let responseMessage;
+  try {
+    const botNumber = await Matrix.decodeJid(Matrix.user.id); // Get the bot's number
+    const isCreator = [botNumber, `${config.OWNER_NUMBER}@s.whatsapp.net`].includes(m.sender); // Check if the sender is the owner
+    const prefix = config.PREFIX;
+    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(" ")[0].toLowerCase() : "";
+    const text = m.body.slice(prefix.length + cmd.length).trim(); // Extract the message text
 
-    if (text) {
-      config.STATUS_READ_MSG = text; // Set custom reply message
-      responseMessage = `Custom reply message has been set to: "${text}"`;
-    } else {
-      responseMessage = `Usage: *${prefix}setstatusmsg <message>* to set a custom reply message.`;
-    }
+    if (cmd === "setstatusmsg") {
+      if (!isCreator) {
+        // If the sender is not the bot's owner
+        return await Matrix.sendMessage(m.from, { text: "*📛 THIS IS AN OWNER COMMAND*" }, { quoted: m });
+      }
 
-    try {
-      await Matrix.sendMessage(m.from, { text: responseMessage }, { quoted: m });
-    } catch (error) {
-      console.error("Error processing your request:", error);
-      await Matrix.sendMessage(m.from, { text: 'Error processing your request.' }, { quoted: m });
+      if (text) {
+        // If a custom message is provided
+        config.STATUS_READ_MSG = text; // Update the status message in the configuration
+        await Matrix.sendMessage(
+          m.from,
+          { text: `✅ Custom reply message has been set to:\n"${text}"` },
+          { quoted: m }
+        );
+      } else {
+        // If no message is provided
+        await Matrix.sendMessage(
+          m.from,
+          {
+            text: `❌ Usage: *${prefix}setstatusmsg <message>*\n\nExample: *${prefix}setstatusmsg I am busy right now, call later!*`,
+          },
+          { quoted: m }
+        );
+      }
     }
+  } catch (error) {
+    console.error("Error processing your request:", error);
+    await Matrix.sendMessage(
+      m.from,
+      { text: "❌ Error processing your request. Please try again later." },
+      { quoted: m }
+    );
   }
 };
 
 export default anticallCommand;
+
+// POWERED BY BANDAHEALI
