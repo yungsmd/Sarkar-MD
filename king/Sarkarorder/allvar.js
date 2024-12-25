@@ -101,10 +101,11 @@ const allVarCommand = async (m, Matrix) => {
                 m.from,
 
                 { text: '❌ Failed to read environment variables. Check server logs for more details.' },
-    await m.React('❌');
+
                 { quoted: m }
 
             );
+            ❌
 
         }
 
