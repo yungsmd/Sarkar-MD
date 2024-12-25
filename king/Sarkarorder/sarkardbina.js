@@ -7,10 +7,10 @@ const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0
 const text = m.body.slice(prefix.length + cmd.length).trim();
 
   const validCommands = ['dbinary'];
-    await m.React('⏳');
+    
    if (validCommands.includes(cmd)) {
          if (!text) return m.reply('Please provide a text.');
-      await m.React('✅'); 
+       
          let db = await dBinary(text)
          m.reply(db)
    }
