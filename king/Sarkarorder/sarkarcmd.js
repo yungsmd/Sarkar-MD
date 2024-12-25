@@ -164,6 +164,10 @@ const alive = async (m, sock) => {
 *┋*🤓 *${prefix}𝚄𝙿𝙳𝙰𝚃𝙴 <𝚌𝚑𝚎𝚡𝚔 𝚏𝚘𝚛 𝚞𝚙𝚍𝚊𝚝𝚎>*
 *┋*🤓 *${prefix}𝚄𝙿𝙳𝙰𝚃𝙴𝙽𝙾𝚆 <𝚞𝚙𝚍𝚊𝚝𝚎 𝚙𝚕𝚞𝚐𝚒𝚗𝚜>*
 *┋*🤓 *${prefix}𝙼𝙿3 <𝚛𝚎𝚙𝚕𝚢 𝚠𝚒𝚝𝚑 𝚟𝚒𝚍𝚎𝚘>*
+*┋*🤓 *${prefix}𝚃𝙴𝙼𝙿𝙼𝙰𝙸𝙻 <𝚏𝚘𝚛 𝚝𝚎𝚖𝚙 𝚖𝚊𝚒𝚕>
+*┋*🤓 *${prefix}𝙲𝙷𝙴𝙲𝙺𝙼𝙰𝙸𝙻 <𝚏𝚘𝚛 𝚌𝚑𝚎𝚌𝚔 𝚖𝚊𝚒𝚕𝚜>
+*┋*🤓 *${prefix}𝚃𝚃𝚂 <𝚝𝚎𝚡𝚝 𝚝𝚘 𝚜𝚙𝚎𝚎𝚌𝚑>
+*┋*🤓 *${prefix}𝚄𝚁𝙻𝚂𝙷𝙾𝚁𝚃𝙽𝙴𝚁 <𝚜𝚑𝚘𝚛𝚝 𝚊𝚗𝚢 𝚞𝚛𝚕>
 *╰┈───────────────•*
 *[ • 🤓 𝚂𝚃𝙰𝙻𝙺𝙴𝚁 𝙲𝙼𝙳 🤓 ‎• ]*
 *╭┈───────────────•*
@@ -171,7 +175,8 @@ const alive = async (m, sock) => {
 *┋*🤓 *${prefix}𝚃𝙸𝙺𝚂𝚃𝙰𝙻𝙺 <𝚞𝚜𝚎𝚛𝚗𝚊𝚖𝚎>*
 *┋*🤓 *${prefix}𝙽𝙿𝙼𝚂𝚃𝙰𝙻𝙺 <𝚙𝚊𝚌𝚔𝚊𝚐𝚎 𝚗𝚊𝚖𝚎>*
 *┋*🤓 *${prefix}𝙿𝙾𝙿𝙸𝙽𝙵𝙾 <𝚠𝚘𝚛𝚕𝚍𝚜 𝚙𝚘𝚙𝚞𝚕𝚊𝚝𝚒𝚘𝚗>*
-*┋*🤓 *${prefix}𝙻𝙾𝙾𝙺𝚄𝙿 <𝚒𝚙 𝚊𝚍𝚛𝚎𝚜𝚜>*
+*┋*🤓 *${prefix}𝙻𝙾𝙾𝙺𝚄𝙿 <𝚒𝚙 𝚊𝚍𝚛𝚎𝚜𝚜>
+*┋*🤓 *${prefix}𝚆𝙰𝙲𝙷𝙰𝙽𝙽𝙴𝙻 <𝚠𝚊 𝚜𝚝𝚊𝚕𝚔>
 *╰┈───────────────•*
 *[ • 🤵𝙷𝙴𝚁𝙾𝙺𝚄 𝙲𝙻𝙸𝙴𝙽𝚃🤵 ‎• ]*
 *╭┈───────────────•*
@@ -195,20 +200,20 @@ const alive = async (m, sock) => {
       {
         text: aliveMessage,
         contextInfo: {
-          isForwarded: true,
+          isForwarded: false,
           forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363199257221654@newsletter',
+            newsletterJid: '@newsletter',
             newsletterName: "Sarkar-MD",
             serverMessageId: -1,
           },
           forwardingScore: 999, // Score to indicate it has been forwarded
           externalAdReply: {
             title: "✨ Sarkar-MD ✨",
-            body: "Join wa Channel",
+            body: "${cmd}",
             thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
-            sourceUrl: 'https://github.com/Sarkar-Bandaheali/Sarkar-MD', // Add source URL if necessary
+            sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
             mediaType: 1,
-            renderLargerThumbnail: false,
+            renderLargerThumbnail: true,
           },
         },
       },
