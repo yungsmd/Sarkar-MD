@@ -209,7 +209,7 @@ const alive = async (m, sock) => {
           forwardingScore: 999, // Score to indicate it has been forwarded
           externalAdReply: {
             title: "✨ Sarkar-MD ✨",
-            body: "${cmd}",
+            body: "My Menu",
             thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
             sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
             mediaType: 1,
