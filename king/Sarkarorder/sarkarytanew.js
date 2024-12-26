@@ -1,10 +1,10 @@
 import axios from 'axios';
 import config from '../../config.cjs';
 
-const searchAndDownloadVideo = async (m, gss) => {
+const searchAndDownload = async (m, gss) => {
   const prefix = config.PREFIX;
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const validCommands = ['yta', 'ytvideo', 'ytvid'];
+  const validCommands = ['ytsearch', 'ytvideo', 'ytvid'];
 
   if (validCommands.includes(cmd)) {
     const searchQuery = m.body.slice(prefix.length + cmd.length).trim(); // Get search query from the user
@@ -25,45 +25,26 @@ const searchAndDownloadVideo = async (m, gss) => {
       const searchData = searchResponse.data;
 
       if (searchData.success) {
-        const videos = searchData.results.map((video) => ({
-          title: video.title,
-          url: video.url,
-          description: video.description,
-          views: video.views,
-          author: video.author.name,
-          thumbnail: video.thumbnail,
-        }));
+        // Get the first video from the search results
+        const firstVideo = searchData.results[0];
+        const videoUrl = firstVideo.url;
 
-        // Step 2: Display search results
-        let searchMessage = `Search Results for "${searchQuery}":\n\n`;
-        videos.forEach((video, idx) => {
-          searchMessage += `${idx + 1}. Title: ${video.title}\nURL: ${video.url}\nAuthor: ${video.author}\nViews: ${video.views}\nDescription: ${video.description}\n\n`;
-        });
-        searchMessage += '\nType the number of the video you want to download (e.g., 1, 2, etc.).';
-
-        // Send search results to the user
-        await gss.sendMessage(m.from, {
-          text: searchMessage,
-        }, { quoted: m });
-
-        // Wait for the user's input (for now, we'll assume the user selects the first video)
-        const selectedVideoIndex = 0; // Replace this with user input logic
-        const selectedVideo = videos[selectedVideoIndex];
-
-        // Step 3: Fetch the download URL for the selected video
-        const downloadApiUrl = `https://api.giftedtech.my.id/api/download/yts?apikey=gifted&url=${encodeURIComponent(selectedVideo.url)}`;
+        // Step 2: Fetch the download link for the first video
+        const downloadApiUrl = `https://api.giftedtech.my.id/api/download/yts?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
         const downloadResponse = await axios.get(downloadApiUrl);
         const downloadData = downloadResponse.data;
 
         if (downloadData.success) {
-          const downloadLink = downloadData.result.download_url;
+          // Check if the user wants video or audio
+          const isAudio = m.body.toLowerCase().includes('audio');
+          const downloadLink = downloadData.result[isAudio ? 'audio_url' : 'video_url'];
 
-          // Step 4: Send the video download link to the user
+          // Step 3: Send the video or audio to the user
           await gss.sendMessage(
             m.from,
             {
-              video: { url: downloadLink },
-              caption: `🎬 *Video Downloaded* 🎬\n\nTitle: ${selectedVideo.title}\nDescription: ${selectedVideo.description}\n\nCreated by BANDAHEALI.`,
+              [isAudio ? 'audio' : 'video']: { url: downloadLink },
+              caption: `🎬 *${isAudio ? 'Audio' : 'Video'} Downloaded* 🎬\n\nTitle: ${firstVideo.title}\nDescription: ${firstVideo.description}\n\nCreated by BANDAHEALI.`,
             },
             { quoted: m }
           );
@@ -86,4 +67,4 @@ const searchAndDownloadVideo = async (m, gss) => {
   }
 };
 
-export default searchAndDownloadVideo;
+export default searchAndDownload;
