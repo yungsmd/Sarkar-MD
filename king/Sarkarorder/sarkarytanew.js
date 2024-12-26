@@ -1,13 +1,14 @@
 import axios from 'axios';
 import config from '../../config.cjs';
 
-const searchAndDownload = async (m, gss) => {
+const ytSearchAndDownload = async (m, gss) => {
   const prefix = config.PREFIX;
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const validCommands = ['ytsearch', 'ytvideo', 'ytvid'];
+  const validCommands = ['ytsearch', 'ytvid', 'ytvideo'];
 
   if (validCommands.includes(cmd)) {
     const searchQuery = m.body.slice(prefix.length + cmd.length).trim(); // Get search query from the user
+
     if (!searchQuery) {
       await gss.sendMessage(m.from, {
         text: 'Please provide a search term to look for a video.',
@@ -15,31 +16,30 @@ const searchAndDownload = async (m, gss) => {
       return;
     }
 
+    // Step 1: Fetch search results from the YTS API
     const searchApiUrl = `https://api.giftedtech.my.id/api/search/yts?apikey=gifted&query=${encodeURIComponent(searchQuery)}`;
-
+    
     try {
       await m.React('⏳'); // React with a loading icon
-
-      // Step 1: Fetch search results
+      
       const searchResponse = await axios.get(searchApiUrl);
       const searchData = searchResponse.data;
 
       if (searchData.success) {
-        // Get the first video from the search results
-        const firstVideo = searchData.results[0];
-        const videoUrl = firstVideo.url;
+        const firstVideo = searchData.results[0];  // Get first video from the search results
+        const videoUrl = firstVideo.url;  // Get URL of the first video
 
-        // Step 2: Fetch the download link for the first video
+        // Step 2: Fetch the download link using the video URL from the download API
         const downloadApiUrl = `https://api.giftedtech.my.id/api/download/yts?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
         const downloadResponse = await axios.get(downloadApiUrl);
         const downloadData = downloadResponse.data;
 
         if (downloadData.success) {
-          // Check if the user wants video or audio
-          const isAudio = m.body.toLowerCase().includes('audio');
+          // Step 3: Choose between video and audio based on user command
+          const isAudio = m.body.toLowerCase().includes('audio');  // If the command has "audio", download audio
           const downloadLink = downloadData.result[isAudio ? 'audio_url' : 'video_url'];
 
-          // Step 3: Send the video or audio to the user
+          // Step 4: Send video or audio to the user
           await gss.sendMessage(
             m.from,
             {
@@ -67,4 +67,4 @@ const searchAndDownload = async (m, gss) => {
   }
 };
 
-export default searchAndDownload;
+export default ytSearchAndDownload;
