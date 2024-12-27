@@ -48,6 +48,7 @@ export default youtubeVideo;
 // POWERED BY BANDAHEALI */
 
 // Sarkar-MD
+// Sarkar-MD
 import axios from 'axios';
 import config from '../../config.cjs';
 
@@ -68,10 +69,18 @@ const youtubeMp3 = async (m, gss) => {
         `https://api.giftedtech.my.id/api/download/dlmp3?apikey=gifted&url=${encodeURIComponent(query)}`
       );
 
+      console.log(response.data);  // Log the entire API response for debugging
+
       // Check API response structure
       const data = response.data;
       if (data.success) {
         const { title, thumbnail, download_url } = data.result;
+
+        if (!download_url) {
+          console.error('Download URL is missing.');
+          await gss.sendMessage(m.from, { text: 'Sorry, the audio is not available for that video.' }, { quoted: m });
+          return;
+        }
 
         // Send the audio directly to the user
         await gss.sendMessage(
@@ -85,10 +94,11 @@ const youtubeMp3 = async (m, gss) => {
           { quoted: m }
         );
       } else {
+        console.error('API response was not successful:', data);
         await gss.sendMessage(m.from, { text: 'Sorry, no audio found for that query.' }, { quoted: m });
       }
     } catch (error) {
-      console.error(error); // Log error for debugging
+      console.error('Error fetching audio:', error);  // Log error for debugging
       await gss.sendMessage(m.from, { text: 'Failed to fetch the audio. Please try again later.' }, { quoted: m });
     }
   }
