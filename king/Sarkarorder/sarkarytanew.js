@@ -1,5 +1,4 @@
-Sarkar-MD
-
+// Sarkar-MD
 import axios from 'axios';
 import config from '../../config.cjs';
 
@@ -15,10 +14,11 @@ const youtubeVideo = async (m, gss) => {
     }
 
     try {
-      await m.React('⏳'); // React with a loading icon
+      await gss.sendMessage(m.from, { text: 'Fetching your video, please wait...' }, { quoted: m }); // Loading message
       const response = await axios.get(`https://api.some-youtube-api.com/getVideo?query=${encodeURIComponent(query)}`);
-      const videoUrl = response.data.videoUrl;
-
+      
+      // Validate response structure
+      const videoUrl = response.data?.videoUrl;
       if (videoUrl) {
         await gss.sendMessage(
           m.from,
@@ -32,11 +32,11 @@ const youtubeVideo = async (m, gss) => {
         await gss.sendMessage(m.from, { text: 'Sorry, no video found for that query.' }, { quoted: m });
       }
     } catch (error) {
+      console.error(error); // Log error for debugging
       await gss.sendMessage(m.from, { text: 'Failed to fetch the video. Please try again later.' }, { quoted: m });
     }
   }
 };
 
 export default youtubeVideo;
-
-POWERED BY BANDAHEALI
+// POWERED BY BANDAHEALI
