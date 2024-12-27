@@ -1,4 +1,4 @@
-// Sarkar-MD
+/* Sarkar-MD
 import axios from 'axios';
 import config from '../../config.cjs';
 
@@ -45,4 +45,54 @@ const youtubeVideo = async (m, gss) => {
 };
 
 export default youtubeVideo;
+// POWERED BY BANDAHEALI */
+
+// Sarkar-MD
+import axios from 'axios';
+import config from '../../config.cjs';
+
+const youtubeMp3 = async (m, gss) => {
+  const prefix = config.PREFIX;
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const validCommands = ['ytmp3', 'ymp3', 'youtubeaudio'];
+
+  if (validCommands.includes(cmd)) {
+    const query = m.body.slice(prefix.length + cmd.length).trim();
+    if (!query) {
+      return await gss.sendMessage(m.from, { text: 'Please provide a YouTube video link.' }, { quoted: m });
+    }
+
+    try {
+      await gss.sendMessage(m.from, { text: 'Fetching your audio, please wait...' }, { quoted: m }); // Loading message
+      const response = await axios.get(
+        `https://api.giftedtech.my.id/api/download/dlmp3?apikey=gifted&url=${encodeURIComponent(query)}`
+      );
+
+      // Check API response structure
+      const data = response.data;
+      if (data.success) {
+        const { title, thumbnail, download_url } = data.result;
+
+        // Send the audio directly to the user
+        await gss.sendMessage(
+          m.from,
+          {
+            audio: { url: download_url },
+            mimetype: 'audio/mp4', // Ensure it's recognized as audio
+            caption: `🎶 *YouTube Audio* 🎶\n\n*Title:* ${title}\n\n🎧 Powered by BANDAHEALI 🎧`,
+            thumbnail: { url: thumbnail },
+          },
+          { quoted: m }
+        );
+      } else {
+        await gss.sendMessage(m.from, { text: 'Sorry, no audio found for that query.' }, { quoted: m });
+      }
+    } catch (error) {
+      console.error(error); // Log error for debugging
+      await gss.sendMessage(m.from, { text: 'Failed to fetch the audio. Please try again later.' }, { quoted: m });
+    }
+  }
+};
+
+export default youtubeMp3;
 // POWERED BY BANDAHEALI
