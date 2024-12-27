@@ -15,16 +15,22 @@ const youtubeVideo = async (m, gss) => {
 
     try {
       await gss.sendMessage(m.from, { text: 'Fetching your video, please wait...' }, { quoted: m }); // Loading message
-      const response = await axios.get(`https://api.some-youtube-api.com/getVideo?query=${encodeURIComponent(query)}`);
-      
-      // Validate response structure
-      const videoUrl = response.data?.videoUrl;
-      if (videoUrl) {
+      const response = await axios.get(
+        `https://api.giftedtech.my.id/api/search/yts?apikey=gifted&query=${encodeURIComponent(query)}`
+      );
+
+      // Check API response structure
+      const results = response.data?.results;
+      if (results && results.length > 0) {
+        const video = results[0]; // Fetch the first video result
+        const { url, title, description, thumbnail, duration, views, author } = video;
+
         await gss.sendMessage(
           m.from,
           {
-            video: { url: videoUrl },
-            caption: `🎬 *YouTube Video* 🎬\n\n🎥 Video fetched by BANDAHEALI 🎥`,
+            video: { url },
+            caption: `🎬 *YouTube Video* 🎬\n\n*Title:* ${title}\n*Description:* ${description}\n*Duration:* ${duration.timestamp}\n*Views:* ${views.toLocaleString()}\n*Author:* ${author.name}\n\n🎥 Powered by BANDAHEALI 🎥`,
+            thumbnail: { url: thumbnail },
           },
           { quoted: m }
         );
