@@ -1,4 +1,9 @@
-import config from '../../config.cjs'; // Ensure this matches your project setup
+import moment from 'moment-timezone';
+import fs from 'fs';
+import os from 'os';
+import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
+const { generateWAMessageFromContent, proto } = pkg;
+import config from '../../config.cjs';
 
 const alive = async (m, sock) => {
   const prefix = config.PREFIX;
@@ -18,10 +23,28 @@ const alive = async (m, sock) => {
     const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
     const minutes = Math.floor((uptimeSeconds % 3600) / 60);
     const seconds = Math.floor(uptimeSeconds % 60);
+    const xtime = moment.tz("Asia/Colombo").format("HH:mm:ss");
+    const xdate = moment.tz("Asia/Colombo").format("DD/MM/YYYY");
+    const time2 = moment().tz("Asia/Colombo").format("HH:mm:ss");
+let pushwish = "";
+
+if (time2 < "05:00:00") {
+  pushwish = `Good Morning 🌄`;
+} else if (time2 < "11:00:00") {
+  pushwish = `Good Morning 🌄`;
+} else if (time2 < "15:00:00") {
+  pushwish = `Good Afternoon 🌅`;
+} else if (time2 < "18:00:00") {
+  pushwish = `Good Evening 🌃`;
+} else if (time2 < "19:00:00") {
+  pushwish = `Good Evening 🌃`;
+} else {
+  pushwish = `Good Night 🌌`;
+}
 
     const aliveMessage = `╭┈───────────────•*
 *⇆𝙷𝙴𝙻𝙻𝙾 𝙼𝚁⇆*
-          *${pushName}*
+          ${pushName} ${pushwish}
 *⇆ ✨ 𝚂𝙰𝚁𝙺𝙰𝚁-𝙼𝙳 𝙲𝙾𝙼𝙼𝙰𝙽𝙳 𝙻𝙸𝚂𝚃 ✨ ⇆*
 *╰┈───────────────•*
 *╭┈───────────────•* 
