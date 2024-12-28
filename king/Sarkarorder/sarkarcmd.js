@@ -4,7 +4,7 @@ const alive = async (m, sock) => {
   const prefix = config.PREFIX;
   const mode = config.MODE;
   const pushName = m.pushName || 'User';
-  
+
   const cmd = m.body.startsWith(prefix)
     ? m.body.slice(prefix.length).split(' ')[0].toLowerCase()
     : '';
@@ -79,13 +79,11 @@ const alive = async (m, sock) => {
     );
 
     // Wait for the user to reply with "1"
-    const filter = (response) => response.body === '1' && response.from === m.from;
-    const userReply = await sock.waitForMessage(m.from, { filter, timeoutMs: 60000 }); // Wait for 1 minute
+    sock.on('message', async (response) => {
+      if (response.body === '1' && response.from === m.from) {
+        await m.React('⏳'); // React with a loading icon
 
-    if (userReply) {
-      await m.React('⏳'); // React with a loading icon
-
-      const islamicmenu = `╭━❮ 𝙲𝙾𝙽𝚅𝙴𝚁𝚃𝙴𝚁 ❯━╮
+        const islamicmenu = `╭━❮ 𝙲𝙾𝙽𝚅𝙴𝚁𝚃𝙴𝚁 ❯━╮
 ┃✰ ${prefix}𝙰𝚃𝚃𝙿
 ┃✰ ${prefix}𝙰𝚃𝚃𝙿2
 ┃✰ ${prefix}𝙰𝚃𝚃𝙿3
@@ -96,33 +94,34 @@ const alive = async (m, sock) => {
 ╰━━━━━━━━━━━━━━━⪼
 `;
 
-      await m.React('✅'); // React with a success icon
+        await m.React('✅'); // React with a success icon
 
-      sock.sendMessage(
-        m.from,
-        {
-          text: islamicmenu,
-          contextInfo: {
-            isForwarded: false,
-            forwardedNewsletterMessageInfo: {
-              newsletterJid: '@newsletter',
-              newsletterName: "Sarkar-MD",
-              serverMessageId: -1,
-            },
-            forwardingScore: 999, // Score to indicate it has been forwarded
-            externalAdReply: {
-              title: "✨ Sarkar-MD ✨",
-              body: "Islamic Commands",
-              thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
-              sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
-              mediaType: 1,
-              renderLargerThumbnail: true,
+        sock.sendMessage(
+          m.from,
+          {
+            text: islamicmenu,
+            contextInfo: {
+              isForwarded: false,
+              forwardedNewsletterMessageInfo: {
+                newsletterJid: '@newsletter',
+                newsletterName: "Sarkar-MD",
+                serverMessageId: -1,
+              },
+              forwardingScore: 999, // Score to indicate it has been forwarded
+              externalAdReply: {
+                title: "✨ Sarkar-MD ✨",
+                body: "Islamic Commands",
+                thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
+                sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
+                mediaType: 1,
+                renderLargerThumbnail: true,
+              },
             },
           },
-        },
-        { quoted: m }
-      );
-    }
+          { quoted: m }
+        );
+      }
+    });
   }
 };
 
