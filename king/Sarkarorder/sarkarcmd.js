@@ -48,7 +48,7 @@ const alive = async (m, sock) => {
 *┃◈└───────────┈⊷*
 *╰──────────────┈⊷*
 
-*✧ ʀᴇᴘʟʏ ᴡɪᴛʜ ᴛʜᴇ ɴᴜᴍʙᴇʀ ʏᴏᴜ ᴡᴀɴᴛ ᴏᴜᴛ ᴛᴏ sᴇʟᴇᴄᴛ ✧*
+*✧ ʀᴇᴘʟʏ ᴡɪᴛʜ ᴛʜᴇ ɴᴜᴍʙᴇʀ ʏᴏᴜ ᴡᴀɴᴛ ᴏᴜᴛ ᴏᴜᴛ ᴛᴏ sᴇʟᴇᴄᴛ ✧*
 *`;
 
     await m.React('✅'); // React with a success icon
@@ -82,12 +82,12 @@ const alive = async (m, sock) => {
     const timeout = 30000; // Timeout after 30 seconds
     let responseTimeout;
 
-    const replyListener = (response) => {
+    const replyListener = async (response) => {
       if (response.from === m.from && response.body === '1') {
         clearTimeout(responseTimeout); // Clear the timeout when we get a valid reply
 
-        // Process the response
-        sendIslamicMenu(response);
+        // Send the Islamic menu
+        await sendIslamicMenu(response);
       }
     };
 
@@ -118,7 +118,7 @@ const sendIslamicMenu = async (response) => {
 
   await response.React('✅'); // React with a success icon
 
-  response.sock.sendMessage(
+  await response.sock.sendMessage(
     response.from,
     {
       text: islamicmenu,
