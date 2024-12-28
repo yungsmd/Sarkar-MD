@@ -2,7 +2,7 @@ import config from '../../config.cjs';
 const test = async (m, Matrix) => {
   const prefix = config.PREFIX;
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const mode = config.MODE === 'public' ? 'public' : 'private';
+  const mode = config.MODE;
   const pref = config.PREFIX;
   const validCommands = ['list', 'help', 'menu'];
 
@@ -12,8 +12,7 @@ const test = async (m, Matrix) => {
 │🤖 Bot Name: *Ethix-MD*
 │📍 Version: 2.1.0
 │👨‍💻 Owner : *Ethix xSid*
-│👤 Number: 919142294671
-│📡 Platform: *${os.platform()}*
+│👤 Number: 923253617422
 │🛡 Mode: *${mode}*
 │💫 Prefix: [${pref}]
 ╰─────────────━┈⊷ 
