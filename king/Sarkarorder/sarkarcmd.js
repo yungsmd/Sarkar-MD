@@ -2,7 +2,7 @@ import config from '../../config.cjs'; // Ensure this matches your project setup
 
 const alive = async (m, sock) => {
   const prefix = config.PREFIX;
-  const mode = config.MODE
+  const mode = config.MODE;
   const pushName = m.pushName || 'User';
   
   const cmd = m.body.startsWith(prefix)
@@ -11,17 +11,13 @@ const alive = async (m, sock) => {
 
   if (cmd === "menu") {
     await m.React('⏳'); // React with a loading icon
-// Calculate uptime
+    // Calculate uptime
 
-  const uptimeSeconds = process.uptime();
-
-  const days = Math.floor(uptimeSeconds / (24 * 3600));
-
-  const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
-
-  const minutes = Math.floor((uptimeSeconds % 3600) / 60);
-
-  const seconds = Math.floor(uptimeSeconds % 60);
+    const uptimeSeconds = process.uptime();
+    const days = Math.floor(uptimeSeconds / (24 * 3600));
+    const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
+    const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+    const seconds = Math.floor(uptimeSeconds % 60);
 
     const aliveMessage = `╭┈───────────────•*
 *⇆𝙷𝙴𝙻𝙻𝙾 𝙼𝚁⇆*
@@ -81,14 +77,15 @@ const alive = async (m, sock) => {
       },
       { quoted: m }
     );
-  }
-};
 
-if (cmd === "1") {
-    await m.React('⏳'); // React with a loading icon
-// Calculate uptime
+    // Wait for the user to reply with "1"
+    const filter = (response) => response.body === '1' && response.from === m.from;
+    const userReply = await sock.waitForMessage(m.from, { filter, timeoutMs: 60000 }); // Wait for 1 minute
 
-  const islamicmenu =`╭━❮ 𝙲𝙾𝙽𝚅𝙴𝚁𝚃𝙴𝚁 ❯━╮
+    if (userReply) {
+      await m.React('⏳'); // React with a loading icon
+
+      const islamicmenu = `╭━❮ 𝙲𝙾𝙽𝚅𝙴𝚁𝚃𝙴𝚁 ❯━╮
 ┃✰ ${prefix}𝙰𝚃𝚃𝙿
 ┃✰ ${prefix}𝙰𝚃𝚃𝙿2
 ┃✰ ${prefix}𝙰𝚃𝚃𝙿3
@@ -98,32 +95,34 @@ if (cmd === "1") {
 ┃✰ ${prefix}𝙼𝙿3
 ╰━━━━━━━━━━━━━━━⪼
 `;
-  await m.React('✅'); // React with a success icon
 
-    sock.sendMessage(
-      m.from,
-      {
-        text: islamicmenu,
-        contextInfo: {
-          isForwarded: false,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: '@newsletter',
-            newsletterName: "Sarkar-MD",
-            serverMessageId: -1,
-          },
-          forwardingScore: 999, // Score to indicate it has been forwarded
-          externalAdReply: {
-            title: "✨ Sarkar-MD ✨",
-            body: "My Menu",
-            thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
-            sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
-            mediaType: 1,
-            renderLargerThumbnail: true,
+      await m.React('✅'); // React with a success icon
+
+      sock.sendMessage(
+        m.from,
+        {
+          text: islamicmenu,
+          contextInfo: {
+            isForwarded: false,
+            forwardedNewsletterMessageInfo: {
+              newsletterJid: '@newsletter',
+              newsletterName: "Sarkar-MD",
+              serverMessageId: -1,
+            },
+            forwardingScore: 999, // Score to indicate it has been forwarded
+            externalAdReply: {
+              title: "✨ Sarkar-MD ✨",
+              body: "Islamic Commands",
+              thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
+              sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
+              mediaType: 1,
+              renderLargerThumbnail: true,
+            },
           },
         },
-      },
-      { quoted: m }
-    );
+        { quoted: m }
+      );
+    }
   }
 };
 
