@@ -1,37 +1,89 @@
-import config from '../../config.cjs';
-const test = async (m, Matrix) => {
+import config from '../../config.cjs'; // Ensure this matches your project setup
+
+const alive = async (m, sock) => {
   const prefix = config.PREFIX;
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const mode = config.MODE;
-  const pref = config.PREFIX;
-  const validCommands = ['list', 'help', 'menu'];
+  const mode = config.MODE
+  const pushName = m.pushName || 'User';
+  
+  const cmd = m.body.startsWith(prefix)
+    ? m.body.slice(prefix.length).split(' ')[0].toLowerCase()
+    : '';
 
-  if (validCommands.includes(cmd)) {
-    const menuMessage = `
-╭─────────────━┈⊷
-│🤖 Bot Name: *Ethix-MD*
-│📍 Version: 2.1.0
-│👨‍💻 Owner : *Ethix xSid*
-│👤 Number: 923253617422
-│🛡 Mode: *${mode}*
-│💫 Prefix: [${pref}]
-╰─────────────━┈⊷ 
+  if (cmd === "menu") {
+    await m.React('⏳'); // React with a loading icon
+// Calculate uptime
 
-*Main Menu:*
-1. All Menu
-2. Downloader Menu
-3. Group Menu
+  const uptimeSeconds = process.uptime();
 
-Send the number of the menu to get details. Example: *${prefix}1* for All Menu.
-Powered by Ethix-MD
-`;
+  const days = Math.floor(uptimeSeconds / (24 * 3600));
 
-    await Matrix.sendMessage(m.from, { text: menuMessage }, { quoted: m });
-  } else if (cmd === '1') {
-    await Matrix.sendMessage(m.from, { text: '*You selected: All Menu*\nHere are the details for All Menu...' }, { quoted: m });
-  } else if (cmd === '2') {
-    await Matrix.sendMessage(m.from, { text: '*You selected: Downloader Menu*\nHere are the details for Downloader Menu...' }, { quoted: m });
-  } else if (cmd === '3') {
-    await Matrix.sendMessage(m.from, { text: '*You selected: Group Menu*\nHere are the details for Group Menu...' }, { quoted: m });
+  const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
+
+  const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+
+  const seconds = Math.floor(uptimeSeconds % 60);
+
+    const aliveMessage = `╭┈───────────────•*
+*⇆𝙷𝙴𝙻𝙻𝙾 𝙼𝚁⇆*
+          *${pushName}*
+*⇆ ✨ 𝚂𝙰𝚁𝙺𝙰𝚁-𝙼𝙳 𝙲𝙾𝙼𝙼𝙰𝙽𝙳 𝙻𝙸𝚂𝚃 ✨ ⇆*
+*╰┈───────────────•*
+*╭┈───────────────•* 
+*│  ◦*  𝙱𝙾𝚃 𝙽𝙰𝙼𝙴: 𝚂𝙰𝚁𝙺𝙰𝚁-𝙼𝙳
+*│  ◦* 𝚅𝙴𝚁𝚂𝙸𝙾𝙽: 1𝚂𝚃
+*│  ◦* 𝙳𝙴𝚅: 𝚂𝙰𝚁𝙺𝙰𝚁-𝙱𝙰𝙽𝙳𝙰𝙷𝙴𝙰𝙻𝙸
+*│  ◦* 𝙿𝚁𝙴𝙵𝙸𝚇: *${prefix}*
+*│  ◦* 𝙼𝙾𝙳𝙴: *${mode}*
+*│  ◦* 𝚄𝙿𝚃𝙸𝙼𝙴: *${days}d ${hours}h ${minutes}m ${seconds}s*
+*╰┈───────────────•*
+*♡︎•━━━━━━☻︎━━━━━━•♡︎*
+*╭━━〔 •ᴄᴍᴅ-ᴍᴇɴᴜ• 〕━━┈⊷*
+*┃◈╭─────────────·๏*
+*┃◈┃•* 1➠ *【 ALQURAN 】*
+*┃◈┃•* 2➠ *【 OWNER 】*
+*┃◈┃•* 3➠ *【 DOWNLOAD 】‎*
+*┃◈┃•* 4➠ *【 GROUPS 】*
+*┃◈┃•* 5➠ *【 INFO 】‎*
+*┃◈┃•* 6➠ *【 RANDOM 】*
+*┃◈┃•* 7➠ *【 CONVERT 】*
+*┃◈┃•* 8➠ *【 AI-CMD 】*
+*┃◈┃•* 9➠ *【 WALLPAPERS 】*
+*┃◈┃•* 10➠ *【 OTHER 】*
+*┃◈└───────────┈⊷*
+*╰──────────────┈⊷*
+
+*✧ ʀᴇᴘʟʏ ᴡɪᴛʜ ᴛʜᴇ ɴᴜᴍʙᴇʀ ʏᴏᴜ ᴡᴀɴᴛ ᴏᴜᴛ ᴛᴏ sᴇʟᴇᴄᴛ ✧*
+
+> POWERED BY Ajay Sejwani 
+*`;
+
+    await m.React('✅'); // React with a success icon
+
+    sock.sendMessage(
+      m.from,
+      {
+        text: aliveMessage,
+        contextInfo: {
+          isForwarded: false,
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: '@newsletter',
+            newsletterName: "Sarkar-MD",
+            serverMessageId: -1,
+          },
+          forwardingScore: 999, // Score to indicate it has been forwarded
+          externalAdReply: {
+            title: "✨ Sarkar-MD ✨",
+            body: "My Menu",
+            thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
+            sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
+            mediaType: 1,
+            renderLargerThumbnail: true,
+          },
+        },
+      },
+      { quoted: m }
+    );
   }
 };
+
+export default alive;
