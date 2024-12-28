@@ -17,30 +17,32 @@ const alive = async (m, sock) => {
   if (cmd === "menu") {
     await m.React('⏳'); // React with a loading icon
     // Calculate uptime
-
     const uptimeSeconds = process.uptime();
     const days = Math.floor(uptimeSeconds / (24 * 3600));
     const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
     const minutes = Math.floor((uptimeSeconds % 3600) / 60);
     const seconds = Math.floor(uptimeSeconds % 60);
-    const xtime = moment.tz("Asia/Colombo").format("HH:mm:ss");
-    const xdate = moment.tz("Asia/Colombo").format("DD/MM/YYYY");
-    const time2 = moment().tz("Asia/Colombo").format("HH:mm:ss");
-let pushwish = "";
 
-if (time2 < "05:00:00") {
-  pushwish = `Good Morning 🌄`;
-} else if (time2 < "11:00:00") {
-  pushwish = `Good Morning 🌄`;
-} else if (time2 < "15:00:00") {
-  pushwish = `Good Afternoon 🌅`;
-} else if (time2 < "18:00:00") {
-  pushwish = `Good Evening 🌃`;
-} else if (time2 < "19:00:00") {
-  pushwish = `Good Evening 🌃`;
-} else {
-  pushwish = `Good Night 🌌`;
-}
+    // Get real time
+    const realTime = moment().tz("Asia/Colombo").format("HH:mm:ss");
+    const xdate = moment.tz("Asia/Colombo").format("DD/MM/YYYY");
+
+    const xtime = moment.tz("Asia/Colombo").format("HH:mm:ss");
+
+    let pushwish = "";
+    if (xtime < "05:00:00") {
+      pushwish = `Good Morning 🌄`;
+    } else if (xtime < "11:00:00") {
+      pushwish = `Good Morning 🌄`;
+    } else if (xtime < "15:00:00") {
+      pushwish = `Good Afternoon 🌅`;
+    } else if (xtime < "18:00:00") {
+      pushwish = `Good Evening 🌃`;
+    } else if (xtime < "19:00:00") {
+      pushwish = `Good Evening 🌃`;
+    } else {
+      pushwish = `Good Night 🌌`;
+    }
 
     const aliveMessage = `╭┈───────────────•*
 *⇆𝙷𝙴𝙻𝙻𝙾 𝙼𝚁⇆*
@@ -54,6 +56,7 @@ if (time2 < "05:00:00") {
 *│  ◦* 𝙿𝚁𝙴𝙵𝙸𝚇: *${prefix}*
 *│  ◦* 𝙼𝙾𝙳𝙴: *${mode}*
 *│  ◦* 𝚄𝙿𝚃𝙸𝙼𝙴: *${days}d ${hours}h ${minutes}m ${seconds}s*
+*│  ◦* 𝙲𝚄𝚁𝚁𝙴𝙽𝚃 𝚃𝙸𝙼𝙴: *${realTime}*
 *╰┈───────────────•*
 *♡︎•━━━━━━☻︎━━━━━━•♡︎*
 *╭━━〔 •ᴄᴍᴅ-ᴍᴇɴᴜ• 〕━━┈⊷*
@@ -71,8 +74,8 @@ if (time2 < "05:00:00") {
 *┃◈└───────────┈⊷*
 *╰──────────────┈⊷*
 
-*✧ ʀᴇᴘʟʏ ᴡɪᴛʜ ᴛʜᴇ ɴᴜᴍʙᴇʀ ʏᴏᴜ ᴡᴀɴᴛ ᴏᴜᴛ ᴏᴜᴛ ᴛᴏ sᴇʟᴇᴄᴛ ✧*
-*`;
+*✧ ʀᴇᴘʟʏ ᴡɪᴛʜ ᴛʜᴇ ɴᴜᴍʙᴇʀ ʏᴏᴜ ᴡᴀɴᴛ ᴏᴜᴛ ᴏᴜᴛ ᴏᴛᴏ sᴇʟᴇᴄᴛ ✧*
+`;
 
     await m.React('✅'); // React with a success icon
 
@@ -102,5 +105,58 @@ if (time2 < "05:00:00") {
     );
 
     // Wait for the user to reply with "1" (Reply Timeout: 30 seconds)
-  
-export default alive;
+    const timeout = 30000; // Timeout after 30 seconds
+    let responseTimeout;
+
+    const replyListener = async (response) => {
+      if (response.from === m.from && response.body === '1') {
+        clearTimeout(responseTimeout); // Clear the timeout when we get a valid reply
+
+        // Send the Islamic menu
+        await sendIslamicMenu(response);
+      }
+    };
+
+    sock.on('message', replyListener);
+
+    // Set a timeout to stop listening after a certain period (30 seconds)
+    responseTimeout = setTimeout(() => {
+      sock.removeListener('message', replyListener); // Stop listening after timeout
+      m.reply('Time expired. Please reply with a valid selection.');
+    }, timeout);
+  }
+};
+
+// Function to send Islamic menu
+const sendIslamicMenu = async (response) => {
+  const prefix = config.PREFIX;
+
+  const islamicmenu = `╭━❮ 𝙲𝙾𝙽𝚅𝙴𝚁𝚃𝙴𝚁 ❯━╮
+┃✰ ${prefix}𝙰𝚃𝚃𝙿
+┃✰ ${prefix}𝙰𝚃𝚃𝙿2
+┃✰ ${prefix}𝙰𝚃𝚃𝙿3
+┃✰ ${prefix}𝙴𝙱𝙸𝙽𝙰𝚁𝚈
+┃✰ ${prefix}𝙳𝙱𝙸𝙽𝙰𝚁𝚈
+┃✰ ${prefix}𝙴𝙼𝙾𝙹𝙸𝙼𝙸𝚇
+┃✰ ${prefix}𝙼𝙿3
+╰━━━━━━━━━━━━━━━⪼
+`;
+
+  await response.React('✅'); // React with a success icon
+
+  await response.sock.sendMessage(
+    response.from,
+    {
+      text: islamicmenu,
+      contextInfo: {
+        isForwarded: false,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: '@newsletter',
+          newsletterName: "Sarkar-MD",
+          serverMessageId: -1,
+        },
+        forwardingScore: 999, // Score to indicate it has been forwarded
+        externalAdReply: {
+          title: "✨ Sarkar-MD ✨",
+          body: "Islamic Commands",
+          thumbnailUrl:
