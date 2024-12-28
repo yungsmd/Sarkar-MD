@@ -53,8 +53,6 @@ const alive = async (m, sock) => {
 *╰──────────────┈⊷*
 
 *✧ ʀᴇᴘʟʏ ᴡɪᴛʜ ᴛʜᴇ ɴᴜᴍʙᴇʀ ʏᴏᴜ ᴡᴀɴᴛ ᴏᴜᴛ ᴛᴏ sᴇʟᴇᴄᴛ ✧*
-
-> POWERED BY Ajay Sejwani 
 *`;
 
     await m.React('✅'); // React with a success icon
@@ -63,6 +61,49 @@ const alive = async (m, sock) => {
       m.from,
       {
         text: aliveMessage,
+        contextInfo: {
+          isForwarded: false,
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: '@newsletter',
+            newsletterName: "Sarkar-MD",
+            serverMessageId: -1,
+          },
+          forwardingScore: 999, // Score to indicate it has been forwarded
+          externalAdReply: {
+            title: "✨ Sarkar-MD ✨",
+            body: "My Menu",
+            thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
+            sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
+            mediaType: 1,
+            renderLargerThumbnail: true,
+          },
+        },
+      },
+      { quoted: m }
+    );
+  }
+};
+
+if (cmd === "1") {
+    await m.React('⏳'); // React with a loading icon
+// Calculate uptime
+
+  const islamicmenu =`╭━❮ 𝙲𝙾𝙽𝚅𝙴𝚁𝚃𝙴𝚁 ❯━╮
+┃✰ ${prefix}𝙰𝚃𝚃𝙿
+┃✰ ${prefix}𝙰𝚃𝚃𝙿2
+┃✰ ${prefix}𝙰𝚃𝚃𝙿3
+┃✰ ${prefix}𝙴𝙱𝙸𝙽𝙰𝚁𝚈
+┃✰ ${prefix}𝙳𝙱𝙸𝙽𝙰𝚁𝚈
+┃✰ ${prefix}𝙴𝙼𝙾𝙹𝙸𝙼𝙸𝚇
+┃✰ ${prefix}𝙼𝙿3
+╰━━━━━━━━━━━━━━━⪼
+`;
+  await m.React('✅'); // React with a success icon
+
+    sock.sendMessage(
+      m.from,
+      {
+        text: islamicmenu,
         contextInfo: {
           isForwarded: false,
           forwardedNewsletterMessageInfo: {
