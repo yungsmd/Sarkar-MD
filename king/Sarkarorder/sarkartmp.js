@@ -10,7 +10,7 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
     const validCommands = ['tomp3', 'mp3'];
 
     if (!validCommands.includes(cmd)) return;
-
+await m.React('⏳'); // React with a loading icon
     if (!m.quoted || m.quoted.mtype !== 'videoMessage') {
       return m.reply(Send/Reply with Video to convert into MP3 with caption ${prefix + cmd});
     }
@@ -18,6 +18,7 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
     m.reply('Converting to MP3, please wait...');
     const media = await m.quoted.download();
     const audio = await toAudio(media, 'mp4'); // Correctly importing toAudio function
+    await m.React('✅'); // React with a success icon
 
     await gss.sendMessage(m.from, { document: audio, mimetype: 'audio/mpeg', fileName: Converted By ${gss.user.name}.mp3 }, { quoted: m });
   } catch (error) {
