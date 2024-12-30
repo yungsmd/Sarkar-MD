@@ -3,62 +3,45 @@ import config from '../../config.cjs';
 
 const tomp3 = async (m, gss, sock) => {
   try {
+    console.log("Command execution started...");
     const prefix = config.PREFIX;
     const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-    const text = m.body.slice(prefix.length + cmd.length).trim();
+    console.log(`Extracted command: ${cmd}`);
 
     const validCommands = ['tomp3', 'mp3'];
-
-    if (!validCommands.includes(cmd)) return;
+    if (!validCommands.includes(cmd)) {
+      console.log("Invalid command. Skipping...");
+      return;
+    }
 
     if (!m.quoted || m.quoted.mtype !== 'videoMessage') {
+      console.log("Quoted message is not a video.");
       return sock.sendMessage(
         m.from,
         {
           text: `Send or reply to a video with caption *${prefix}${cmd}* to convert it into MP3.`,
-          contextInfo: {
-            isForwarded: true,
-            forwardingScore: 500,
-            externalAdReply: {
-              title: "✨ Sarkar-MD ✨",
-              body: "Convert videos to MP3 easily!",
-              thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg',
-              sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P',
-              mediaType: 1,
-              renderLargerThumbnail: true,
-            },
-          },
         },
         { quoted: m }
       );
     }
 
-    // Notify user about the process
+    // Notify the user about the conversion
     await sock.sendMessage(
       m.from,
       {
         text: 'Converting to MP3, please wait...',
-        contextInfo: {
-          isForwarded: false,
-          forwardingScore: 1000,
-          externalAdReply: {
-            title: "✨ Sarkar-MD ✨",
-            body: "Your MP3 is on the way!",
-            thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg',
-            sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P',
-            mediaType: 1,
-            renderLargerThumbnail: true,
-          },
-        },
       },
       { quoted: m }
     );
+    console.log("Notified user about conversion...");
 
-    // Process video to MP3
+    // Process the video
     const media = await m.quoted.download();
+    console.log("Downloaded media successfully...");
     const audio = await toAudio(media, 'mp4');
+    console.log("Converted video to MP3 successfully...");
 
-    // Send the converted MP3
+    // Send the MP3 file
     await gss.sendMessage(
       m.from,
       {
@@ -68,35 +51,20 @@ const tomp3 = async (m, gss, sock) => {
       },
       { quoted: m }
     );
+    console.log("Sent MP3 file successfully...");
 
-    // Send a forwardable success message
+    // Send a success message
     const successMessage = `✨ Your video has been successfully converted to MP3! ✨\n\n*Powered by Sarkar-MD.*`;
     await sock.sendMessage(
       m.from,
       {
         text: successMessage,
-        contextInfo: {
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: '@newsletter',
-            newsletterName: "Sarkar-MD",
-            serverMessageId: -1,
-          },
-          forwardingScore: 999,
-          externalAdReply: {
-            title: "✨ Sarkar-MD ✨",
-            body: "Enjoy your MP3!",
-            thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg',
-            sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P',
-            mediaType: 1,
-            renderLargerThumbnail: true,
-          },
-        },
       },
       { quoted: m }
     );
+    console.log("Sent success message.");
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error during MP3 conversion:', error);
     sock.sendMessage(
       m.from,
       { text: 'An error occurred while processing the command.' },
