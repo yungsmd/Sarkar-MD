@@ -27,7 +27,6 @@ const alive = async (m, sock) => {
     
     // Get real time
     const realTime = moment().tz("Asia/Karachi").format("HH:mm:ss");
-const xdate = moment.tz("Asia/Colombo").format("DD/MM/YYYY");
     const xtime = moment.tz("Asia/Karachi").format("HH:mm:ss");
     const xdate = moment.tz("Asia/Karachi").format("DD/MM/YYYY");
     const time2 = moment().tz("Asia/Karachi").format("HH:mm:ss");
@@ -60,7 +59,6 @@ if (time2 < "05:00:00") {
 *│  ◦* 𝙼𝙾𝙳𝙴: *${mode}*
 *│  ◦* 𝚄𝙿𝚃𝙸𝙼𝙴: *${days}d ${hours}h ${minutes}m ${seconds}s*
 *│  ◦* 𝙲𝚄𝚁𝚁𝙴𝙽𝚃 𝚃𝙸𝙼𝙴: *${realTime}*
-*│  ◦* 𝙲𝚄𝚁𝚁𝙴𝙽𝚃 DATE: *${xdate}*
 *╰┈───────────────•*
 *♡︎•━━━━━━☻︎━━━━━━•♡︎*
 *[ • 🥰 𝙸𝚂𝙻𝙰𝙼𝙸𝙲 𝙲𝙼𝙳 🥰 • ]*
@@ -89,41 +87,33 @@ if (time2 < "05:00:00") {
 *╰┈───────────────•*
 *[ • 🔎 𝚂𝙴𝙰𝚁𝙲𝙷 𝙲𝙼𝙳 🔍 ‎• ]*
 *╭┈───────────────•*
-*┋*🔍 *${prefix}𝚈𝚃𝚂  <ᴛᴇxᴛ>*
-*┋*🔍 *${prefix}𝙶𝙾𝙾𝙶𝙻𝙴 <ᴛᴇxᴛ>*
-*┋*🔍 *${prefix}𝙸𝙼𝙳𝙱 <ᴛᴇxᴛ>*
-*┋*🔍 *${prefix}𝙸𝙼𝙶 <ᴛᴇxᴛ>*
-*┋*🔍 *${prefix}𝚆𝙴𝙰𝚃𝙷𝙴𝚁 <ᴄɪᴛʏ>*
-*┋*🔍 *${prefix}𝙿𝙻𝙰𝚈𝚂𝚃𝙾𝚁𝙴 <𝚜𝚎𝚊𝚛𝚌𝚑𝚊𝚙𝚔>*
-*┋*🔍 *${prefix}𝙽𝙴𝚆𝚂 <𝚝𝚎𝚌𝚑 𝚗𝚎𝚠𝚜>*
+*┋*🔍 *${prefix}𝚈𝚃𝚂*
+*┋*🔍 *${prefix}𝙶𝙾𝙾𝙶𝙻𝙴*
+*┋*🔍 *${prefix}𝙸𝙼𝙳𝙱*
+*┋*🔍 *${prefix}𝙸𝙼𝙶*
+*┋*🔍 *${prefix}𝚆𝙴𝙰𝚃𝙷𝙴𝚁*
+*┋*🔍 *${prefix}𝙿𝙻𝙰𝚈𝚂𝚃𝙾𝚁𝙴*
+*┋*🔍 *${prefix}𝙽𝙴𝚆𝚂*
 *╰┈───────────────•*
 *[ • 🧠 𝙰𝙸 𝙲𝙼𝙳 🧠  ‎• ]*
 *╭┈───────────────•*
-*┋*🧠 *${prefix}𝚛𝚊𝚜𝚑𝚒𝚍 <ᴛᴇxᴛ>*
-*┋*🧠 *${prefix}𝚜𝚊𝚛𝚔𝚊𝚛 <ᴛᴇxᴛ>*
-*┋*🧠 *${prefix}𝚊𝚣𝚒𝚣 <ᴛᴇxᴛ>*
-*┋*🧠 *${prefix}𝙱𝙻𝙰𝙲𝙺𝙱𝙾𝚇𝙰𝙸 <𝙿𝚁𝙾𝙶𝚁𝙰𝙼>*
-*┋*🧠 *${prefix}𝙲𝙾𝙳𝙴 <𝙿𝚁𝙾𝙶𝚁𝙰𝙼>*
-*┋*🧠 *${prefix}𝙲𝙾𝙳𝙴𝚁 <𝙿𝚁𝙾𝙶𝚁𝙰𝙼>*
-*┋*🧠 *${prefix}𝙰𝙸 <𝚀𝚄𝙴𝚂𝚃𝙸𝙾𝙽>*
-*┋*🧠 *${prefix}𝙱𝙾𝚃 <𝚀𝚄𝙴𝚂𝚃𝙸𝙾𝙽>*
-*┋*🧠 *${prefix}𝙶𝙿𝚃 <𝚀𝚄𝙴𝚂𝚃𝙸𝙾𝙽>*
-*┋*🧠 *${prefix}𝚃𝚁𝙰𝚅𝙴𝙻 <𝙿𝙻𝙰𝙲𝙴𝙽𝙰𝙼𝙴>*
-*┋*🧠 *${prefix}𝚅𝙸𝚂𝙸𝚃 <𝙿𝙻𝙰𝙲𝙴>*
+*┋*🧠 *${prefix}𝙱𝙻𝙰𝙲𝙺𝙱𝙾𝚇𝙰𝙸*
+*┋*🧠 *${prefix}𝙶𝙿𝚃*
+*┋*🧠 *${prefix}𝚅𝙸𝚂𝙸𝚃*
 *╰┈───────────────•*
 *[ • 📥 DOWNLOADER-CMD 📥 ‎• ]*
 *╭┈───────────────•*
-*┋*⏬️ *${prefix}ғʙ <ᴜʀʟ>*
-*┋*⏬️ *${prefix}ɪɴꜱᴛᴀ <ᴜʀʟ>*
-*┋*⏬️ *${prefix}ᴠɪᴅᴇᴏ <𝚞𝚛𝚕 𝚘𝚛 𝚚𝚞𝚎𝚛𝚢>*
-*┋*⏬️ *${prefix}ɢᴅʀɪᴠᴇ <ᴜʀʟ>*
-*┋*⏬️ *${prefix}ᴛᴡɪᴛᴛᴇʀ <ᴜʀʟ>*
-*┋*⏬️ *${prefix}ᴛᴛ <𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕>*
-*┋*⏬️ *${prefix}ᴍᴇᴅɪᴀғɪʀᴇ <ᴜʀʟ>*
-*┋*⏬️ *${prefix}ꜱᴏɴɢ <ϙᴜᴇʀʏ>*
-*┋*⏬️ *${prefix}ᴠɪᴅᴇᴏ <ϙᴜᴇʀʏ>*
-*┋*⏬️ *${prefix}ᴀᴘᴋ <𝚚𝚞𝚎𝚛𝚢>*
-*┋*⏬️ *${prefix}𝚃𝚃𝙰𝚄𝙳𝙸𝙾 <𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕>*
+*┋*⏬️ *${prefix}ғʙ*
+*┋*⏬️ *${prefix}ɪɴꜱᴛᴀ*
+*┋*⏬️ *${prefix}ᴠɪᴅᴇᴏ*
+*┋*⏬️ *${prefix}ɢᴅʀɪᴠᴇ*
+*┋*⏬️ *${prefix}ᴛᴡɪᴛᴛᴇʀ*
+*┋*⏬️ *${prefix}𝚝𝚒𝚔𝚝𝚘𝚔*
+*┋*⏬️ *${prefix}ᴍᴇᴅɪᴀғɪʀᴇ*
+*┋*⏬️ *${prefix}ꜱᴏɴɢ*
+*┋*⏬️ *${prefix}ᴠɪᴅᴇᴏ*
+*┋*⏬️ *${prefix}ᴀᴘᴋ*
+*┋*⏬️ *${prefix}𝚃𝚃𝙰𝚄𝙳𝙸𝙾*
 *╰┈───────────────•*
 *[ • 🚻 GROUP-CMD 🚻 ‎• ]*
 *╭┈───────────────•*
@@ -182,22 +172,21 @@ if (time2 < "05:00:00") {
 *╰┈───────────────•*
 *[ • 🤓 𝙾𝚃𝙷𝙴𝚁 𝙲𝙼𝙳 🤓 ‎• ]*
 *╭┈───────────────•*
-*┋*🤓 *${prefix}𝙵𝙰𝙽𝙲𝚈 <𝚃𝙴𝚇𝚃>*
-*┋*🤓 *${prefix}𝙴𝙱𝙸𝙽𝙰𝚁𝚈 <𝚃𝙴𝚇𝚃>*
-*┋*🤓 *${prefix}𝙳𝙱𝙸𝙽𝙰𝚁𝚈 <𝚃𝙴𝚇𝚃>*
-*┋*🤓 *${prefix}𝙶𝙴𝚃 <𝚃𝙴𝚇𝚃>*
-*┋*🤓 *${prefix}𝙵𝙴𝚃𝙲𝙷 <𝚃𝙴𝚇𝚃>*
-*┋*🤓 *${prefix}𝚄𝙿𝙳𝙰𝚃𝙴 <𝚌𝚑𝚎𝚡𝚔 𝚏𝚘𝚛 𝚞𝚙𝚍𝚊𝚝𝚎>*
-*┋*🤓 *${prefix}𝚄𝙿𝙳𝙰𝚃𝙴𝙽𝙾𝚆 <𝚞𝚙𝚍𝚊𝚝𝚎 𝚙𝚕𝚞𝚐𝚒𝚗𝚜>*
-*┋*🤓 *${prefix}𝙼𝙿3 <𝚛𝚎𝚙𝚕𝚢 𝚠𝚒𝚝𝚑 𝚟𝚒𝚍𝚎𝚘>*
+*┋*🤓 *${prefix}𝙵𝙰𝙽𝙲𝚈*
+*┋*🤓 *${prefix}𝙴𝙱𝙸𝙽𝙰𝚁𝚈*
+*┋*🤓 *${prefix}𝙳𝙱𝙸𝙽𝙰𝚁𝚈*
+*┋*🤓 *${prefix}𝙶𝙴𝚃*
+*┋*🤓 *${prefix}𝙵𝙴𝚃𝙲𝙷*
+*┋*🤓 *${prefix}𝚄𝙿𝙳𝙰𝚃𝙴𝙽𝙾𝚆*
+*┋*🤓 *${prefix}𝙼𝙿3*
 *╰┈───────────────•*
 *[ • 🤓 𝚂𝚃𝙰𝙻𝙺𝙴𝚁 𝙲𝙼𝙳 🤓 ‎• ]*
 *╭┈───────────────•*
-*┋*🤓 *${prefix}𝙶𝙸𝚃𝚂𝚃𝙰𝙻𝙺 <𝚞𝚜𝚎𝚛𝚗𝚊𝚖𝚎>*
-*┋*🤓 *${prefix}𝚃𝙸𝙺𝚂𝚃𝙰𝙻𝙺 <𝚞𝚜𝚎𝚛𝚗𝚊𝚖𝚎>*
-*┋*🤓 *${prefix}𝙽𝙿𝙼𝚂𝚃𝙰𝙻𝙺 <𝚙𝚊𝚌𝚔𝚊𝚐𝚎 𝚗𝚊𝚖𝚎>*
-*┋*🤓 *${prefix}𝙿𝙾𝙿𝙸𝙽𝙵𝙾 <𝚠𝚘𝚛𝚕𝚍𝚜 𝚙𝚘𝚙𝚞𝚕𝚊𝚝𝚒𝚘𝚗>*
-*┋*🤓 *${prefix}𝙻𝙾𝙾𝙺𝚄𝙿 <𝚒𝚙 𝚊𝚍𝚛𝚎𝚜𝚜>*
+*┋*🤓 *${prefix}𝙶𝙸𝚃𝚂𝚃𝙰𝙻𝙺*
+*┋*🤓 *${prefix}𝚃𝙸𝙺𝚂𝚃𝙰𝙻𝙺*
+*┋*🤓 *${prefix}𝙽𝙿𝙼𝚂𝚃𝙰𝙻𝙺*
+*┋*🤓 *${prefix}𝙿𝙾𝙿𝙸𝙽𝙵𝙾*
+*┋*🤓 *${prefix}𝙻𝙾𝙾𝙺𝚄𝙿*
 *╰┈───────────────•*
 *[ • 🤵𝙷𝙴𝚁𝙾𝙺𝚄 𝙲𝙻𝙸𝙴𝙽𝚃🤵 ‎• ]*
 *╭┈───────────────•*
@@ -230,7 +219,7 @@ if (time2 < "05:00:00") {
           forwardingScore: 999, // Score to indicate it has been forwarded
           externalAdReply: {
             title: "✨ Sarkar-MD ✨",
-            body: "${pushName}",
+            body: "*${pushName}* _${pushwish}_",
             thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
             sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
             mediaType: 1,
