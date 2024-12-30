@@ -27,7 +27,7 @@ const alive = async (m, sock) => {
     
     // Get real time
     const realTime = moment().tz("Asia/Karachi").format("HH:mm:ss");
-    const xdate = moment.tz("Asia/Karachi").format("DD/MM/YYYY");
+  //  const xdate = moment.tz("Asia/Karachi").format("DD/MM/YYYY");
     const xtime = moment.tz("Asia/Karachi").format("HH:mm:ss");
     const xdate = moment.tz("Asia/Karachi").format("DD/MM/YYYY");
     const time2 = moment().tz("Asia/Karachi").format("HH:mm:ss");
@@ -60,7 +60,6 @@ if (time2 < "05:00:00") {
 *│  ◦* 𝙼𝙾𝙳𝙴: *${mode}*
 *│  ◦* 𝚄𝙿𝚃𝙸𝙼𝙴: *${days}d ${hours}h ${minutes}m ${seconds}s*
 *│  ◦* 𝙲𝚄𝚁𝚁𝙴𝙽𝚃 𝚃𝙸𝙼𝙴: *${realTime}*
-*│  ◦* 𝙲𝚄𝚁𝚁𝙴𝙽𝚃 DATE: *${xdate}*
 *╰┈───────────────•*
 *♡︎•━━━━━━☻︎━━━━━━•♡︎*
 *[ • 🥰 𝙸𝚂𝙻𝙰𝙼𝙸𝙲 𝙲𝙼𝙳 🥰 • ]*
