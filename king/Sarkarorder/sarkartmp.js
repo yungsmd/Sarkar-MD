@@ -12,8 +12,8 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
     if (!validCommands.includes(cmd)) return;
 
     if (!m.quoted || m.quoted.mtype !== 'videoMessage') {
-      return m.reply(`Send/Reply with Video to convert into MP3 with caption ${prefix + cmd}`);
       await m.react('❌'); // React with error emoji
+      return m.reply(`Send/Reply with Video to convert into MP3 with caption ${prefix + cmd}`);
     }
 
     m.reply('Converting to MP3, please wait...');
