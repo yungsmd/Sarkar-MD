@@ -23,6 +23,13 @@ const alive = async (m, sock) => {
     const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
     const minutes = Math.floor((uptimeSeconds % 3600) / 60);
     const seconds = Math.floor(uptimeSeconds % 60);
+
+    
+    // Get real time
+    const realTime = moment().tz("Asia/Colombo").format("HH:mm:ss");
+    const xdate = moment.tz("Asia/Colombo").format("DD/MM/YYYY");
+
+    
     const xtime = moment.tz("Asia/Colombo").format("HH:mm:ss");
     const xdate = moment.tz("Asia/Colombo").format("DD/MM/YYYY");
     const time2 = moment().tz("Asia/Colombo").format("HH:mm:ss");
@@ -44,7 +51,7 @@ if (time2 < "05:00:00") {
 
     const aliveMessage = `╭┈───────────────•*
 *⇆𝙷𝙴𝙻𝙻𝙾 𝙼𝚁⇆*
-          ${pushName} ${pushwish}
+          *${pushName}* _${pushwish}_
 *⇆ ✨ 𝚂𝙰𝚁𝙺𝙰𝚁-𝙼𝙳 𝙲𝙾𝙼𝙼𝙰𝙽𝙳 𝙻𝙸𝚂𝚃 ✨ ⇆*
 *╰┈───────────────•*
 *╭┈───────────────•* 
@@ -54,6 +61,7 @@ if (time2 < "05:00:00") {
 *│  ◦* 𝙿𝚁𝙴𝙵𝙸𝚇: *${prefix}*
 *│  ◦* 𝙼𝙾𝙳𝙴: *${mode}*
 *│  ◦* 𝚄𝙿𝚃𝙸𝙼𝙴: *${days}d ${hours}h ${minutes}m ${seconds}s*
+*│  ◦* 𝙲𝚄𝚁𝚁𝙴𝙽𝚃 𝚃𝙸𝙼𝙴: *${realTime}*
 *╰┈───────────────•*
 *♡︎•━━━━━━☻︎━━━━━━•♡︎*
 *[ • 🥰 𝙸𝚂𝙻𝙰𝙼𝙸𝙲 𝙲𝙼𝙳 🥰 • ]*
