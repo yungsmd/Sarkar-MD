@@ -26,8 +26,8 @@ const alive = async (m, sock) => {
 
     
     // Get real time
-    const realTime = moment().tz("Asia/Colombo").format("HH:mm:ss");
-    
+    const realTime = moment().tz("Asia/Karachi").format("HH:mm:ss");
+
     const xtime = moment.tz("Asia/Colombo").format("HH:mm:ss");
     const xdate = moment.tz("Asia/Colombo").format("DD/MM/YYYY");
     const time2 = moment().tz("Asia/Colombo").format("HH:mm:ss");
