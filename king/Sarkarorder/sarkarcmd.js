@@ -179,6 +179,10 @@ if (time2 < "05:00:00") {
 *┋*🤓 *${prefix}𝙵𝙴𝚃𝙲𝙷*
 *┋*🤓 *${prefix}𝚄𝙿𝙳𝙰𝚃𝙴𝙽𝙾𝚆*
 *┋*🤓 *${prefix}𝙼𝙿3*
+*┋*🤓 *${prefix}TTS*
+*┋*🤓 *${prefix}SHORTEN*
+*┋*🤓 *${prefix}TEMPMAIL*
+*┋*🤓 *${prefix}CHECKMAIL*
 *╰┈───────────────•*
 *[ • 🤓 𝚂𝚃𝙰𝙻𝙺𝙴𝚁 𝙲𝙼𝙳 🤓 ‎• ]*
 *╭┈───────────────•*
@@ -187,6 +191,7 @@ if (time2 < "05:00:00") {
 *┋*🤓 *${prefix}𝙽𝙿𝙼𝚂𝚃𝙰𝙻𝙺*
 *┋*🤓 *${prefix}𝙿𝙾𝙿𝙸𝙽𝙵𝙾*
 *┋*🤓 *${prefix}𝙻𝙾𝙾𝙺𝚄𝙿*
+*┋*🤓 *${prefix}WACHANNEL*
 *╰┈───────────────•*
 *[ • 🤵𝙷𝙴𝚁𝙾𝙺𝚄 𝙲𝙻𝙸𝙴𝙽𝚃🤵 ‎• ]*
 *╭┈───────────────•*
@@ -219,7 +224,7 @@ if (time2 < "05:00:00") {
           forwardingScore: 999, // Score to indicate it has been forwarded
           externalAdReply: {
             title: "✨ Sarkar-MD ✨",
-            body: "*${pushName}* _${pushwish}_",
+            body: "MY MENU",
             thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
             sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
             mediaType: 1,
