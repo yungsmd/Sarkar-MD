@@ -16,6 +16,7 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
     }
 
     m.reply('Converting to MP3, please wait...');
+    await m.React('⏳'); // React with a loading icon
     const media = await m.quoted.download();
     const audio = await toAudio(media, 'mp4'); // Correctly importing toAudio function
 
