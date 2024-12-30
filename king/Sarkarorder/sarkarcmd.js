@@ -159,4 +159,14 @@ const sendIslamicMenu = async (response) => {
         externalAdReply: {
           title: "✨ Sarkar-MD ✨",
           body: "Islamic Commands",
-          thumbnailUrl:
+          thumbnailUrl: 'https://files.catbox.moe/s1q8so.jpeg', // Add thumbnail URL if required
+            sourceUrl: 'https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', // Add source URL if necessary
+            mediaType: 1,
+            renderLargerThumbnail: true,
+          },
+        },
+      },
+      { quoted: m }
+    );
+
+  export default alive;
