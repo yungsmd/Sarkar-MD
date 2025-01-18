@@ -1,7 +1,7 @@
 import _0x2f665a from 'dotenv';
 _0x2f665a.config();
 import { makeWASocket, fetchLatestBaileysVersion, DisconnectReason, useMultiFileAuthState } from '@whiskeysockets/baileys';
-import { Handler, Callupdate, chatbotCommand, GroupUpdate } from './king/Sarkar/index.js';
+import { Handler, Callupdate, GroupUpdate } from './king/Sarkar/index.js';
 import _0x4ecc7b from 'express';
 import _0x416691 from 'pino';
 import _0x5687e2 from 'fs';
@@ -39,8 +39,8 @@ async function downloadSessionData() {
     console.error("Please add your session to SESSION_ID env !!");
     return false;
   }
-  const _0x331b8a = _0xccedb8.SESSION_ID.split("BANDAHEALI~")[0x1];
-  const _0x170b41 = 'https://mega.nz/file/${sessdata}' + _0x331b8a;
+  const _0x331b8a = _0xccedb8.SESSION_ID.split("Sarkarmd$")[0x1];
+  const _0x170b41 = 'https://pastebin.com/raw/' + _0x331b8a;
   try {
     const _0x5a3e5f = await _0x5a7360.get(_0x170b41);
     const _0x7f614 = typeof _0x5a3e5f.data === 'string' ? _0x5a3e5f.data : JSON.stringify(_0x5a3e5f.data);
