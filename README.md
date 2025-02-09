@@ -129,63 +129,29 @@ jobs:
 ```
 
 
+---
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
+<h6>Authors</h6>
 
+<div align="center">
 
-## Features
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
-> System Features
+| [![Sarkar Bandaheali](https://github.com/Sarkar-Bandaheali.png?lenght=50width=50)](https://github.com/Sarkar-Bandaheali) |
+|----|
+| [ MR SHABAN ](https://wa.me/message/L5NHEHHAQUQZF1) |
+| HELPER CONTACT |
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
-- **Multi-Platform Support**: The Sarkar-MD bot is designed to be integrated with multiple platforms, including WhatsApp, Telegram, Slack, and others. 
+<br>
 
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
-- **Parallel Conversation Support**: The bot is highly scalable and can handle a large number of conversations for multiple users parallel. 
-
-
-- **Conversation Isolation** : The bot is designed to handle multiple conversations at the same time without interfering with other user conversations.
-
-
-- **State-Aware Conversation**: The bot is designed to maintain the state of the conversation with the user. This means that the bot can remember information provided by the user earlier in the conversation and use it to provide more personalized responses. For example, if the user has already provided their location, the bot can use that information to suggest nearby ride options.
-
-
-- **Integrated Template Engine**: The bot includes a template engine that allows the generation of messages and responses to user queries quickly and efficiently in multiple languages.
-
-
-- **Horizontal Scalability**: The bot is designed to be horizontally scalable, meaning that it can handle a large number of users by distributing the workload across multiple servers.
-
-
-- **Auto Conversation Closing**: The bot is designed to automatically close conversations with users after a specified period of inactivity.
-
-> Bot Features
-
-- **End-to-End Ride Booking** : Users can book a ride in Namma Yatri Platform from start to finish using the Karna Chat bot.
-
-
-- **Ride Status Tracking** : The bot provides users with real-time updates on the status of their ride, such as driver
-  ETA and more.
-
-
-- **Ride Cancellation** : Users can cancel their booked ride using the bot.
-
-
-- **Feedback Provision** : The bot allows users to provide feedback on their ride experience.
-
-
-- **Multi-Language Support** : The bot supports multiple languages to cater to a wider user base, currently Kannada,
-  Hindi and English are supported.
-
-
-- **Starred Places Management** : Users can manage their frequently used or favorite locations and use them for booking
-  rides quickly.
-
-
-- **View Past Rides** : Users can view their ride history and check ride details.
-
-
-- **Namma Yatri Open Data** : The bot provides access to Namma Yatri Open Data.
-
-
-- **Additional Features** : The bot provides additional features such as support, FAQ section, and more.
 
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
   </div>
