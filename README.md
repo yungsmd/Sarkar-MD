@@ -3,21 +3,17 @@
   <a href="https://files.catbox.moe/s1q8so.jpeg">
     <img alt="secktor docs" height="300" src="https://files.catbox.moe/s1q8so.jpeg">
     
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=monospace-ExtraBold&color=blue&lines=🙏+𝗙𝗢𝗥𝗞+𝗔𝗡𝗗+𝗦𝗧𝗔𝗥+⭐+𝗥𝗘𝗣𝗢+⤵️)](https://git.io/typing-svg)
+ <p align="lift">
+ <a href="https://github.com/Sarkar-Bandaheali/Sarkar-MD/fork"><img title="SARKAR-MD" src="https://img.shields.io/badge/FORK-SARKAR MD-h?color=green&style=for-the-badge&logo=github"></a>
    
+<p align="lift">
+<a href="https://sarkar-md-session-generator.koyeb.app/"><img height= "25" title="Author" src="https://img.shields.io/badge/GET SESSION-1-blue?style=for-the-badge&logo=koyeb"></a>
 
-<a href="https://github.com/Sarkar-Bandaheali/Sarkar-MD/fork"><img title="WEB" src="https://img.shields.io/badge/FORK Sarkar-MD-QR?color=black&style=for-the-badge&logo=stackshare"></a>
-
-  
-</p>
-
----
-***
-<a href="https://sarkar-md-session-generator.koyeb.app/"><img src="https://img.shields.io/badge/CLICK%20ME%20TO%20GET%20SESSION-skyblue" alt="CLICK ME TO GET SESSION" width="270"></a>
-
-
-  ***
-
-<a href="null" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+ <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
 </p>
 <p align="center">
@@ -31,17 +27,13 @@
 </p>></a>                     
 
    <h1 align="center"                  
-
-
-
-
-***
-
-
+ <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
 ### 🔥Sarkar Bandaheali😈💫
 
-***
+ <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
 
   ♻️DEPLOY NORMAL BOT ✅*[ HEROKU ]*
