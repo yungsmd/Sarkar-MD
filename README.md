@@ -35,32 +35,37 @@
  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
   </div>
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=𝗗𝗘𝗣𝗟𝗢𝗬+⤵️+𝗢𝗡+𝗛𝗘𝗥𝗢𝗞𝗨+🛰️)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=DEPLOY+⤵️+ON+HEROKU)](https://git.io/typing-svg)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new-app?template=https://github.com/Sarkar-Bandaheali/Sarkar-MD)
-***
+
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=DEPLOY+⤵️+ON+KOYEB)](https://git.io/typing-svg)
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=sarkar-md&type=git&repository=Sarkar-Bandaheali%2FSarkar-MD&branch=main&builder=buildpack&env%5BSESSION_ID%5D=&ports=8000%3Bhttp%3B%2F)
+
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=CREATE+⤵️+ON+ACCOUNT)](https://git.io/typing-svg)
+<br>
+<a href='https://app.koyeb.com/auth/signup' target="_blank">
+  <img alt='CREATE ACCOUNT' src='https://img.shields.io/badge/-CREATE_ACCOUNT-green?style=for-the-badge&logo=koyeb&logoColor=white'/>
+</a>
+ <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
 ⭕  DEPLOY ON [ RENDER ]
 
 [![Find On Whatsapp ](https://img.shields.io/badge/🚘Click_Here-blue.svg)](https://render.com)
+♻️CREATE ACCOUNT ✅  
 
 
-***
+ <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
 
 ⭕  DEPLOY ON [ Panel ]
 
 [![Find On Whatsapp ](https://img.shields.io/badge/🚘Click_Here-blue.svg)](https://toystack.ai)
 
-♻️CREATE ACCOUNT ✅  
-<br>
-<a href='https://app.koyeb.com/auth/signup' target="_blank">
-  <img alt='CREATE ACCOUNT' src='https://img.shields.io/badge/-CREATE_ACCOUNT-green?style=for-the-badge&logo=koyeb&logoColor=white'/>
-</a>
-
-♻️DEPLOY TO [KOYEB] ✅  
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=sarkar-md&type=git&repository=Sarkar-Bandaheali%2FSarkar-MD&branch=main&builder=buildpack&env%5BSESSION_ID%5D=&ports=8000%3Bhttp%3B%2F)
  # 😈 Sarkar-MD INFO
-***
-## ᴡʜᴀᴛsᴀᴘᴘ ᴄʜᴀɴɴᴇʟ // Whatsapp group
+ <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
+  
 <a href="https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P" target="_blank">
     <img alt="whatsapp channel" src="https://img.shields.io/badge/ Whatsapp Support Channel -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
 </a>
@@ -182,34 +187,10 @@ jobs:
 
 - **Additional Features** : The bot provides additional features such as support, FAQ section, and more.
 
-
-
-***
-
-## Contribution
-
-We welcome contributions to this project. If you find a bug or would like to suggest a new feature, please create a pull request or submit an issue. Before submitting your pull request, make sure to run the tests and ensure that they pass. We also ask that you follow our coding guidelines.
-
-
-## Issues
-
-If you encounter any issues while using this project, please create a new issue on our GitHub repository. We will do our best to address the issue as soon as possible. When creating an issue, please provide as much detail as possible, including steps to reproduce the issue and any error messages you received.
-
-## Conclusion
-
-In conclusion, the ChatBot solution presented here provides an efficient and user-friendly way for interacting with various services. By leveraging popular messaging platforms like WhatsApp, the chatbot enables a seamless conversation-based experience for users to perform different actions without leaving the chat interface. The chatbot solution also includes various components such as a message platform, message gateway, workflow orchestrator, template engine, incoming message handler, backend event handler, conversation process orchestrator, document database, and more. These components work together to provide a robust and scalable architecture for handling large volumes of user interactions.
-
-We welcome any feedback or suggestions you may have to help improve the chatbot solution further. With the ability to integrate with different messaging platforms and services, this solution can be adapted to various use cases and industries. As the chatbot ecosystem continues to grow, we believe that solutions like this will play an increasingly important role in providing seamless and efficient interactions between users and services.
-
-
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+  </div>
+  
 [Sarkar-MD Codes](.)
-
-
-
-
-[BMW MD COPY](.)
-
-
 
 
 [Thanks To God](.)
