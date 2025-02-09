@@ -30,15 +30,13 @@
  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
   </div>
 
-### 🔥Sarkar Bandaheali😈💫
+### 🔥Sarkar Bandaheali😈
 
  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
   </div>
 
-
-  ♻️DEPLOY NORMAL BOT ✅*[ HEROKU ]*
-<br>
-<a href='https://dashboard.heroku.com/new?template=https://github.com/Sarkar-Bandaheali/Sarkar-MD' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=heroku&logoColor=white'/>
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=𝗗𝗘𝗣𝗟𝗢𝗬+⤵️+𝗢𝗡+𝗛𝗘𝗥𝗢𝗞𝗨+🛰️)](https://git.io/typing-svg)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new-app?template=https://github.com/Sarkar-Bandaheali/Sarkar-MD)
 ***
 
 ⭕  DEPLOY ON [ RENDER ]
