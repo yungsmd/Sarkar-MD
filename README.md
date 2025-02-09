@@ -1,11 +1,10 @@
-r0<p align="center">  
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=1BAFBAFF&center=true&width=910&height=100&lines=THANKS FOR YOUR +SUPPORT-DONT; FORGET+SATAR+FORK+MYREPO;CREATED+BY+SARKAR+BANDAHEALI;RELEASED+24-12-2024" alt="Typing SVG" /></a>  
+
   <a href="https://files.catbox.moe/s1q8so.jpeg">
     <img alt="secktor docs" height="300" src="https://files.catbox.moe/s1q8so.jpeg">
-    <h1 align="center"> Sarkar-MD MADE BY Sarkar-Bandaheali</h1>
-  </a>
-</p>  
-FORK THE REPOSITORY (Repo) 
-    <br>
+    
+   
+
 <a href="https://github.com/Sarkar-Bandaheali/Sarkar-MD/fork"><img title="WEB" src="https://img.shields.io/badge/FORK Sarkar-MD-QR?color=black&style=for-the-badge&logo=stackshare"></a>
 
   
