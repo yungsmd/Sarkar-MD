@@ -14,6 +14,12 @@
 
  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
   </div>
+  
+  </p>
+<p align="center">
+  <!-- Developer -->
+  <img src="https://img.shields.io/static/v1?label=OWNER&message=Sarkar%20Bandaheali&color=orange&style=plastic" alt="Developer Badge">
+</p> 
 
 </p>
 <p align="center">
@@ -30,7 +36,6 @@
  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
   </div>
 
-### 🔥Sarkar Bandaheali😈
 
  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
   </div>
