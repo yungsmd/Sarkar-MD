@@ -41,7 +41,7 @@
   </div>
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=DEPLOY+⤵️+ON+HEROKU)](https://git.io/typing-svg)
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new-app?template=https://github.com/Sarkar-Bandaheali/Sarkar-MD)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new-app?template=https://github.com/sarKarji1/abc)
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=DEPLOY+⤵️+ON+KOYEB)](https://git.io/typing-svg)
 [![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=sarkar-md&type=git&repository=Sarkar-Bandaheali%2FSarkar-MD&branch=main&builder=buildpack&env%5BSESSION_ID%5D=&ports=8000%3Bhttp%3B%2F)
