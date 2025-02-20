@@ -44,7 +44,7 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new-app?template=https://github.com/sarKarji1/abc)
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=DEPLOY+⤵️+ON+KOYEB)](https://git.io/typing-svg)
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=sarkar-md&type=git&repository=Sarkar-Bandaheali%2FSarkar-MD&branch=main&builder=buildpack&env%5BSESSION_ID%5D=&ports=8000%3Bhttp%3B%2F)
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=abc&repository=sarKarji1%2Fabc&branch=main&instance_type=free&env%5BSESSION_ID%5D=Sarkarmd%24eHJxVY2u&env%5BAUTO_REACT%5D=false&env%5BOWNER_NUMBER%5D=923253617422&env%5BOWNER_NAME%5D=Bandaheali&env%5BOWNER_REACT%5D=false)
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=blue&lines=CREATE+⤵️+ON+ACCOUNT)](https://git.io/typing-svg)
 <br>
@@ -54,7 +54,8 @@
  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
   </div>
 
-⭕  DEPLOY ON [ RENDER ]
+⭕  DEPLOY ON [ RENDER
+]
 
 [![Find On Whatsapp ](https://img.shields.io/badge/🚘Click_Here-blue.svg)](https://render.com)
 ♻️CREATE ACCOUNT ✅  
